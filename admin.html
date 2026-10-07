@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>79 CMS — Админ</title>
+<style>
+:root{--side:#1E3F78;--side-2:#24498A;--red:#D71920;--blue:#1A4FA0;--bg:#F1F5FA;--ink:#1F2937;--muted:#6B7280;--line:#E3EAF2;--ok:#16A34A}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);font-size:14px}
+button{font:inherit;cursor:pointer}
+a{color:inherit}
+svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+input,select,textarea{font:inherit;width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+input[type=color]{padding:2px;height:40px;width:70px}
+input:focus,select:focus,textarea:focus{outline:2px solid #3B82F6;outline-offset:-1px;border-color:transparent}
+label{font-size:12.5px;font-weight:600;display:block;margin-bottom:5px;color:#374151}
+
+/* layout */
+.side{position:fixed;inset:0 auto 0 0;width:225px;background:var(--side);color:#fff;display:flex;flex-direction:column;z-index:40;transition:transform .2s}
+.side-h{display:flex;align-items:center;justify-content:space-between;padding:18px 16px;border-bottom:1px solid rgba(255,255,255,.1)}
+.side-h b{font-size:15px}.side-h b span{color:#FF6B6B}
+.side-h button{background:none;border:0;color:#fff;opacity:.85;padding:4px}
+.menu{flex:1;overflow:auto;padding:10px 9px}
+.menu a{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:7px;text-decoration:none;font-size:13px;color:#E6EDF8;margin-bottom:2px}
+.menu a:hover{background:var(--side-2)}
+.menu a.on{background:var(--red);color:#fff;font-weight:700}
+.menu a .n{margin-left:auto;background:var(--red);color:#fff;border-radius:99px;font-size:11px;padding:1px 7px;font-weight:700}
+.menu a.on .n{background:#fff;color:var(--red)}
+main{margin-left:225px;padding:22px 26px 40px;min-height:100vh}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:26px;gap:12px}
+.top .who{text-align:right;font-size:12.5px;font-weight:700}.top .who small{display:block;color:var(--muted);font-weight:500}
+.top .left{display:flex;gap:10px;align-items:center}
+.burger{display:none;background:#fff;border:1px solid var(--line);border-radius:8px;padding:7px 10px}
+.view-site{display:inline-flex;gap:6px;align-items:center;font-size:12.5px;color:var(--blue);text-decoration:none;font-weight:600;background:#fff;border:1px solid var(--line);padding:7px 12px;border-radius:8px}
+h1{color:var(--blue);font-size:22px;margin:0 0 18px}
+.head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.head h1{margin:0}
+
+/* cards */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:26px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:10px;padding:24px 20px;display:flex;justify-content:space-between;box-shadow:0 1px 3px rgba(15,23,42,.05);text-decoration:none;transition:.15s}
+.stat:hover{box-shadow:0 4px 14px rgba(15,23,42,.08)}
+.stat svg.i{width:20px;height:20px;color:#B91C1C}
+.stat span{display:block;margin-top:14px;color:#4B5563;font-size:12.5px}
+.stat b{font-size:26px;color:var(--blue)}
+.box{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px 20px;box-shadow:0 1px 3px rgba(15,23,42,.05)}
+.box h3{margin:0 0 14px;color:var(--blue);font-size:14px}
+.log>div{padding:11px 0;border-bottom:1px solid var(--line)}.log>div:last-child{border:0}
+.log b{font-weight:600;font-size:13.5px}.log small{display:block;color:var(--muted);font-size:11px;margin-top:2px}
+.log .tag{font-size:10.5px;background:#EEF2FF;color:var(--blue);padding:1px 7px;border-radius:99px;margin-left:6px;font-weight:600}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:8px;padding:9px 15px;font-weight:600;font-size:13px;background:var(--blue);color:#fff}
+.btn:hover{filter:brightness(1.08)}
+.btn.red{background:var(--red)}.btn.gray{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.sm{padding:5px 9px;font-size:12px}
+.icon-btn{background:none;border:1px solid var(--line);border-radius:7px;padding:5px 7px;color:#475569}
+.icon-btn:hover{background:#F8FAFC}.icon-btn.del:hover{color:var(--red);border-color:#FCA5A5}
+
+/* table */
+.tools{display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.tools input{max-width:300px}
+.tbl{width:100%;border-collapse:collapse;background:#fff}
+.tbl-wrap{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:auto}
+.tbl th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);background:#F8FAFC;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;max-width:340px}
+.tbl tr:last-child td{border:0}
+.tbl td.act{white-space:nowrap;text-align:right;width:1%}
+.tbl .thumb{width:34px;height:34px;border-radius:7px;display:grid;place-items:center;font-size:18px;background-size:cover;background-position:center}
+.clip{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pill{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:700;background:#E0E7FF;color:var(--blue)}
+.pill.ok{background:#DCFCE7;color:var(--ok)}.pill.red{background:#FEE2E2;color:var(--red)}
+.empty{padding:40px;text-align:center;color:var(--muted)}
+
+/* forms */
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px}
+.form .full{grid-column:1/-1}
+.chk{display:flex;gap:8px;align-items:center;font-weight:600;margin:0}.chk input{width:auto}
+.img-f{display:flex;gap:8px;align-items:center}
+.img-f .pv{width:40px;height:40px;border-radius:7px;background:#F1F5F9 center/cover;flex:none;border:1px solid var(--line)}
+.img-f select{max-width:170px}
+.hint{font-size:12px;color:var(--muted);margin-top:4px}
+.save-bar{margin-top:18px;display:flex;gap:10px}
+
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(15,23,42,.45);display:grid;place-items:center;z-index:100;padding:16px}
+.modal[hidden]{display:none}
+.modal-box{background:#fff;border-radius:12px;width:min(680px,100%);max-height:90vh;overflow:auto;padding:22px}
+.modal-box h3{margin:0 0 16px;color:var(--blue)}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;margin-top:18px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#0F172A;color:#fff;padding:10px 18px;border-radius:8px;z-index:200;font-size:13px}
+
+/* media */
+.media{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.media .m{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.media .m div{aspect-ratio:4/3;background:#F1F5F9 center/cover}
+.media .m p{margin:0;padding:8px;font-size:12px;display:flex;justify-content:space-between;gap:6px;align-items:center}
+.media .m p span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* login */
+.login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,var(--side),#0F2550);padding:16px}
+.login form{background:#fff;border-radius:14px;padding:30px;width:min(360px,100%);display:grid;gap:14px}
+.login h2{margin:0;color:var(--blue)}.login h2 span{color:var(--red)}
+.login .err{color:var(--red);font-size:12.5px;min-height:16px}
+
+@media (max-width:1000px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:860px){
+  .side{transform:translateX(-100%)}.side.open{transform:none;box-shadow:0 0 40px rgba(0,0,0,.3)}
+  main{margin-left:0;padding:16px}.burger{display:inline-block}
+  .form{grid-template-columns:1fr}
+}
+@media (max-width:520px){.stats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="login" id="login" hidden>
+  <form id="loginForm">
+    <h2><span>79</span> CMS</h2>
+    <div style="color:var(--muted);font-size:13px;margin-top:-8px">Админ самбарт нэвтрэх</div>
+    <div><label>Нэвтрэх нэр</label><input name="user" autocomplete="username" required></div>
+    <div><label>Нууц үг</label><input name="pass" type="password" autocomplete="current-password" required></div>
+    <div class="err" id="loginErr"></div>
+    <button type="button" class="btn gray" id="exportOld" hidden style="justify-content:center">⬇ Browser-т хадгалсан хуучин өгөгдлийг файлд татах</button>
+    <button class="btn" style="justify-content:center">Нэвтрэх</button>
+    <div class="hint">Анхны нэвтрэлт: <b>admin</b> / <b>admin79</b> — нэвтэрсний дараа “Хэрэглэгчид” хэсгээс нууц үгээ заавал солино уу.</div>
+  </form>
+</div>
+
+<div id="app" hidden>
+  <aside class="side" id="side">
+    <div class="side-h"><b><span>79</span> CMS</b><button id="logout" title="Гарах"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button></div>
+    <nav class="menu" id="menu"></nav>
+  </aside>
+  <main>
+    <div class="top">
+      <div class="left"><button class="burger" id="burger">☰</button><a class="view-site" href="index.html" target="_blank">↗ Сайт үзэх</a></div>
+      <div class="who" id="who"></div>
+    </div>
+    <div id="view"></div>
+  </main>
+</div>
+
+<div class="modal" id="modal" hidden><div class="modal-box"><form id="mForm"><h3 id="mTitle"></h3><div id="mBody"></div><div class="modal-foot" id="mFoot"></div></form></div></div>
+
+<script src="cms-data.js"></script>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid=()=>Math.random().toString(36).slice(2,10);
+const fmtTime=t=>t?new Date(t).toLocaleString('en-US'):'';
+function toast(t){const el=document.createElement('div');el.className='toast';el.textContent=t;document.body.appendChild(el);setTimeout(()=>el.remove(),2400)}
+
+/* icons */
+const IC={
+ grid:'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',
+ gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>',
+ palette:'<circle cx="13.5" cy="6.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/><circle cx="8.5" cy="7.5" r="1"/><circle cx="6.5" cy="12.5" r="1"/><path d="M12 2a10 10 0 0 0 0 20c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.4-.5-.8-.5-1.3 0-1.1.9-2 2-2h2.4A5.6 5.6 0 0 0 22 9.8C22 5.5 17.5 2 12 2z"/>',
+ home:'<path d="M3 10l9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>',
+ news:'<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/>',
+ mega:'<path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+ bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>',
+ cal:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>',
+ users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+ trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6M18 9h1.5a2.5 2.5 0 0 0 0-5H18M4 22h16M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22M18 2H6v7a6 6 0 0 0 12 0V2z"/>',
+ clip:'<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2M9 12h6M9 16h6"/>',
+ file:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/>',
+ book:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>',
+ msg:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+ video:'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M10 8l6 4-6 4z"/>',
+ store:'<path d="M3 9l1.5-5h15L21 9M3 9h18v2a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0zM5 13v8h14v-8"/>',
+ flag:'<path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1zM4 22v-7"/>',
+ user:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/>',
+ folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 3h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+ edit:'<path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+ trash:'<path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>',
+ eye:'<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>',
+};
+const ic=(n,st='')=>`<svg class="i" viewBox="0 0 24 24" style="${st}">${IC[n]}</svg>`;
+
+/* field presets */
+const F={
+ title:{k:'title',l:'Гарчиг',req:1,full:1},
+ date:{k:'date',l:'Огноо',type:'date',req:1},
+ ico:{k:'ico',l:'Эможи дүрс',ph:'📢'},
+ bg:{k:'bg',l:'Дэвсгэр өнгө',type:'color'},
+ img:{k:'img',l:'Зураг (сонголттой)',type:'img',full:1},
+ text:{k:'text',l:'Агуулга',type:'textarea',req:1,full:1,rows:6},
+};
+const POST=[F.title,F.date,F.ico,F.bg,F.img,F.text];
+const POST_COLS=[['_thumb',''],['title','Гарчиг'],['date','Огноо'],['text','Агуулга']];
+const AD_CATS=['Сурах бичиг','Хувцас','Спорт','Цахилгаан бараа','Ном','Бусад'];
+
+/* sections — same order as the sidebar */
+const SECTIONS=[
+ {k:'dash',t:'Хяналтын самбар',ic:'grid',title:'Dashboard'},
+ {k:'settings',t:'Сайтын тохиргоо',ic:'gear',form:[
+   {k:'name',l:'Сургуулийн нэр',req:1},{k:'sub',l:'Дэд нэр'},{k:'slogan',l:'Уриа',full:1},
+   {k:'phone',l:'Утас'},{k:'email',l:'И-мэйл'},{k:'city',l:'Хот'},{k:'address',l:'Хаяг'},{k:'hours',l:'Ажлын цаг',full:1},
+   {k:'facebook',l:'Facebook холбоос'},{k:'instagram',l:'Instagram холбоос'},{k:'youtube',l:'YouTube холбоос'}]},
+ {k:'theme',t:'Өнгө, дизайн',ic:'palette',form:[
+   {k:'blue',l:'Үндсэн цэнхэр',type:'color'},{k:'blue2',l:'Цайвар цэнхэр',type:'color'},{k:'navy',l:'Хар хөх (толгой, хөл)',type:'color'},
+   {k:'red',l:'Улаан (товч, тэмдэг)',type:'color'},{k:'bg',l:'Хэсгийн дэвсгэр',type:'color'}],reset:1},
+ {k:'home',t:'Нүүр хуудас',ic:'home',form:[
+   {k:'eyebrow',l:'Дээд бичиг',full:1},{k:'title1',l:'Гарчиг (1-р мөр)'},{k:'title2',l:'Гарчиг (2-р мөр, улаан)'},
+   {k:'text',l:'Танилцуулга текст',type:'textarea',full:1},{k:'about',l:'“Сургуулийн тухай” текст',type:'textarea',full:1},
+   {k:'students',l:'Сурагчийн тоо',type:'number'},{k:'staff',l:'Багш, ажилтны тоо',type:'number'},{k:'clubs',l:'Клубын тоо',type:'number'},{k:'years',l:'Түүхтэй жил',type:'number'}]},
+ {k:'news',t:'Мэдээ',ic:'news',fields:POST,cols:POST_COLS,sort:'date'},
+ {k:'announcements',t:'Зарлал',ic:'mega',fields:POST,cols:POST_COLS,sort:'date'},
+ {k:'popup',t:'Поп-ап зар',ic:'bell',form:[
+   {k:'on',l:'Поп-ап зарыг сайтад харуулах',type:'check',full:1},{k:'ico',l:'Эможи дүрс'},{k:'title',l:'Гарчиг',req:1},
+   {k:'text',l:'Текст',type:'textarea',full:1},{k:'btn',l:'Товчны бичиг'},{k:'link',l:'Товчны холбоос',ph:'#clubs'}],
+   hint:'Поп-ап зар нь сайтад нэг сешнд нэг удаа гарна.'},
+ {k:'events',t:'Арга хэмжээ',ic:'cal',fields:[F.title,F.date,{k:'place',l:'Цаг, байршил'},F.ico,F.bg,{k:'featured',l:'Нүүр хуудасны “Онцлох зарлал”-д харуулах',type:'check',full:1},F.img,F.text],
+   cols:[['_thumb',''],['title','Гарчиг'],['date','Огноо'],['place','Байршил'],['featured','Онцлох']],sort:'date'},
+ {k:'teachers',t:'Багш, ажилчид',ic:'users',fields:[{k:'n',l:'Нэр (Ж: Б.Болд)',req:1},{k:'r',l:'Албан тушаал',req:1},{k:'s',l:'Хичээл / чиглэл',full:1},{k:'e',l:'Туршлага (жил)',type:'number'},{k:'o',l:'Эрэмбэ',type:'number'},{k:'rank',l:'Мэргэжлийн зэрэг',ph:'Заах аргач зэрэгтэй'},{k:'homeroom',l:'Даасан анги',ph:'6в'},{k:'classes',l:'Хичээл заадаг анги',full:1},{k:'quote',l:'Уриа үг',full:1},{k:'photo',l:'Зураг',type:'img',full:1}],
+   cols:[['_photo',''],['n','Нэр'],['r','Албан тушаал'],['rank','Зэрэг'],['e','Туршлага'],['o','Эрэмбэ']],sort:'o',asc:1},
+ {k:'clubs',t:'Клуб',ic:'trophy',fields:[{k:'name',l:'Клубын нэр',req:1},{k:'cat',l:'Ангилал',req:1,ph:'Спорт'},F.ico,F.bg,{k:'t',l:'Багш / удирдагч'},{k:'grade',l:'Хамрах анги',ph:'5–12'},{k:'day',l:'Хичээллэх өдөр, цаг',ph:'Мяг, Пүр 15:00'},{k:'max',l:'Дээд суудал',type:'number'},{k:'cur',l:'Одоогийн гишүүд',type:'number'},F.img,{k:'d',l:'Тайлбар',type:'textarea',full:1}],
+   cols:[['_thumb',''],['name','Нэр'],['cat','Ангилал'],['t','Багш'],['day','Цаг'],['_seats','Суудал']]},
+ {k:'regs',t:'Клубын бүртгэл',ic:'clip',raw:'s79_regs',badge:1,
+   cols:[['club','Клуб'],['_name','Сурагч'],['_grade','Анги'],['phone','Утас'],['prev','Өмнө'],['why','Шалтгаан'],['at','Огноо']]},
+ {k:'pages',t:'Хуудсууд',ic:'file',fields:[F.title,F.text],cols:[['title','Гарчиг'],['text','Агуулга']],hint:'Хуудсууд сайтын хөлийн “Хуудсууд” баганад гарна.'},
+ {k:'courses',t:'Сургалт',ic:'book',fields:[F.title,F.text],cols:[['title','Гарчиг'],['text','Агуулга']],hint:'Сургалтын мэдээлэл сайтын хөлийн “Сургалт” баганад гарна.'},
+ {k:'faq',t:'Асуулт, хариулт',ic:'msg',fields:[{k:'q',l:'Асуулт',req:1,full:1},{k:'a',l:'Хариулт',type:'textarea',req:1,full:1}],cols:[['q','Асуулт'],['a','Хариулт']]},
+ {k:'videos',t:'Видео',ic:'video',fields:[F.title,{k:'url',l:'YouTube холбоос',req:1,full:1,ph:'https://www.youtube.com/watch?v=...'},{k:'text',l:'Тайлбар',type:'textarea',full:1}],cols:[['title','Гарчиг'],['url','Холбоос']],hint:'Видео нэмэгдвэл сайтад “Видео” хэсэг автоматаар гарна.'},
+ {k:'msgs',t:'Хүсэлт, зурвас',ic:'msg',raw:'s79_msgs',badge:1,
+   cols:[['_name','Нэр'],['phone','Утас'],['email','Имэйл'],['topic','Сэдэв'],['msg','Мессеж'],['at','Огноо']]},
+ {k:'ads',t:'Зарын булан',ic:'store',fields:[F.title,{k:'cat',l:'Ангилал',type:'select',opt:AD_CATS},{k:'price',l:'Үнэ (₮)',type:'number'},{k:'contact',l:'Холбоо барих',req:1},{k:'feat',l:'⭐ Онцлох зар',type:'check'},{k:'desc',l:'Тайлбар',type:'textarea',full:1}],
+   cols:[['title','Гарчиг'],['cat','Ангилал'],['price','Үнэ'],['contact','Холбоо'],['feat','Онцлох'],['at','Огноо']],sort:'at'},
+ {k:'reports',t:'Гомдол, илгээлт',ic:'flag',raw:'s79_reports',badge:1,cols:[['ad','Зар'],['adId','Төлөв'],['at','Огноо']]},
+ {k:'users',t:'Хэрэглэгчид',ic:'user',admin:1,fields:[{k:'name',l:'Бүтэн нэр',req:1},{k:'user',l:'Нэвтрэх нэр',req:1},{k:'pass',l:'Нууц үг (6+ тэмдэгт)',type:'password',ph:'Шинэ хэрэглэгчид заавал; солих бол л бичнэ'},{k:'role',l:'Эрх',type:'select',opt:['admin','editor']}],
+   cols:[['name','Нэр'],['user','Нэвтрэх нэр'],['role','Эрх']]},
+ {k:'media',t:'Медиа сан',ic:'folder'},
+];
+const SEC=Object.fromEntries(SECTIONS.map(s=>[s.k,s]));
+
+/* data access */
+const load=s=>s.raw?S79.raw(s.raw,[]):S79.get(s.k);
+const save=(s,v)=>{
+  if(s.k!=='users')return s.raw?S79.put(s.raw,v):S79.set(s.k,v);
+  // Хэрэглэгчийг сервер шалгаж (давхардал, нууц үг, admin үлдэх) хадгална
+  return S79.set('users',v,(e,r)=>{if(e)return S79.load().then(route);S79.cache[S79.key('users')]=r.users;
+    me=r.users.find(u=>u.id===me.id)||me;$('#who').innerHTML=`${esc(me.name)}<small>${esc(me.role)}</small>`;if(location.hash==='#users')renderList(SEC.users)});
+};
+let me=null;
+function log(t,sec){S79.log(t,sec,me&&me.name)}
+
+/* auth — нэвтрэлтийг сервер шалгаж, HttpOnly cookie-д session хадгална */
+function boot(){
+  me=S79.me;
+  $('#login').hidden=!!me;$('#app').hidden=!me;
+  if(S79.offline){$('#loginErr').textContent='Сервер ажиллахгүй байна. Терминалд “python3 server.py” ажиллуулаад http://localhost:8000/admin.html хаягаар орно уу.';$('#exportOld').hidden=!legacyKeys(true).length}
+  if(!me)return;
+  $('#who').innerHTML=`${esc(me.name)}<small>${esc(me.role)}</small>`;
+  route();
+}
+$('#loginForm').onsubmit=e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));
+  S79.api('POST','/api/login',d).then(()=>S79.load()).then(()=>{f.reset();$('#loginErr').textContent='';boot()},
+    err=>{$('#loginErr').textContent=err.message==='Failed to fetch'?'Сервертэй холбогдож чадсангүй.':err.message})};
+$('#logout').onclick=()=>S79.q.then(()=>S79.api('POST','/api/logout')).finally(()=>{S79.me=null;location.hash='';S79.load().finally(boot)});
+$('#burger').onclick=()=>$('#side').classList.toggle('open');
+
+/* router */
+function route(){
+  let k=location.hash.slice(1)||'dash';
+  if(!SEC[k]||(SEC[k].admin&&me.role!=='admin'))k='dash';
+  renderMenu(k);$('#side').classList.remove('open');
+  const s=SEC[k];
+  if(k==='dash')renderDash();
+  else if(k==='media')renderMedia(s);
+  else if(s.form)renderForm(s);
+  else renderList(s);
+  scrollTo(0,0);
+}
+// Хяналтын самбар, бүртгэл, зурвас руу ороход серверээс шинэ өгөгдөл татна
+addEventListener('hashchange',()=>{if(!me)return;const s=SEC[location.hash.slice(1)||'dash'];
+  if(s&&(s.raw||s.k==='dash'))S79.load().then(()=>{me=S79.me;me?route():boot()},()=>route());else route()});
+
+function renderMenu(cur){
+  $('#menu').innerHTML=SECTIONS.filter(s=>!s.admin||me.role==='admin').map(s=>{
+    const n=s.badge?load(s).filter(x=>!x.seen).length:0;
+    return `<a href="#${s.k}" class="${s.k===cur?'on':''}">${ic(s.ic)}${s.t}${n?`<span class="n">${n}</span>`:''}</a>`}).join('');
+}
+
+/* dashboard */
+function renderDash(){
+  const cards=[['news','Нийт мэдээ','news'],['announcements','Нийт зарлал','mega'],['events','Нийт event','cal'],['teachers','Нийт багш','users'],['clubs','Нийт клуб','trophy'],['users','Нийт хэрэглэгч','user'],
+    ['regs','Клубын бүртгэл','clip'],['msgs','Хүсэлт, зурвас','msg'],['ads','Нийт зар','store']];
+  const logs=S79.raw('s79_cms_log',[]).slice(0,8);
+  const oldKeys=legacyKeys();
+  $('#view').innerHTML=`<h1>Dashboard</h1>
+  ${oldKeys.length?`<div class="box" style="margin-bottom:18px;border-color:#FCD34D;background:#FFFBEB"><h3>Энэ browser-т хуучин өгөгдөл байна</h3>
+    <p style="margin:0 0 12px">Өмнө нь browser-т (localStorage) хадгалсан ${oldKeys.length} төрлийн өгөгдөл олдлоо. Сервер рүү шилжүүлбэл серверт байгаа ижил хэсгүүдийг дарж бичнэ. Хэрэглэгчийн бүртгэлийг шилжүүлэхгүй.</p>
+    <button class="btn" id="imp">Сервер рүү шилжүүлэх</button> <button class="btn gray" id="impNo">Үгүй, мартах</button></div>`:''}
+  <div class="stats">${cards.filter(([k])=>!SEC[k].admin||me.role==='admin').map(([k,l,i])=>`<a class="stat" href="#${k}"><div>${ic(i)}<span>${l}</span></div><b>${load(SEC[k]).length}</b></a>`).join('')}</div>
+  <div class="box"><h3>Сүүлийн өөрчлөлтүүд</h3><div class="log">${logs.length?logs.map(l=>`<div><b>${esc(l.t)}</b><span class="tag">${esc(SEC[l.sec]?.t||l.sec)}</span><small>${fmtTime(l.at)}${l.user?' · '+esc(l.user):''}</small></div>`).join(''):'<div class="empty" style="padding:20px">Одоогоор өөрчлөлт алга. Аль нэг хэсэгт контент нэмэхэд энд харагдана.</div>'}</div></div>
+  ${me.role==='admin'?`<div class="hint" style="margin-top:14px">Хуучин өгөгдлийн файл (s79-huuchin-ugugdul.json) байгаа бол: <label style="display:inline;color:var(--blue);cursor:pointer;text-decoration:underline">импортлох<input type="file" id="impFile" accept=".json,application/json" hidden></label></div>`:''}`;
+}
+
+/* хуучин localStorage өгөгдлийг сервер рүү нэг удаа шилжүүлэх */
+function legacyKeys(all){try{if(!all&&localStorage.getItem('s79_imported'))return[];return Object.keys(localStorage).filter(k=>/^s79_(cms_|regs$|msgs$|reports$)/.test(k)&&!['s79_cms_users','s79_cms_migrations'].includes(k))}catch(e){return[]}}
+function importData(obj,btn){
+  const keys=Object.keys(obj).filter(k=>/^s79_(cms_|regs$|msgs$|reports$)/.test(k)&&!['s79_cms_users','s79_cms_migrations'].includes(k)&&obj[k]!=null);
+  if(!keys.length)return toast('Импортлох өгөгдөл олдсонгүй');
+  if(btn)btn.disabled=true;
+  return Promise.all(keys.map(k=>{S79.cache[k]=obj[k];return S79.api('PUT','/api/data/'+encodeURIComponent(k),obj[k])}))
+   .then(()=>{try{localStorage.setItem('s79_imported',String(Date.now()))}catch(_){}log(`Хуучин өгөгдөл импортлогдлоо (${keys.length} хэсэг)`,'dash');toast('Импортлож дууслаа ✓');return S79.load()},
+     err=>{toast('Импортлож чадсангүй: '+err.message);if(btn)btn.disabled=false})
+   .then(()=>renderDash());
+}
+$('#exportOld').onclick=()=>{const o={};legacyKeys(true).forEach(k=>{try{o[k]=JSON.parse(localStorage.getItem(k))}catch(_){}});
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(o)],{type:'application/json'}));a.download='s79-huuchin-ugugdul.json';a.click()};
+document.addEventListener('change',e=>{if(e.target.id!=='impFile'||!e.target.files[0])return;
+  if(!confirm('Файлын өгөгдлөөр серверт байгаа ижил хэсгүүдийг дарж бичих үү?'))return e.target.value='';
+  e.target.files[0].text().then(t=>importData(JSON.parse(t)),()=>toast('Файл уншиж чадсангүй')).catch(()=>toast('Файлын формат буруу байна'))});
+document.addEventListener('click',e=>{
+  if(e.target.id==='impNo'){if(!confirm('Хуучин өгөгдлийг шилжүүлэхгүй, энэ мэдэгдлийг нуух уу?'))return;try{localStorage.setItem('s79_imported','skip')}catch(_){}renderDash()}
+  if(e.target.id!=='imp'||!confirm('Хуучин өгөгдлийг сервер рүү шилжүүлэх үү?'))return;
+  const o={};legacyKeys().forEach(k=>{try{o[k]=JSON.parse(localStorage.getItem(k))}catch(_){}});
+  importData(o,e.target);
+});
+
+/* field rendering */
+function mediaOpts(cur){return S79.get('media').map(m=>`<option value="media:${m.id}" ${cur==='media:'+m.id?'selected':''}>${esc(m.name)}</option>`).join('')}
+function fieldHTML(f,v){
+  const val=v??'', req=f.req?'required':'', ph=f.ph?`placeholder="${esc(f.ph)}"`:'';
+  let inp;
+  switch(f.type){
+    case 'textarea':inp=`<textarea name="${f.k}" rows="${f.rows||4}" ${req}>${esc(val)}</textarea>`;break;
+    case 'select':inp=`<select name="${f.k}">${f.opt.map(o=>`<option ${o==val?'selected':''}>${esc(o)}</option>`).join('')}</select>`;break;
+    case 'check':return `<div class="${f.full?'full':''}"><label class="chk"><input type="checkbox" name="${f.k}" ${val?'checked':''}> ${f.l}</label></div>`;
+    case 'color':inp=`<input type="color" name="${f.k}" value="${esc(val||'#E6F0FA')}">`;break;
+    case 'img':inp=`<div class="img-f"><div class="pv" style="background-image:url('${esc(S79.img(val))}')"></div><input name="${f.k}" value="${esc(val)}" placeholder="Зургийн URL эсвэл медиа сангаас сонгоно"><select data-media="${f.k}"><option value="">Медиа сан…</option>${mediaOpts(val)}</select></div>`;break;
+    default:inp=`<input type="${f.type||'text'}" name="${f.k}" value="${esc(val)}" ${req} ${ph}>`;
+  }
+  return `<div class="${f.full?'full':''}"><label>${f.l}${f.req?' *':''}</label>${inp}</div>`;
+}
+function bindImg(root){
+  root.querySelectorAll('[data-media]').forEach(sel=>{
+    const inp=root.querySelector(`[name="${sel.dataset.media}"]`), pv=sel.parentNode.querySelector('.pv');
+    const upd=()=>pv.style.backgroundImage=`url('${S79.img(inp.value)}')`;
+    sel.onchange=()=>{if(sel.value){inp.value=sel.value;upd()}};inp.oninput=upd;});
+}
+function readFields(root,fields,base={}){
+  const o={...base};
+  fields.forEach(f=>{const el=root.querySelector(`[name="${f.k}"]`);if(!el)return;
+    o[f.k]=f.type==='check'?el.checked:f.type==='number'?(el.value===''?0:+el.value):el.value.trim()});
+  return o;
+}
+
+/* single-object settings forms */
+function renderForm(s){
+  const v=S79.get(s.k);
+  $('#view').innerHTML=`<h1>${s.t}</h1><div class="box"><form id="sForm"><div class="form">${s.form.map(f=>fieldHTML(f,v[f.k])).join('')}</div>
+   ${s.hint?`<div class="hint" style="margin-top:12px">${s.hint}</div>`:''}
+   <div class="save-bar"><button class="btn">Хадгалах</button>${s.reset?'<button type="button" class="btn gray" id="reset">Анхны өнгө рүү буцаах</button>':''}</div></form></div>`;
+  $('#sForm').onsubmit=e=>{e.preventDefault();if(S79.set(s.k,readFields(e.target,s.form,v))){log(s.t+' шинэчлэгдлээ',s.k);toast('Хадгалагдлаа ✓')}};
+  if(s.reset)$('#reset').onclick=()=>{if(!confirm('Өнгийг анхны байдалд буцаах уу?'))return;S79.set(s.k,{...S79_DEFAULTS[s.k]});log(s.t+' анхны байдалд буцлаа',s.k);renderForm(s);toast('Буцаагдлаа')};
+}
+
+/* list / CRUD */
+const nameOf=x=>x.title||x.name||x.n||x.q||x.ad||[x.last,x.first].filter(Boolean).join(' ')||'Бичлэг';
+function cell(s,x,k){
+  switch(k){
+    case '_thumb':{const im=S79.img(x.img);return `<div class="thumb" style="background-color:${esc(x.bg||'#F1F5F9')};${im?`background-image:url('${esc(im)}')`:''}">${im?'':esc(x.ico||'')}</div>`}
+    case '_photo':{const im=S79.img(x.photo);return `<div class="thumb" style="background-color:#E2E8F0;border-radius:50%;background-position:center 15%;${im?`background-image:url('${esc(im)}')`:''}">${im?'':esc((x.n||'').split('.').pop().charAt(0))}</div>`}
+    case '_name':return esc([x.last,x.first].filter(Boolean).join(' '));
+    case '_grade':return esc((x.grade||'')+(x.group||''));
+    case '_seats':{const r=S79.raw('s79_regs',[]).filter(g=>g.club===x.name).length,c=(+x.cur||0)+r;return `<span class="pill ${c>=x.max?'red':'ok'}">${c}/${x.max}</span>`}
+    case 'date':return esc(S79.fmtDate(x.date));
+    case 'at':return `<small>${esc(fmtTime(x.at))}</small>`;
+    case 'feat':case 'featured':return x[k]?'<span class="pill">Тийм</span>':'';
+    case 'price':return +x.price?(+x.price).toLocaleString()+'₮':'Үнэгүй';
+    case 'adId':return S79.get('ads').some(a=>a.id===x.adId)?'<span class="pill red">Зар идэвхтэй</span>':'<span class="pill ok">Зар устсан</span>';
+    case 'pass':return '••••';
+    default:return `<div class="clip">${esc(x[k])}</div>`;
+  }
+}
+function renderList(s,q=''){
+  let list=load(s);
+  if(s.badge&&list.some(x=>!x.seen)){list.forEach(x=>x.seen=1);save(s,list);renderMenu(s.k)} // нээгдмэгц уншсан гэж тооцно
+  const idx=list.map((x,i)=>[x,i]);
+  if(s.sort)idx.sort(([a],[b])=>s.asc?(a[s.sort]>b[s.sort]?1:-1):(a[s.sort]<b[s.sort]?1:-1));
+  else if(s.raw)idx.reverse();
+  const ql=q.toLowerCase(), rows=idx.filter(([x])=>!ql||JSON.stringify(x).toLowerCase().includes(ql));
+  $('#view').innerHTML=`<div class="head"><h1>${s.t}</h1><div style="display:flex;gap:8px">
+     ${s.raw?`<button class="btn gray" id="csv">⬇ CSV татах</button>`:`<button class="btn red" id="add">＋ Шинээр нэмэх</button>`}</div></div>
+   ${s.hint?`<div class="hint" style="margin:-8px 0 14px">${s.hint}</div>`:''}
+   <div class="tools"><input id="q" placeholder="Хайх..." value="${esc(q)}"><span class="hint" style="align-self:center">${rows.length} бичлэг</span></div>
+   <div class="tbl-wrap">${rows.length?`<table class="tbl"><thead><tr>${s.cols.map(c=>`<th>${c[1]}</th>`).join('')}<th></th></tr></thead><tbody>
+   ${rows.map(([x,i])=>`<tr>${s.cols.map(c=>`<td>${cell(s,x,c[0])}</td>`).join('')}<td class="act">
+     ${s.raw?`<button class="icon-btn" data-view="${i}" title="Харах">${ic('eye')}</button>`:`<button class="icon-btn" data-edit="${i}" title="Засах">${ic('edit')}</button>`}
+     ${s.k==='reports'&&S79.get('ads').some(a=>a.id===x.adId)?`<button class="icon-btn del" data-delad="${i}" title="Зарыг устгах">${ic('store')}</button>`:''}
+     <button class="icon-btn del" data-del="${i}" title="Устгах">${ic('trash')}</button></td></tr>`).join('')}</tbody></table>`
+     :'<div class="empty">Бичлэг алга.</div>'}</div>`;
+  const qi=$('#q');qi.oninput=()=>{renderList(s,qi.value);const n=$('#q');n.focus();n.setSelectionRange(n.value.length,n.value.length)};
+  if($('#add'))$('#add').onclick=()=>edit(s,-1);
+  if($('#csv'))$('#csv').onclick=()=>csv(s,list);
+  $$('[data-edit]').forEach(b=>b.onclick=()=>edit(s,+b.dataset.edit));
+  $$('[data-view]').forEach(b=>b.onclick=()=>view(s,list[+b.dataset.view]));
+  $$('[data-del]').forEach(b=>b.onclick=()=>{const i=+b.dataset.del,x=list[i];
+    if(s.k==='users'&&x.id===me.id)return toast('Өөрийгөө устгах боломжгүй');
+    if(!confirm(`“${nameOf(x)}” устгах уу?`))return;
+    list.splice(i,1);save(s,list);log(`${nameOf(x)} устгагдлаа`,s.k);renderList(s,$('#q').value);toast('Устгагдлаа')});
+  $$('[data-delad]').forEach(b=>b.onclick=()=>{const r=list[+b.dataset.delad],ads=S79.get('ads'),a=ads.find(a=>a.id===r.adId);
+    if(!a||!confirm(`Гомдол гарсан “${a.title}” зарыг устгах уу?`))return;
+    S79.set('ads',ads.filter(x=>x!==a));log(`${a.title} зар устгагдлаа (гомдол)`,'ads');renderList(s,$('#q').value);toast('Зар устгагдлаа')});
+}
+
+function openModal(title,body,foot){$('#mTitle').textContent=title;$('#mBody').innerHTML=body;$('#mFoot').innerHTML=foot;$('#modal').hidden=false}
+function closeModal(){$('#modal').hidden=true;$('#mForm').onsubmit=null}
+$('#modal').addEventListener('click',e=>{if(e.target.id==='modal'||e.target.closest('[data-x]'))closeModal()});
+addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+
+function edit(s,i){
+  const list=load(s), x=i<0?{}:list[i];
+  openModal(i<0?`${s.t} — шинээр нэмэх`:`${s.t} — засах`,`<div class="form">${s.fields.map(f=>fieldHTML(f,x[f.k]??(f.type==='date'?new Date().toISOString().slice(0,10):undefined))).join('')}</div>`,
+    `<button type="button" class="btn gray" data-x>Болих</button><button class="btn">Хадгалах</button>`);
+  bindImg($('#mBody'));
+  $('#mForm').onsubmit=e=>{e.preventDefault();
+    const o=readFields($('#mBody'),s.fields,x);
+    if(s.k==='users'&&list.some((u,j)=>j!==i&&u.user===o.user))return toast('Энэ нэвтрэх нэр бүртгэлтэй байна');
+    if(s.k==='users'&&i>=0&&x.id===me.id&&o.role!=='admin'&&!list.some(u=>u.id!==me.id&&u.role==='admin'))return toast('Дор хаяж нэг admin үлдэх ёстой');
+    if(i<0){o.id=uid();if(s.k==='ads')o.at=Date.now();list.unshift(o)}else list[i]=o;
+    if(!save(s,list))return;
+    log(`${nameOf(o)} ${i<0?'нэмэгдлээ':'засагдлаа'}`,s.k);
+    if(s.k==='users'&&o.id===me.id){me=o;$('#who').innerHTML=`${esc(me.name)}<small>${esc(me.role)}</small>`}
+    closeModal();renderList(s,$('#q')?.value||'');toast('Хадгалагдлаа ✓')};
+}
+function view(s,x){
+  openModal(nameOf(x),`<table class="tbl">${Object.entries(x).filter(([k])=>!['id','seen','adId'].includes(k)).map(([k,v])=>`<tr><th style="width:150px">${esc(k)}</th><td>${esc(k==='at'?fmtTime(v):v)}</td></tr>`).join('')}</table>`,
+    `<button type="button" class="btn" data-x>Хаах</button>`);
+}
+function csv(s,list){
+  const keys=[...new Set(list.flatMap(o=>Object.keys(o)))].filter(k=>!['id','seen'].includes(k));
+  const q=v=>`"${String(v??'').replace(/"/g,'""')}"`;
+  const body='﻿'+[keys.map(q).join(','),...list.map(o=>keys.map(k=>q(k==='at'?fmtTime(o[k]):o[k])).join(','))].join('\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([body],{type:'text/csv'}));a.download=`${s.k}-${new Date().toISOString().slice(0,10)}.csv`;a.click();
+}
+
+/* media library */
+function renderMedia(s){
+  const list=S79.get('media');
+  $('#view').innerHTML=`<div class="head"><h1>${s.t}</h1><label class="btn red" style="margin:0;color:#fff">＋ Зураг оруулах<input type="file" id="up" accept="image/*" multiple hidden></label></div>
+   <div class="hint" style="margin:-8px 0 14px">Зураг серверийн өгөгдлийн санд хадгалагдана. Сайт хурдан ачаалагдахын тулд 1MB-аас бага зураг ашиглана уу. Оруулсан зургаа Мэдээ, Зарлал, Арга хэмжээ, Клубын “Зураг” талбараас сонгоно.</div>
+   ${list.length?`<div class="media">${list.map((m,i)=>`<div class="m"><div style="background-image:url('${esc(m.src)}')"></div><p><span title="${esc(m.name)}">${esc(m.name)}</span><button class="icon-btn del" data-mdel="${i}">${ic('trash')}</button></p></div>`).join('')}</div>`
+   :'<div class="box empty">Медиа сан хоосон байна.</div>'}`;
+  $('#up').onchange=async e=>{
+    for(const f of e.target.files){
+      if(f.size>1.5e6){toast(`${f.name} хэт том байна (1.5MB-аас их)`);continue}
+      const src=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(f)});
+      list.unshift({id:uid(),name:f.name,src,at:Date.now()});
+      S79.set('media',list);
+      log(`${f.name} медиа санд нэмэгдлээ`,'media');
+    }
+    renderMedia(s);
+  };
+  $$('[data-mdel]').forEach(b=>b.onclick=()=>{const m=list[+b.dataset.mdel];if(!confirm(`“${m.name}” устгах уу?`))return;list.splice(+b.dataset.mdel,1);S79.set('media',list);log(`${m.name} медиа сангаас устгагдлаа`,'media');renderMedia(s)});
+}
+
+S79.ready.then(boot);
+</script>
+</body>
+</html>
