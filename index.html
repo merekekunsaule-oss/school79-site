@@ -159,6 +159,11 @@ section{padding-block:84px}
 .pg p{color:#475569;line-height:1.7;margin:0 0 12px}
 .pg-h{margin:22px 0 8px;color:var(--navy);font-size:17px;padding-bottom:6px;border-bottom:2px solid var(--line)}
 .pg-ul{margin:0 0 6px;padding-left:20px}.pg-ul li{margin:6px 0;color:#334155;line-height:1.55}
+.pride{cursor:pointer;overflow:hidden;transition:.2s}.pride:hover{transform:translateY(-4px)}
+.pride .ph{aspect-ratio:4/5;background:#e8eef5 center 20%/cover}
+.pride .pb{padding:16px 18px 18px}.pride h4{margin:0;color:var(--navy);font-size:16.5px}
+.pride .tl{color:var(--red);font-weight:700;font-size:12.5px;margin:4px 0 8px}
+.pride .gr{font-size:12.5px;color:var(--muted)}
 .c-gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
 .c-gal a{display:block;aspect-ratio:1;border-radius:10px;background:var(--bg) center/cover;transition:.2s}.c-gal a:hover{opacity:.85}
 .c-detail dl{display:grid;gap:10px;margin:16px 0 0;padding:14px;background:var(--bg);border-radius:12px}
@@ -369,6 +374,12 @@ footer a:hover{color:#fff}
     <div class="dir-text" id="dirText"></div>
     <div class="dir-sign"><b id="dirName"></b><span id="dirRole"></span></div>
   </div>
+</div></section>
+
+<!-- PRIDE -->
+<section id="pride" hidden><div class="wrap">
+  <div class="sec-head"><div><div class="kicker">СУРГУУЛИЙН БАХАРХАЛ</div><h2>Бидний бахархал — төгсөгчид</h2><p>Дэлхийн тавцанд Монголын нэрийг гаргаж буй манай сургуулийн төгсөгчид.</p></div></div>
+  <div class="grid-4" id="prideGrid"></div>
 </div></section>
 
 <!-- NEWS -->
@@ -714,6 +725,20 @@ function pageHTML(t){let h='',ul=false;String(t||'').split('\n').forEach(l=>{l=l
   else if(l.startsWith('• ')){if(!ul){h+='<ul class="pg-ul">';ul=true}h+=`<li>${esc(l.slice(2))}</li>`}
   else{if(ul){h+='</ul>';ul=false}h+=`<p>${esc(l)}</p>`}});return h+(ul?'</ul>':'')}
 function openPage(p){$('#detailBody').innerHTML=`<h3>${esc(p.title)}</h3><div class="pg">${pageHTML(p.text)}</div>`;openM('#detailModal')}
+
+/* PRIDE — сургуулийн бахархал */
+const pride=S79.get('pride').slice().sort((a,b)=>(a.o||0)-(b.o||0));
+if(pride.length){$('#pride').hidden=false;
+  $('#prideGrid').innerHTML=pride.map((p,i)=>`<div class="card pride" data-pr="${i}" tabindex="0"><div class="ph" style="background-image:url('${esc(S79.img(p.photo))}')"></div>
+    <div class="pb"><span class="chip">${esc(p.sport||'')}</span><h4 style="margin-top:8px">${esc(p.n)}</h4><div class="tl">${esc(p.title||'')}</div><div class="gr">🎓 ${esc(p.grad||'')}</div></div></div>`).join('');
+  $$('#prideGrid [data-pr]').forEach(c=>c.onclick=c.onkeydown=e=>{if(e.type==='keydown'&&e.key!=='Enter')return;const p=pride[+c.dataset.pr];
+    const wins=String(p.wins||'').split('\n').map(x=>x.trim()).filter(Boolean),gal=String(p.gallery||'').split('\n').map(x=>x.trim()).filter(Boolean).map(g=>esc(S79.img(g)));
+    $('#detailBody').innerHTML=`<div class="t-detail"><img src="${esc(S79.img(p.photo))}" alt="${esc(p.n)}"><div><span class="chip">${esc(p.sport||'')}</span><h3 style="margin:10px 0 2px">${esc(p.n)}</h3>
+      <div style="color:var(--red);font-weight:700">${esc(p.title||'')}</div><p style="color:var(--muted);margin:8px 0 0">🎓 ${esc(p.grad||'')}</p></div></div>
+      ${p.text?`<p style="margin-top:16px;color:#475569;line-height:1.7">${esc(p.text)}</p>`:''}
+      ${wins.length?`<h4 class="pg-h">🏆 Гаргасан амжилт</h4><ul class="pg-ul">${wins.map(w=>w.startsWith('—')?`</ul><h4 class="pg-h">${esc(w.replace(/^—\s*|\s*—$/g,''))}</h4><ul class="pg-ul">`:`<li>${esc(w)}</li>`).join('')}</ul>`:''}
+      ${gal.length?`<div class="c-gal" style="margin-top:14px">${gal.map(g=>`<a href="${g}" target="_blank" rel="noopener" style="background-image:url('${g}')"></a>`).join('')}</div>`:''}`;
+    openM('#detailModal')})}
 
 /* footer — Хуудсууд, Сургалт */
 function footList(sel,items,prepend){const ul=$(sel);ul.insertAdjacentHTML(prepend?'afterbegin':'beforeend',items.map((p,i)=>`<li><a href="#" data-pg="${i}">${esc(p.title)}</a></li>`).join(''));
