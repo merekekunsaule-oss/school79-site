@@ -1119,9 +1119,19 @@
    "s": "Сэтгэл зүйн зөвлөгөө",
    "e": 0,
    "photo": "img/teachers/psych-enkhjargal.jpg",
-   "dept": "Сэтгэл зүй",
+   "dept": "Эмч, мэргэжилтнүүд",
    "id": "psych-enkhjargal",
    "o": 84
+  },
+  {
+   "n": "Н.Алтангинж",
+   "r": "Эмч",
+   "s": "Сургуулийн эмч",
+   "e": 0,
+   "photo": "img/teachers/doctor-altanginj.jpg",
+   "dept": "Эмч, мэргэжилтнүүд",
+   "id": "doctor-altanginj",
+   "o": 85
   }
  ],
  "clubs": [
