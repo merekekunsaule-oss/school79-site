@@ -208,6 +208,15 @@ class Handler(SimpleHTTPRequestHandler):
         # Өөрчлөх хүсэлт бүр зөвхөн манай JS-ээс (тусгай толгойтой) ирэх ёстой
         return self.headers.get("X-S79") == "1"
 
+    def end_headers(self):
+        # HTML/JS/CSS-ийг browser cache-лүүлэхгүй: засвар хийсний дараа хуучин хуудас харагдахаас сэргийлнэ
+        p = urlparse(self.path).path.lower()
+        if not p.startswith("/api/") and (p.endswith((".html", ".js", ".css", "/")) or "." not in p.rsplit("/", 1)[-1]):
+            self.send_header("Cache-Control", "no-cache")
+        if p.endswith((".mp4", ".webm", ".mov", ".m4v")) and self.command == "GET":
+            self.send_header("Accept-Ranges", "bytes")
+        super().end_headers()
+
     # --- static
     def do_GET(self):
         path = urlparse(self.path).path
@@ -216,7 +225,53 @@ class Handler(SimpleHTTPRequestHandler):
         low = unquote(path).lower()
         if low.startswith("/data/") or low.endswith(BLOCKED) or "/." in low:
             return self.send_error(404)
+        if self.headers.get("Range") and low.endswith((".mp4", ".webm", ".mov", ".m4v")):
+            return self.send_range()
         return super().do_GET()
+
+    def send_range(self):
+        """Видеог хэсэгчлэн өгөх (HTTP Range). Safari үүнгүйгээр видео тоглуулдаггүй."""
+        fs_path = self.translate_path(self.path)
+        if not os.path.isfile(fs_path):
+            return self.send_error(404)
+        size = os.path.getsize(fs_path)
+        try:
+            unit, rng = self.headers["Range"].split("=", 1)
+            start_s, end_s = rng.split(",")[0].strip().split("-")
+            if unit.strip() != "bytes":
+                raise ValueError
+            if start_s == "":  # “bytes=-500” → сүүлийн 500 байт
+                start, end = max(0, size - int(end_s)), size - 1
+            else:
+                start = int(start_s)
+                end = min(int(end_s), size - 1) if end_s else size - 1
+            if start > end or start >= size:
+                raise ValueError
+        except ValueError:
+            self.send_response(416)
+            self.send_header("Content-Range", f"bytes */{size}")
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+            return
+        length = end - start + 1
+        self.send_response(206)
+        self.send_header("Content-Type", self.guess_type(fs_path))
+        self.send_header("Accept-Ranges", "bytes")
+        self.send_header("Content-Range", f"bytes {start}-{end}/{size}")
+        self.send_header("Content-Length", str(length))
+        self.end_headers()
+        with open(fs_path, "rb") as f:
+            f.seek(start)
+            remaining = length
+            while remaining > 0:
+                chunk = f.read(min(64 * 1024, remaining))
+                if not chunk:
+                    break
+                try:
+                    self.wfile.write(chunk)
+                except (BrokenPipeError, ConnectionResetError):
+                    return
+                remaining -= len(chunk)
 
     def do_HEAD(self):
         return self.send_error(405)

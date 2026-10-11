@@ -103,7 +103,20 @@ section{padding-block:84px}
 /* about */
 .about{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
 .about-visual{aspect-ratio:4/3;border-radius:24px;background:linear-gradient(160deg,#cfe3f6,#eaf3fb);position:relative;overflow:hidden}
-.about-visual svg{position:absolute;inset:0;width:100%;height:100%}
+.about-visual svg,.about-visual img{position:absolute;inset:0;width:100%;height:100%}
+.about-visual img{object-fit:cover;object-position:center 55%}
+.dir-sec{background:linear-gradient(180deg,#fff 0%,var(--bg) 100%)}
+.director{display:grid;grid-template-columns:minmax(260px,400px) 1fr;gap:56px;align-items:center}
+.dir-photo{position:relative}
+.dir-photo::before{content:"";position:absolute;inset:18px -18px -18px 18px;border-radius:24px;background:linear-gradient(135deg,var(--blue),var(--navy));opacity:.12}
+.dir-photo img{position:relative;width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:24px;box-shadow:0 20px 44px rgba(0,62,117,.16)}
+.dir-text{position:relative;margin-top:6px}
+.dir-text::before{content:"“";position:absolute;right:0;top:-92px;font-size:110px;line-height:1;color:var(--red);opacity:.18;font-family:Georgia,serif}
+.dir-text p{color:#475569;margin:0 0 12px;line-height:1.7}
+.dir-text p.em{color:var(--navy);font-weight:700;font-style:italic;margin-bottom:4px}
+.dir-sign{margin-top:22px;padding-top:16px;border-top:2px solid var(--line);display:flex;flex-direction:column;gap:2px}
+.dir-sign b{font-size:19px;color:var(--navy)}.dir-sign span{color:var(--red);font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase}
+@media(max-width:900px){.director{grid-template-columns:1fr;gap:34px}.dir-photo{max-width:340px}}
 .about-badge{position:absolute;left:20px;bottom:20px;background:#fff;border-radius:16px;padding:14px 18px;box-shadow:0 8px 24px rgba(0,0,0,.1)}
 .about-badge b{color:var(--red);font-size:26px}
 .values{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px}
@@ -132,9 +145,24 @@ section{padding-block:84px}
 .club p{font-size:14px;color:#475569;margin:0 0 16px;flex:1}
 .bar{height:7px;background:#E6EEF6;border-radius:999px;overflow:hidden;margin:6px 0 16px}
 .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--blue-2),var(--blue))}
-.club .row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted)}
+.club .row{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--muted)}
+.club-ico.img{background:center/cover}
+.club .acts{display:grid;grid-template-columns:1fr 1.4fr;gap:8px;margin-top:14px}
+.club .acts .btn{justify-content:center;padding-inline:10px}
+.c-detail h4{margin:18px 0 6px;color:var(--navy);font-size:15px}
+.c-detail ul{margin:0;padding-left:20px}.c-detail li{margin:3px 0}
+.news-img{position:relative}.news-img .play{position:absolute;inset:0;margin:auto;width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;display:grid;place-items:center;font-size:22px;padding-left:4px}
+.c-gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.c-gal a{display:block;aspect-ratio:1;border-radius:10px;background:var(--bg) center/cover;transition:.2s}.c-gal a:hover{opacity:.85}
+.c-detail dl{display:grid;gap:10px;margin:16px 0 0;padding:14px;background:var(--bg);border-radius:12px}
+.c-detail dt{font-size:12px;color:var(--muted)}.c-detail dd{margin:0;font-weight:600}
 
 /* teachers */
+.t-tabs{margin-bottom:18px;flex-wrap:wrap}
+.tab small{font-size:11.5px;font-weight:700;opacity:.65;margin-left:2px}
+.t-group{margin-bottom:38px}.t-group:last-child{margin-bottom:0}
+.t-group h3{display:flex;align-items:center;gap:10px;margin:0 0 16px;color:var(--navy);font-size:20px}
+.t-group h3 small{font-size:12.5px;font-weight:700;color:var(--blue);background:#E6F0FA;border-radius:999px;padding:3px 10px}
 .filters{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px}
 .filters input{flex:1 1 260px}
 .filters select{flex:0 1 220px}
@@ -292,6 +320,7 @@ footer a:hover{color:#fff}
 <!-- ABOUT -->
 <section id="about"><div class="wrap about">
   <div class="about-visual">
+    <img id="aboutImg" alt="79-р сургуулийн байр" hidden>
     <svg viewBox="0 0 400 300" aria-hidden="true">
       <rect x="70" y="110" width="260" height="150" fill="#0057A8"/>
       <polygon points="60,112 200,40 340,112" fill="#003E75"/>
@@ -312,12 +341,23 @@ footer a:hover{color:#fff}
       <h2>Сургуультайгаа танилцацгаая!</h2>
     </div></div>
     <p style="color:#475569" data-h="about">79-р сургууль нь Эрдэм мэдлэгийн ордон болохын хувьд сурагч бүрт чанартай боловсрол олгож, авьяас, хөгжлийг нь дэмжих суралцах таатай орчныг бүрдүүлдэг. Бид эрдэм мэдлэгээр жигүүрлэсэн ирээдүйг хамтдаа бүтээнэ.</p>
+    <a href="#" class="more" id="historyLink" style="display:inline-block;margin:-4px 0 18px;font-weight:700;color:var(--blue)">📖 Сургуулийн түүх, дэлгэрэнгүй →</a>
     <div class="values">
       <div class="value"><h4>🎯 Зорилго</h4><p>Эрдэмтэй, зөв хандлагатай, бүтээлч иргэн.</p></div>
       <div class="value"><h4>🌱 Сурагчийн хөгжил</h4><p>Сурагч бүрийн авьяас, хөгжил, амжилтыг дэмжинэ.</p></div>
       <div class="value"><h4>🤝 Хамтын ажиллагаа</h4><p>Багш, сурагч, эцэг эх — нэг баг, нэг зорилго.</p></div>
       <div class="value"><h4>🏆 Амжилт</h4><p>Олимпиад, уралдаан, тэмцээнд тогтмол амжилт гаргадаг.</p></div>
     </div>
+  </div>
+</div></section>
+
+<!-- DIRECTOR -->
+<section id="director" class="dir-sec" hidden><div class="wrap director">
+  <div class="dir-photo"><img id="dirImg" alt=""></div>
+  <div>
+    <div class="sec-head" style="margin-bottom:14px"><div><div class="kicker">ЗАХИРЛЫН МЭНДЧИЛГЭЭ</div><h2 id="dirTitle">Мэндчилгээ</h2></div></div>
+    <div class="dir-text" id="dirText"></div>
+    <div class="dir-sign"><b id="dirName"></b><span id="dirRole"></span></div>
   </div>
 </div></section>
 
@@ -342,16 +382,16 @@ footer a:hover{color:#fff}
 <!-- TEACHERS -->
 <section id="teachers" class="alt"><div class="wrap">
   <div class="sec-head"><div><div class="kicker">БАГШ, АЖИЛЧИД</div><h2>Багш нарын мэдээлэл</h2><p>Манай сургуулийн багш, ажилтнуудтай хичээл, чиглэлээр нь танилцана уу.</p></div></div>
+  <div class="tabs t-tabs" id="tDept"></div>
   <div class="filters">
-    <input id="tq" placeholder="Багшийн нэрээр хайх...">
-    <select id="tRole"></select>
+    <input id="tq" placeholder="Багшийн нэр, хичээлээр хайх...">
     <select id="tSort">
       <option value="order">Эрэмбэ: Хичээлийн дараалал</option>
       <option value="name">Эрэмбэ: Нэр (А-Я)</option>
       <option value="exp">Эрэмбэ: Туршлага (их→бага)</option>
     </select>
   </div>
-  <div class="grid-4" id="teacherGrid"></div>
+  <div id="teacherGrid"></div>
 </div></section>
 
 <!-- MARKET -->
@@ -495,7 +535,7 @@ S79.ready.then(()=>{
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 function toast(t){const el=document.createElement('div');el.className='toast';el.textContent=t;document.body.appendChild(el);setTimeout(()=>el.remove(),2600)}
 function openM(id){$(id).hidden=false;document.body.style.overflow='hidden'}
-function closeAll(){$$('.modal').forEach(m=>m.hidden=true);document.body.style.overflow=''}
+function closeAll(){$$('.modal video').forEach(v=>v.pause());$$('.modal').forEach(m=>m.hidden=true);document.body.style.overflow=''}
 document.addEventListener('click',e=>{if(e.target.closest('[data-close]')||e.target.classList.contains('modal'))closeAll()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAll()});
 $('#yr').textContent=new Date().getFullYear();
@@ -510,6 +550,10 @@ $$('[data-link]').forEach(a=>a.href=cfg[a.dataset.link]||'#');
 $$('[data-h]').forEach(el=>{const v=home[el.dataset.h];if(v==null||v==='')return;if(el.hasAttribute('data-count'))el.dataset.count=v;else el.textContent=v});
 $$('[data-p]').forEach(el=>{const v=pop[el.dataset.p];if(v)el.textContent=v});
 $('#popup [data-p="btn"]').setAttribute('href',pop.link||'#clubs');
+if(home.dirText){$('#director').hidden=false;$('#dirImg').src=S79.img(home.dirImg||'');$('#dirImg').alt=home.dirName||'';if(!home.dirImg)$('.dir-photo').hidden=true;
+  $('#dirTitle').textContent=home.dirTitle||'Мэндчилгээ';$('#dirName').textContent=home.dirName||'';$('#dirRole').textContent=home.dirRole||'';
+  $('#dirText').innerHTML=String(home.dirText).split('\n').map(l=>l.trim()).filter(Boolean).map(l=>`<p${l.length<70?' class="em"':''}>${esc(l)}</p>`).join('')}
+if(home.aboutImg){const im=$('#aboutImg');im.src=S79.img(home.aboutImg);im.hidden=false;$('.about-visual svg').style.display='none'}
 const fmtD=d=>S79.fmtDate(d);
 const today=new Date().toISOString().slice(0,10);
 const evs=S79.get('events'), upcoming=evs.filter(e=>e.date>=today).sort((a,b)=>a.date<b.date?-1:1), feat=upcoming.filter(e=>e.featured);
@@ -532,23 +576,31 @@ $$('[data-count]').forEach(el=>io.observe(el));
 
 /* NEWS — Мэдээ, Зарлал, Арга хэмжээг нэгтгэж харуулна */
 const news=[...S79.get('news').map(n=>({...n,cat:'Мэдээ'})),...S79.get('announcements').map(n=>({...n,cat:'Зарлал'})),...evs.map(n=>({...n,cat:'Арга хэмжээ'}))]
-  .sort((a,b)=>a.date<b.date?1:-1).map(n=>({...n,date:fmtD(n.date),title:esc(n.title),text:esc(n.text),ico:esc(n.ico||''),bg:esc(n.bg||'#E6F0FA'),im:esc(S79.img(n.img))}));
+  .sort((a,b)=>a.date<b.date?1:-1).map(n=>({...n,date:fmtD(n.date),title:esc(n.title),text:esc(n.text),ico:esc(n.ico||''),bg:esc(n.bg||'#E6F0FA'),im:esc(S79.img(n.img)),vid:esc(S79.img(n.video||'')),gal:String(n.gallery||'').split('\n').map(x=>x.trim()).filter(Boolean).map(g=>esc(S79.img(g))).filter(Boolean)}));
 let newsCat='Бүгд';
 function renderNews(){
   const cats=['Бүгд',...new Set(news.map(n=>n.cat))];
   $('#newsTabs').innerHTML=cats.map(c=>`<button class="tab ${c===newsCat?'on':''}" data-c="${c}">${c}</button>`).join('');
   $$('#newsTabs .tab').forEach(b=>b.onclick=()=>{newsCat=b.dataset.c;renderNews()});
   const list=news.filter(n=>newsCat==='Бүгд'||n.cat===newsCat);
-  $('#newsGrid').innerHTML=list.map((n,i)=>`<article class="card"><div class="news-img" style="background:${n.bg} center/cover;${n.im?`background-image:url('${n.im}')`:''}">${n.im?'':n.ico}</div>
+  $('#newsGrid').innerHTML=list.map((n,i)=>`<article class="card"><div class="news-img" style="background:${n.bg} center/cover;${n.im?`background-image:url('${n.im}')`:''}">${n.im?'':n.ico}${n.vid?'<span class="play">▶</span>':''}</div>
    <div class="news-body"><div class="meta"><span class="chip ${n.cat==='Зарлал'?'red':n.cat==='Арга хэмжээ'?'green':''}">${n.cat}</span><span>📅 ${n.date}</span></div>
    <h3>${n.title}</h3><p>${n.text.slice(0,90)}…</p><a href="#" class="more" data-n="${news.indexOf(n)}">Дэлгэрэнгүй →</a></div></article>`).join('');
   $$('#newsGrid [data-n]').forEach(a=>a.onclick=e=>{e.preventDefault();const n=news[a.dataset.n];
-    $('#detailBody').innerHTML=`<div class="popup-hero" style="background:${n.bg} center/cover;color:inherit;${n.im?`background-image:url('${n.im}');min-height:200px`:''}">${n.im?'':n.ico}</div><span class="chip">${n.cat}</span> <small style="color:var(--muted)">📅 ${n.date}</small><h3 style="margin-top:10px">${n.title}</h3><p>${n.text}</p>`;openM('#detailModal')});
+    $('#detailBody').innerHTML=`${n.vid?`<video src="${n.vid}" ${n.im?`poster="${n.im}"`:''} controls playsinline preload="metadata" style="width:100%;max-height:70vh;background:#000;border-radius:12px;margin-bottom:14px"></video>`:n.im?`<img src="${n.im}" alt="" style="width:100%;border-radius:12px;margin-bottom:14px">`:`<div class="popup-hero" style="background:${n.bg};color:inherit">${n.ico}</div>`}<span class="chip">${n.cat}</span> <small style="color:var(--muted)">📅 ${n.date}</small><h3 style="margin-top:10px">${n.title}</h3><p style="white-space:pre-line">${n.text}</p>${n.gal.length?`<h4 style="margin:18px 0 8px;color:var(--navy)">📷 Зургийн цомог</h4><div class="c-gal">${n.gal.map(g=>`<a href="${g}" target="_blank" rel="noopener" style="background-image:url('${g}')" aria-label="Зураг томоор харах"></a>`).join('')}</div>`:''}`;openM('#detailModal')});
 }
 renderNews();
 
 /* CLUBS */
-const clubs=S79.get('clubs').map(c=>({...c,name:esc(c.name),cat:esc(c.cat),t:esc(c.t),grade:esc(c.grade),day:esc(c.day),d:esc(c.d),ico:esc(c.ico),bg:esc(c.bg),max:+c.max||0,cur:+c.cur||0}));
+const clubs=S79.get('clubs').map(c=>({...c,name:esc(c.name),cat:esc(c.cat),t:esc(c.t||''),grade:esc(c.grade||''),day:esc(c.day||''),d:esc(c.d||''),ico:esc(c.ico||''),bg:esc(c.bg||'#E6F0FA'),
+  goal:esc(c.goal||''),acts:String(c.acts||'').split('\n').map(x=>x.trim()).filter(Boolean).map(esc),place:esc(c.place||''),phone:esc(c.phone||''),motto:esc(c.motto||''),email:esc(c.email||''),more:moreSecs(c.more),wins:String(c.wins||'').split('\n').map(x=>x.trim()).filter(Boolean).map(esc),gallery:String(c.gallery||'').split('\n').map(x=>x.trim()).filter(Boolean).map(g=>esc(S79.img(g))).filter(Boolean),im:esc(S79.img(c.img)),max:+c.max||0,cur:+c.cur||0}));
+// “# Гарчиг” мөрөөр эхэлсэн хэсэг бүрийг жагсаалт болгоно
+function moreSecs(v){const out=[];String(v||'').split('\n').map(x=>x.trim()).filter(Boolean).forEach(l=>{
+  if(l.startsWith('#'))out.push({h:esc(l.replace(/^#+\s*/,'')),items:[]});else{if(!out.length)out.push({h:'',items:[]});out[out.length-1].items.push(esc(l.replace(/^[*•\-✔️]+\s*/u,'')))}});return out}
+const gradeTxt=g=>/^[\d\s–\-,]+$/.test(g)?g+' анги':g; // “5–12” → “5–12 анги”, текстийг хэвээр
+const clubIco=(c,st='')=>c.im?`<div class="club-ico img" style="background-image:url('${c.im}');${st}"></div>`:`<div class="club-ico" style="background:${c.bg};${st}">${c.ico}</div>`;
+function openClub(c){curClub=c;$('#cmTitle').textContent=c.name+' — бүртгэл';
+  $('#cmSub').textContent=[c.t&&'Багш / дасгалжуулагч: '+c.t,c.grade&&'Хамрагдах: '+gradeTxt(c.grade)].filter(Boolean).join(' · ').replace(/&amp;/g,'&');openM('#clubModal')}
 let clubCat='Бүгд', curClub=null;
 function renderClubs(){
   const cats=['Бүгд',...new Set(clubs.map(c=>c.cat))];
@@ -556,38 +608,64 @@ function renderClubs(){
   $$('#clubTabs .tab').forEach(b=>b.onclick=()=>{clubCat=b.dataset.c;renderClubs()});
   const regs=S79.raw('s79_regs',[]);
   $('#clubGrid').innerHTML=clubs.filter(c=>clubCat==='Бүгд'||c.cat===clubCat).map(c=>{
-    const cur=c.cur+regs.filter(r=>r.club===c.name).length, full=cur>=c.max;
-    return `<div class="card club"><div class="club-ico" style="background:${c.bg}">${c.ico}</div>
-    <h3>${c.name}</h3><div class="t">👤 ${c.t} · ${c.grade} анги</div><p>${c.d}</p>
-    <div class="row"><span>🕒 ${c.day}</span><span>${Math.min(cur,c.max)}/${c.max}</span></div>
-    <div class="bar"><i style="width:${Math.min(100,cur/c.max*100)}%"></i></div>
-    ${full?'<button class="btn btn-outline" disabled style="opacity:.6;justify-content:center">Бүртгэл дүүрсэн</button>':`<button class="btn btn-primary" style="justify-content:center" data-club="${c.name}">Клубт бүртгүүлэх</button>`}</div>`}).join('');
-  $$('[data-club]').forEach(b=>b.onclick=()=>{curClub=clubs.find(c=>c.name===b.dataset.club);$('#cmTitle').textContent=curClub.name+' — бүртгэл';$('#cmSub').textContent=`Клубын багш / удирдагч: ${curClub.t} · Хамрах анги: ${curClub.grade}`;openM('#clubModal')});
+    const i=clubs.indexOf(c), cur=c.cur+regs.filter(r=>r.club===c.name).length;
+    const short=c.grade&&gradeTxt(c.grade).length<=14?' · '+gradeTxt(c.grade):'';
+    return `<div class="card club">${clubIco(c)}
+    <h3>${c.name}</h3>${c.t?`<div class="t">👤 ${c.t}${short}</div>`:''}<p>${c.d}</p>
+    ${c.day||c.place||c.max?`<div class="row"><span>${c.day?'🕒 '+c.day:c.place?'📍 '+c.place:''}</span>${c.max?`<span>${Math.min(cur,c.max)}/${c.max}</span>`:''}</div>`:''}
+    ${c.max?`<div class="bar"><i style="width:${Math.min(100,cur/c.max*100)}%"></i></div>`:''}
+    <div class="acts"><button class="btn btn-outline" data-cinfo="${i}">Дэлгэрэнгүй</button>
+    <button class="btn btn-primary" data-club="${i}">Бүртгүүлэх</button></div></div>`}).join('');
+  $$('[data-club]').forEach(b=>b.onclick=()=>openClub(clubs[b.dataset.club]));
+  $$('[data-cinfo]').forEach(b=>b.onclick=()=>{const c=clubs[b.dataset.cinfo],cur=c.cur+regs.filter(r=>r.club===c.name).length;
+    $('#detailBody').innerHTML=`<div class="c-detail">${clubIco(c,'width:72px;height:72px;font-size:36px')}<span class="chip">${c.cat}</span><h3 style="margin:10px 0 6px">${c.name}</h3><p style="margin:0">${c.d}</p>
+      ${c.goal?`<h4>🎯 Зорилго</h4><p style="margin:0">${c.goal}</p>`:''}
+      ${c.acts.length?`<h4>${c.ico||'📌'} Үйл ажиллагаа</h4><ul>${c.acts.map(a=>`<li>${a}</li>`).join('')}</ul>`:''}
+      ${c.more.map(m=>`${m.h?`<h4>${m.h}</h4>`:''}<ul>${m.items.map(a=>`<li>${a}</li>`).join('')}</ul>`).join('')}
+      ${c.wins.length?`<h4>🏆 Амжилт</h4><ul>${c.wins.map(a=>`<li>${a}</li>`).join('')}</ul>`:''}
+      ${c.gallery.length?`<h4>📷 Зургийн цомог</h4><div class="c-gal">${c.gallery.map(g=>`<a href="${g}" target="_blank" rel="noopener" style="background-image:url('${g}')" aria-label="Зураг томоор харах"></a>`).join('')}</div>`:''}
+      <dl>${c.grade?`<div><dt>👦👧 Хамрагдах</dt><dd>${gradeTxt(c.grade)}</dd></div>`:''}${c.t?`<div><dt>👤 Багш / дасгалжуулагч</dt><dd>${c.t}</dd></div>`:''}
+      ${c.day?`<div><dt>🕒 Хичээллэх цаг</dt><dd>${c.day}</dd></div>`:''}${c.place?`<div><dt>📍 Байршил</dt><dd>${c.place}</dd></div>`:''}
+      ${c.phone?`<div><dt>📞 Холбоо барих</dt><dd><a href="tel:${c.phone.replace(/[^\d+]/g,'')}" style="color:var(--blue)">${c.phone}</a></dd></div>`:''}
+      ${c.email?`<div><dt>✉️ И-мэйл</dt><dd><a href="mailto:${c.email}" style="color:var(--blue)">${c.email}</a></dd></div>`:''}
+      ${c.max?`<div><dt>Суудал</dt><dd>${Math.min(cur,c.max)}/${c.max}</dd></div>`:''}</dl>
+      ${c.motto?`<p style="margin:16px 0 0;text-align:center;font-weight:800;color:var(--red);font-size:17px">🔥 ${c.motto}</p>`:''}
+      <button class="btn btn-red" id="cdReg" style="width:100%;justify-content:center;margin-top:16px">Клубт бүртгүүлэх</button></div>`;
+    openM('#detailModal');$('#cdReg').onclick=()=>{closeAll();openClub(c)}});
 }
 renderClubs();
 $('#clubForm').onsubmit=e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));send('s79_regs',{...d,club:curClub.name},f,()=>{f.reset();closeAll();renderClubs();toast('Амжилттай бүртгэгдлээ! 🎉 Таны клубт элсэх хүсэлтийг хүлээн авлаа.')})};
 
 /* TEACHERS */
-const teachers=S79.get('teachers').map(t=>({n:esc(t.n),r:esc(t.r),s:esc(t.s),e:+t.e||0,o:+t.o||0,rank:esc(t.rank||''),homeroom:esc(t.homeroom||''),classes:esc(t.classes||''),quote:esc(t.quote||''),photo:esc(S79.img(t.photo))}));
+const deptGuess=r=>/^Бага анги/.test(r)?'Бага анги':/^Монгол хэл/.test(r)?'Монгол хэл, уран зохиол':/хэлний багш/.test(r)?'Гадаад хэл':/^(Түүх|Газарзүй)/.test(r)?'Түүх, газарзүй':/^Дизайн технологи/.test(r)?'Дизайн технологи':/^(Хөгжим|Дүрслэх)/.test(r)?'Урлаг':/^(Математик|Физик|Мэдээллийн технологи)/.test(r)?'Математик, физик, МТ':'Бусад';
+const teachers=S79.get('teachers').map(t=>({dept:esc(t.dept||deptGuess(t.r||'')),n:esc(t.n),r:esc(t.r),s:esc(t.s),e:+t.e||0,o:+t.o||0,rank:esc(t.rank||''),homeroom:esc(t.homeroom||''),classes:esc(t.classes||''),quote:esc(t.quote||''),photo:esc(S79.img(t.photo))}));
 const colors=['#0057A8','#1976B8','#D71920','#4C9A62','#003E75','#7C3AED','#D97706'];
-$('#tRole').innerHTML='<option value="">Албан тушаал: Бүгд</option>'+[...new Set(teachers.map(t=>t.r))].map(r=>`<option>${r}</option>`).join('');
+// Судлагдахуун: тогтсон дарааллаар, шинэ судлагдахуун гарвал араас нь
+const DEPT_ORDER=['Бага анги','Монгол хэл, уран зохиол','Математик, физик, МТ','Гадаад хэл','Түүх, газарзүй','Дизайн технологи','Урлаг'];
+const depts=[...new Set(teachers.map(t=>t.dept))].sort((a,b)=>{const i=DEPT_ORDER.indexOf(a),j=DEPT_ORDER.indexOf(b);return (i<0?99:i)-(j<0?99:j)||a.localeCompare(b,'mn')});
+let tDept='Бүгд';
+function renderDeptTabs(){$('#tDept').innerHTML=['Бүгд',...depts].map(d=>`<button class="tab ${d===tDept?'on':''}" data-d="${d}">${d} <small>${d==='Бүгд'?teachers.length:teachers.filter(t=>t.dept===d).length}</small></button>`).join('');
+  $$('#tDept .tab').forEach(b=>b.onclick=()=>{tDept=b.dataset.d;renderDeptTabs();renderTeachers()})}
+renderDeptTabs();
+const tCard=t=>`<div class="card teacher" data-t="${teachers.indexOf(t)}" tabindex="0">${t.photo?`<div class="avatar photo" style="background-image:url('${t.photo}')" role="img" aria-label="${t.n}"></div>`:`<div class="avatar" style="background:${colors[t.o%colors.length]}">${(t.n.split('.').pop()||t.n).trim().charAt(0)}</div>`}
+    <h4>${t.n}</h4><div class="role">${t.r}</div><div class="chip">${t.s}</div>${t.e?`<div class="exp" style="margin-top:10px">Ажлын туршлага: ${t.e} жил</div>`:''}${t.rank?`<div class="rank">${t.rank}</div>`:''}</div>`;
 function renderTeachers(){
-  const q=$('#tq').value.trim().toLowerCase(), r=$('#tRole').value, s=$('#tSort').value;
-  let l=teachers.filter(t=>(!q||t.n.toLowerCase().includes(q)||t.s.toLowerCase().includes(q))&&(!r||t.r===r));
+  const q=$('#tq').value.trim().toLowerCase(), s=$('#tSort').value;
+  let l=teachers.filter(t=>(!q||(t.n+' '+t.s+' '+t.r+' '+t.homeroom).toLowerCase().includes(q))&&(tDept==='Бүгд'||t.dept===tDept));
   l.sort(s==='name'?(a,b)=>a.n.localeCompare(b.n,'mn'):s==='exp'?(a,b)=>b.e-a.e:(a,b)=>a.o-b.o);
-  $('#teacherGrid').innerHTML=l.length?l.map(t=>`<div class="card teacher" data-t="${teachers.indexOf(t)}" tabindex="0">${t.photo?`<div class="avatar photo" style="background-image:url('${t.photo}')" role="img" aria-label="${t.n}"></div>`:`<div class="avatar" style="background:${colors[t.o%colors.length]}">${(t.n.split('.').pop()||t.n).trim().charAt(0)}</div>`}
-    <h4>${t.n}</h4><div class="role">${t.r}</div><div class="chip">${t.s}</div><div class="exp" style="margin-top:10px">Ажлын туршлага: ${t.e} жил</div>${t.rank?`<div class="rank">${t.rank}</div>`:''}</div>`).join('')
+  const groups=(tDept==='Бүгд'?depts:[tDept]).map(d=>[d,l.filter(t=>t.dept===d)]).filter(([,g])=>g.length);
+  $('#teacherGrid').innerHTML=l.length?groups.map(([d,g])=>`<div class="t-group">${tDept==='Бүгд'?`<h3>${d} <small>${g.length} багш</small></h3>`:''}<div class="grid-4">${g.map(tCard).join('')}</div></div>`).join('')
     :'<div class="empty">Тохирох багш олдсонгүй. Хайлт, шүүлтээ өөрчлөөд үзнэ үү.</div>';
   $$('#teacherGrid [data-t]').forEach(c=>c.onclick=c.onkeydown=e=>{if(e.type==='keydown'&&e.key!=='Enter')return;const t=teachers[c.dataset.t];
     $('#detailBody').innerHTML=`<div class="t-detail">${t.photo?`<img src="${t.photo}" alt="${t.n}">`:`<div class="avatar" style="background:${colors[t.o%colors.length]};margin:0">${(t.n.split('.').pop()||t.n).trim().charAt(0)}</div>`}
       <div><span class="chip">${t.r}</span><h3 style="margin:10px 0 0">${t.n}</h3><dl>
-      <div><dt>Боловсролын байгууллагад</dt><dd>${t.e} жил</dd></div>
+      ${t.e?`<div><dt>Боловсролын байгууллагад</dt><dd>${t.e} жил</dd></div>`:''}
       ${t.rank?`<div><dt>Мэргэжлийн зэрэг</dt><dd>${t.rank}</dd></div>`:''}
       ${t.homeroom?`<div><dt>Даасан анги</dt><dd>${t.homeroom}</dd></div>`:''}
       ${t.classes?`<div><dt>Хичээл заадаг анги</dt><dd>${t.classes}</dd></div>`:''}</dl>
       ${t.quote?`<blockquote>“${t.quote}”</blockquote>`:''}</div></div>`;openM('#detailModal')});
 }
-['#tq','#tRole','#tSort'].forEach(s=>$(s).addEventListener('input',renderTeachers));
+['#tq','#tSort'].forEach(s=>$(s).addEventListener('input',renderTeachers));
 renderTeachers();
 
 /* MARKET */
@@ -624,6 +702,8 @@ if(vids.length){$('#videos').hidden=false;$('#videoGrid').innerHTML=vids.map(v=>
 function footList(sel,items,prepend){const ul=$(sel);ul.insertAdjacentHTML(prepend?'afterbegin':'beforeend',items.map((p,i)=>`<li><a href="#" data-pg="${i}">${esc(p.title)}</a></li>`).join(''));
   ul.querySelectorAll('[data-pg]').forEach(a=>a.onclick=e=>{e.preventDefault();const p=items[+a.dataset.pg];$('#detailBody').innerHTML=`<h3>${esc(p.title)}</h3><p style="white-space:pre-line">${esc(p.text)}</p>`;openM('#detailModal')})}
 footList('#footPages',S79.get('pages'));
+const histPage=S79.get('pages').find(p=>p.title==='Сургуулийн түүх');
+if(histPage)$('#historyLink').onclick=e=>{e.preventDefault();$('#detailBody').innerHTML=`<h3>${esc(histPage.title)}</h3><p style="white-space:pre-line">${esc(histPage.text)}</p>`;openM('#detailModal')};else $('#historyLink').hidden=true;
 footList('#footCourses',S79.get('courses'),true);
 
 
@@ -644,8 +724,8 @@ try{if(pop.on&&!sessionStorage.getItem('s79_pop')){setTimeout(()=>openM('#popup'
 /* AI assistant (rule-based demo) */
 const kb=[
  [/элсэлт|элсэх|бүртгүүл.*сургууль/,'Элсэлтийн мэдээлэл: 1-р ангийн элсэлт 5–6-р сард цахимаар явагдана. Дэлгэрэнгүйг 7000-0079 утсаар лавлана уу.'],
- [/клуб|дугуйлан/,()=>'Манай клубүүд:\n'+clubs.map(c=>`• ${c.ico} ${c.name} (${c.day})`).join('\n')+'\n\n“Клуб” хэсгээс онлайн бүртгүүлээрэй!'],
- [/багш/,'Манай сургуульд 96 багш, ажилтан ажилладаг. “Багш нар” хэсгээс нэр, хичээлээр нь хайж болно.'],
+ [/клуб|дугуйлан/,()=>'Манай клубүүд:\n'+clubs.map(c=>`• ${c.ico} ${c.name}${c.day?` (${c.day})`:''}`.replace(/&amp;/g,'&')).join('\n')+'\n\n“Клуб” хэсгээс онлайн бүртгүүлээрэй!'],
+ [/багш/,()=>`Манай сургуульд ${home.staff} багш, ажилтан ажилладаг. “Багш нар” хэсгээс судлагдахуун, нэрээр нь хайж болно.`],
  [/цаг|хуваарь|ээлж/,'I ээлж 07:45, II ээлж 13:15 цагт эхэлнэ. Захиргааны ажлын цаг: Даваа–Баасан 08:00–18:00.'],
  [/утас|холбоо|хаяг|имэйл|и-мэйл/,()=>`📞 ${cfg.phone}\n✉️ ${cfg.email}\n📍 ${cfg.address}`],
  [/зар|зарах|худалд/,'“Зар” хэсэгт сурах бичиг, хувцас, спорт хэрэгсэл зэргээ зарж, солилцох боломжтой. “Зар нэмэх” товчийг дарна уу.'],
