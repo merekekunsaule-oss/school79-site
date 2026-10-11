@@ -196,7 +196,7 @@ const F={
 };
 const POST=[F.title,F.date,F.ico,F.bg,F.img,F.video,F.text,F.gallery];
 const POST_COLS=[['_thumb',''],['title','Гарчиг'],['date','Огноо'],['text','Агуулга']];
-const AD_CATS=['Сурах бичиг','Хувцас','Спорт','Цахилгаан бараа','Ном','Бусад'];
+const AD_CATS=['Сурах бичиг','Хувцас','Спорт','Цахилгаан бараа','Ном','Сургалт, үйлчилгээ','Бусад'];
 
 /* sections — same order as the sidebar */
 const SECTIONS=[
@@ -234,7 +234,7 @@ const SECTIONS=[
  {k:'videos',t:'Видео',ic:'video',fields:[F.title,{k:'url',l:'YouTube холбоос',req:1,full:1,ph:'https://www.youtube.com/watch?v=...'},{k:'text',l:'Тайлбар',type:'textarea',full:1}],cols:[['title','Гарчиг'],['url','Холбоос']],hint:'Видео нэмэгдвэл сайтад “Видео” хэсэг автоматаар гарна.'},
  {k:'msgs',t:'Хүсэлт, зурвас',ic:'msg',raw:'s79_msgs',badge:1,
    cols:[['_name','Нэр'],['phone','Утас'],['email','Имэйл'],['topic','Сэдэв'],['msg','Мессеж'],['at','Огноо']]},
- {k:'ads',t:'Зарын булан',ic:'store',fields:[F.title,{k:'cat',l:'Ангилал',type:'select',opt:AD_CATS},{k:'price',l:'Үнэ (₮)',type:'number'},{k:'contact',l:'Холбоо барих',req:1},{k:'feat',l:'⭐ Онцлох зар',type:'check'},{k:'desc',l:'Тайлбар',type:'textarea',full:1}],
+ {k:'ads',t:'Зарын булан',ic:'store',fields:[F.title,{k:'cat',l:'Ангилал',type:'select',opt:AD_CATS},{k:'price',l:'Үнэ (₮)',type:'number'},{k:'contact',l:'Холбоо барих',req:1},{k:'feat',l:'⭐ Онцлох зар',type:'check'},{k:'deal',l:'Үнэ тохиролцоно',type:'check'},F.img,{k:'desc',l:'Тайлбар',type:'textarea',full:1}],
    cols:[['title','Гарчиг'],['cat','Ангилал'],['price','Үнэ'],['contact','Холбоо'],['feat','Онцлох'],['at','Огноо']],sort:'at'},
  {k:'reports',t:'Гомдол, илгээлт',ic:'flag',raw:'s79_reports',badge:1,cols:[['ad','Зар'],['adId','Төлөв'],['at','Огноо']]},
  {k:'users',t:'Хэрэглэгчид',ic:'user',admin:1,fields:[{k:'name',l:'Бүтэн нэр',req:1},{k:'user',l:'Нэвтрэх нэр',req:1},{k:'pass',l:'Нууц үг (6+ тэмдэгт)',type:'password',ph:'Шинэ хэрэглэгчид заавал; солих бол л бичнэ'},{k:'role',l:'Эрх',type:'select',opt:['admin','editor']}],
@@ -379,7 +379,7 @@ function cell(s,x,k){
     case 'date':return esc(S79.fmtDate(x.date));
     case 'at':return `<small>${esc(fmtTime(x.at))}</small>`;
     case 'feat':case 'featured':return x[k]?'<span class="pill">Тийм</span>':'';
-    case 'price':return +x.price?(+x.price).toLocaleString()+'₮':'Үнэгүй';
+    case 'price':return x.deal?'Тохиролцоно':+x.price?(+x.price).toLocaleString()+'₮':'Үнэгүй';
     case 'adId':return S79.get('ads').some(a=>a.id===x.adId)?'<span class="pill red">Зар идэвхтэй</span>':'<span class="pill ok">Зар устсан</span>';
     case 'pass':return '••••';
     default:return `<div class="clip">${esc(x[k])}</div>`;
