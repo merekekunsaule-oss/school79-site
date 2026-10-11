@@ -657,11 +657,11 @@ renderClubs();
 $('#clubForm').onsubmit=e=>{e.preventDefault();const f=e.target,d=Object.fromEntries(new FormData(f));send('s79_regs',{...d,club:curClub.name},f,()=>{f.reset();closeAll();renderClubs();toast('Амжилттай бүртгэгдлээ! 🎉 Таны клубт элсэх хүсэлтийг хүлээн авлаа.')})};
 
 /* TEACHERS */
-const deptGuess=r=>/^Бага анги/.test(r)?'Бага анги':/^Монгол хэл/.test(r)?'Монгол хэл, уран зохиол':/хэлний багш/.test(r)?'Гадаад хэл':/^(Түүх|Газарзүй)/.test(r)?'Түүх, газарзүй':/^Дизайн технологи/.test(r)?'Дизайн технологи':/^(Хөгжим|Дүрслэх)/.test(r)?'Урлаг':/^(Математик|Физик|Мэдээллийн технологи)/.test(r)?'Математик, физик, МТ':'Бусад';
+const deptGuess=r=>/^Бага анги/.test(r)?'Бага анги':/^Монгол хэл/.test(r)?'Монгол хэл, уран зохиол':/хэлний багш/.test(r)?'Гадаад хэл':/^(Түүх|Газарзүй)/.test(r)?'Түүх, газарзүй':/^Дизайн технологи/.test(r)?'Дизайн технологи':/^(Хөгжим|Дүрслэх)/.test(r)?'Урлаг':/^(Сэтгэл зүйч|Нийгмийн ажилтан)/.test(r)?'Сэтгэл зүй':/^(Математик|Физик|Мэдээллийн технологи)/.test(r)?'Математик, физик, МТ':'Бусад';
 const teachers=S79.get('teachers').map(t=>({dept:esc(t.dept||deptGuess(t.r||'')),n:esc(t.n),r:esc(t.r),s:esc(t.s),e:+t.e||0,o:+t.o||0,rank:esc(t.rank||''),homeroom:esc(t.homeroom||''),classes:esc(t.classes||''),quote:esc(t.quote||''),photo:esc(S79.img(t.photo))}));
 const colors=['#0057A8','#1976B8','#D71920','#4C9A62','#003E75','#7C3AED','#D97706'];
 // Судлагдахуун: тогтсон дарааллаар, шинэ судлагдахуун гарвал араас нь
-const DEPT_ORDER=['Бага анги','Монгол хэл, уран зохиол','Математик, физик, МТ','Гадаад хэл','Түүх, газарзүй','Дизайн технологи','Урлаг'];
+const DEPT_ORDER=['Бага анги','Монгол хэл, уран зохиол','Математик, физик, МТ','Гадаад хэл','Түүх, газарзүй','Дизайн технологи','Урлаг','Сэтгэл зүй'];
 const depts=[...new Set(teachers.map(t=>t.dept))].sort((a,b)=>{const i=DEPT_ORDER.indexOf(a),j=DEPT_ORDER.indexOf(b);return (i<0?99:i)-(j<0?99:j)||a.localeCompare(b,'mn')});
 let tDept='Бүгд';
 function renderDeptTabs(){$('#tDept').innerHTML=['Бүгд',...depts].map(d=>`<button class="tab ${d===tDept?'on':''}" data-d="${d}">${d} <small>${d==='Бүгд'?teachers.length:teachers.filter(t=>t.dept===d).length}</small></button>`).join('');
