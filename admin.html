@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>79 CMS — Админ</title>
+<link rel="icon" type="image/png" href="img/logo.png">
 <style>
 :root{--side:#1E3F78;--side-2:#24498A;--red:#D71920;--blue:#1A4FA0;--bg:#F1F5FA;--ink:#1F2937;--muted:#6B7280;--line:#E3EAF2;--ok:#16A34A}
 *{box-sizing:border-box}
@@ -119,7 +120,8 @@ h1{color:var(--blue);font-size:22px;margin:0 0 18px}
 
 <div class="login" id="login" hidden>
   <form id="loginForm">
-    <h2><span>79</span> CMS</h2>
+    <img src="img/logo.png" alt="" style="width:72px;height:72px;object-fit:contain;margin:0 auto -4px">
+    <h2 style="text-align:center"><span>79</span> CMS</h2>
     <div style="color:var(--muted);font-size:13px;margin-top:-8px">Админ самбарт нэвтрэх</div>
     <div><label>Нэвтрэх нэр</label><input name="user" autocomplete="username" required></div>
     <div><label>Нууц үг</label><input name="pass" type="password" autocomplete="current-password" required></div>
@@ -132,7 +134,7 @@ h1{color:var(--blue);font-size:22px;margin:0 0 18px}
 
 <div id="app" hidden>
   <aside class="side" id="side">
-    <div class="side-h"><b><span>79</span> CMS</b><button id="logout" title="Гарах"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button></div>
+    <div class="side-h"><b style="display:flex;align-items:center;gap:8px"><img src="img/logo.png" alt="" style="width:30px;height:30px;object-fit:contain"><span>79</span> CMS</b><button id="logout" title="Гарах"><svg class="i" viewBox="0 0 24 24" style="width:18px;height:18px"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg></button></div>
     <nav class="menu" id="menu"></nav>
   </aside>
   <main>
