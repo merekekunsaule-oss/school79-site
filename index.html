@@ -729,11 +729,11 @@ function openPage(p){$('#detailBody').innerHTML=`<h3>${esc(p.title)}</h3><div cl
 /* PRIDE — сургуулийн бахархал */
 const pride=S79.get('pride').slice().sort((a,b)=>(a.o||0)-(b.o||0));
 if(pride.length){$('#pride').hidden=false;
-  $('#prideGrid').innerHTML=pride.map((p,i)=>`<div class="card pride" data-pr="${i}" tabindex="0"><div class="ph" style="background-image:url('${esc(S79.img(p.photo))}')"></div>
+  $('#prideGrid').innerHTML=pride.map((p,i)=>`<div class="card pride" data-pr="${i}" tabindex="0"><div class="ph" style="background-image:url('${esc(S79.img(p.photo))}')${p.fit==='contain'?';background-size:contain;background-position:center;background-repeat:no-repeat;background-color:#1d1d24':''}"></div>
     <div class="pb"><span class="chip">${esc(p.sport||'')}</span><h4 style="margin-top:8px">${esc(p.n)}</h4><div class="tl">${esc(p.title||'')}</div><div class="gr">🎓 ${esc(p.grad||'')}</div></div></div>`).join('');
   $$('#prideGrid [data-pr]').forEach(c=>c.onclick=c.onkeydown=e=>{if(e.type==='keydown'&&e.key!=='Enter')return;const p=pride[+c.dataset.pr];
     const wins=String(p.wins||'').split('\n').map(x=>x.trim()).filter(Boolean),gal=String(p.gallery||'').split('\n').map(x=>x.trim()).filter(Boolean).map(g=>esc(S79.img(g)));
-    $('#detailBody').innerHTML=`<div class="t-detail"><img src="${esc(S79.img(p.photo))}" alt="${esc(p.n)}"><div><span class="chip">${esc(p.sport||'')}</span><h3 style="margin:10px 0 2px">${esc(p.n)}</h3>
+    $('#detailBody').innerHTML=`<div class="t-detail"><img src="${esc(S79.img(p.photo))}" alt="${esc(p.n)}"${p.fit==='contain'?' style="object-fit:contain;background:#1d1d24"':''}><div><span class="chip">${esc(p.sport||'')}</span><h3 style="margin:10px 0 2px">${esc(p.n)}</h3>
       <div style="color:var(--red);font-weight:700">${esc(p.title||'')}</div><p style="color:var(--muted);margin:8px 0 0">🎓 ${esc(p.grad||'')}</p></div></div>
       ${p.text?`<p style="margin-top:16px;color:#475569;line-height:1.7">${esc(p.text)}</p>`:''}
       ${wins.length?`<h4 class="pg-h">🏆 Гаргасан амжилт</h4><ul class="pg-ul">${wins.map(w=>w.startsWith('—')?`</ul><h4 class="pg-h">${esc(w.replace(/^—\s*|\s*—$/g,''))}</h4><ul class="pg-ul">`:`<li>${esc(w)}</li>`).join('')}</ul>`:''}
