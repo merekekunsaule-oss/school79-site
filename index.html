@@ -326,7 +326,7 @@ footer a:hover{color:#fff}
 <div class="stats"><div class="wrap"><div class="grid">
   <div class="stat"><b data-count="1850" data-h="students">0</b><span>сурагч</span></div>
   <div class="stat"><b data-count="96" data-h="staff">0</b><span>багш, ажилтан</span></div>
-  <div class="stat"><b data-count="24" data-h="clubs">0</b><span>клуб, дугуйлан</span></div>
+  <div class="stat"><b data-count="12" data-h="clubs">0</b><span>клуб, дугуйлан</span></div>
   <div class="stat"><b data-count="45" data-h="years">0</b><span>жилийн түүх</span></div>
 </div></div></div>
 
@@ -571,6 +571,8 @@ $$('[data-link]').forEach(a=>a.href=cfg[a.dataset.link]||'#');
 $$('[data-h]').forEach(el=>{const v=home[el.dataset.h];if(v==null||v==='')return;if(el.hasAttribute('data-count'))el.dataset.count=v;else el.textContent=v});
 $$('[data-p]').forEach(el=>{const v=pop[el.dataset.p];if(v)el.textContent=v});
 $('#popup [data-p="btn"]').setAttribute('href',pop.link||'#clubs');
+// Клуб, дугуйлангийн тоог “Клуб” хэсгийн бодит тооноос авна (0 бол гараар оруулсан тоо)
+{const nc=S79.get('clubs').length;if(nc)$('[data-h="clubs"]').dataset.count=nc}
 if(home.dirText){$('#director').hidden=false;$('#dirImg').src=S79.img(home.dirImg||'');$('#dirImg').alt=home.dirName||'';if(!home.dirImg)$('.dir-photo').hidden=true;
   $('#dirTitle').textContent=home.dirTitle||'Мэндчилгээ';$('#dirName').textContent=home.dirName||'';$('#dirRole').textContent=home.dirRole||'';
   $('#dirText').innerHTML=String(home.dirText).split('\n').map(l=>l.trim()).filter(Boolean).map(l=>`<p${l.length<70?' class="em"':''}>${esc(l)}</p>`).join('')}
