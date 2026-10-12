@@ -551,6 +551,7 @@ footer a:hover{color:#fff}
 </div>
 
 <script src="cms-data.js"></script>
+<script src="assistant.js"></script>
 <script>
 S79.ready.then(()=>{
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -769,24 +770,14 @@ $('#heroSearch').onsubmit=e=>{e.preventDefault();const q=$('#heroQ').value.trim(
 /* popup announcement — once per session */
 try{if(pop.on&&!sessionStorage.getItem('s79_pop')){setTimeout(()=>openM('#popup'),1200);sessionStorage.setItem('s79_pop',1)}}catch(e){}
 
-/* AI assistant (rule-based demo) */
-const kb=[
- [/элсэлт|элсэх|бүртгүүл.*сургууль/,()=>'Элсэлтийн талаар сургуулийн захиргаанаас лавлана уу'+(cfg.phone?` (📞 ${cfg.phone})`:'')+' эсвэл “Холбоо барих” хэсгээр хүсэлт илгээгээрэй.'],
- [/клуб|дугуйлан/,()=>'Манай клубүүд:\n'+clubs.map(c=>`• ${c.ico} ${c.name}${c.day?` (${c.day})`:''}`.replace(/&amp;/g,'&')).join('\n')+'\n\n“Клуб” хэсгээс онлайн бүртгүүлээрэй!'],
- [/багш/,()=>`Манай сургуульд ${home.staff} багш, ажилтан ажилладаг. “Багш нар” хэсгээс судлагдахуун, нэрээр нь хайж болно.`],
- [/цаг|хуваарь|ээлж/,()=>'Хичээлийн хуваарийг ангийн багшаасаа лавлана уу.'+(cfg.hours?` Захиргааны ажлын цаг: ${cfg.hours}.`:'')],
- [/утас|холбоо|хаяг|имэйл|и-мэйл/,()=>[cfg.phone&&`📞 ${cfg.phone}`,cfg.email&&`✉️ ${cfg.email}`,cfg.address&&`📍 ${cfg.address}`].filter(Boolean).join('\n')+'\n\n“Холбоо барих” хэсгээр хүсэлт илгээх боломжтой.'],
- [/зар|зарах|худалд/,'“Зар” хэсэгт сурах бичиг, хувцас, спорт хэрэгсэл зэргээ зарж, солилцох боломжтой. “Зар нэмэх” товчийг дарна уу.'],
- [/олимпиад/,'2026–2027 оны хичээлийн жилийн олимпиадын сургуулийн шат 2026 оны 10-р сарын 23–30-нд болно. Хичээл бүрийн хуваарийг “Мэдээ” хэсгийн “Зарлал”-аас харна уу. 🏅'],
- [/сайн уу|сайн байна|hello|hi/,'Сайн байна уу! Танд юугаар туслах вэ? 😊'],
- [/баярлалаа|thanks/,'Баярлалаа! Өөр асуулт байвал асуугаарай.'],
-];
+/* AI туслах — сайтад оруулсан мэдээллээс хариулна (assistant.js) */
+const chatHist=[];
 function bot(t){const m=document.createElement('div');m.className='msg '+(t[0]);m.textContent=t[1];$('#msgs').appendChild(m);$('#msgs').scrollTop=1e9}
-function answer(q){const l=q.toLowerCase();for(const [re,a] of kb)if(re.test(l))return typeof a==='function'?a():a;return 'Уучлаарай, энэ асуултад одоогоор хариулж чадсангүй. '+(cfg.phone?`${cfg.phone} утсаар холбогдох эсвэл `:'')+'“Холбоо барих” хэсгээр хүсэлт илгээнэ үү.'}
-function ask(q){bot(['me',q]);setTimeout(()=>bot(['bot',answer(q)]),450)}
-$('#fab').onclick=()=>{const c=$('#chat');c.hidden=!c.hidden;if(!c.hidden&&!$('#msgs').children.length)bot(['bot','Сайн уу? Би 79-р сургуулийн AI туслах байна. Элсэлт, клуб, багш нар, хичээлийн хуваарийн талаар асуугаарай.']);if(!c.hidden)$('#chatIn').focus()};
+function ask(q){bot(['me',q]);const w=document.createElement('div');w.className='msg bot';w.textContent='…';$('#msgs').appendChild(w);$('#msgs').scrollTop=1e9;
+  const t0=Date.now();S79Assistant.ask(q,chatHist.slice(-6)).then(a=>setTimeout(()=>{w.remove();bot(['bot',a]);chatHist.push({role:'user',content:q},{role:'assistant',content:a})},Math.max(0,350-(Date.now()-t0))))}
+$('#fab').onclick=()=>{const c=$('#chat');c.hidden=!c.hidden;if(!c.hidden&&!$('#msgs').children.length)bot(['bot','Сайн уу? Би 79-р сургуулийн AI туслах байна. Сайтад байгаа мэдээллээс хайж хариулна: багш нар, клуб, мэдээ, арга хэмжээ, олимпиад, холбоо барих гэх мэт.']);if(!c.hidden)$('#chatIn').focus()};
 $('#chatClose').onclick=()=>$('#chat').hidden=true;
-$('#quick').innerHTML=['Элсэлтийн мэдээлэл','Клубүүд','Хичээлийн цаг','Холбоо барих'].map(q=>`<button>${q}</button>`).join('');
+$('#quick').innerHTML=['Клубүүд','Олимпиадын хуваарь','Захирал хэн бэ?','Холбоо барих'].map(q=>`<button>${q}</button>`).join('');
 $$('#quick button').forEach(b=>b.onclick=()=>ask(b.textContent));
 $('#chatForm').onsubmit=e=>{e.preventDefault();const v=$('#chatIn').value.trim();if(!v)return;$('#chatIn').value='';ask(v)};
 });
