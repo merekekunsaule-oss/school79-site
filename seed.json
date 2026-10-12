@@ -1227,6 +1227,16 @@
    "dept": "Эмч, мэргэжилтнүүд",
    "id": "doctor-altanginj",
    "o": 90
+  },
+  {
+   "n": "Д.Дүүрийчимэд",
+   "r": "Хоол зүйч",
+   "s": "Хоол тэжээл",
+   "e": 0,
+   "photo": "img/teachers/nutritionist.jpg",
+   "dept": "Эмч, мэргэжилтнүүд",
+   "id": "nutritionist-duuriichimed",
+   "o": 91
   }
  ],
  "clubs": [
