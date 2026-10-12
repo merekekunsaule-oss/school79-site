@@ -31,7 +31,7 @@ const S79Assistant=(()=>{
         (c.phone?`\n📞 ${c.phone}`:'')+(c.d?`\n${cut(c.d,220)}`:'')+'\n\n“Клуб” хэсгээс онлайн бүртгүүлээрэй.',{c}));
     [['news','📰','Мэдээ'],['announcements','📣','Зарлал'],['events','📅','Арга хэмжээ']].forEach(([k,ic,lab])=>
       g(k).forEach(n=>add(k,`${n.title} ${lab}`,`${n.text} ${n.place||''}`,
-        qt=>`${ic} ${n.title}${n.date?` (${fmtDate(n.date)})`:''}\n${bestPart(n.text,qt||[])}`,{date:n.date||''})));
+        qt=>`${ic} ${n.title}${n.date?` (${fmtDate(n.date)})`:''}\n${bestPart(n.text,qt||[])}`,{date:n.date||'',o:n,lab})));
     g('pages').forEach(p=>{
       let head='';
       String(p.text||'').split('\n').map(clean).filter(Boolean).forEach(l=>{
@@ -42,9 +42,9 @@ const S79Assistant=(()=>{
     });
     g('pride').forEach(p=>add('pride',`${p.n} ${p.sport||''} бахархал төгсөгч`,`${p.title||''} ${p.grad||''} ${p.text||''} ${p.wins||''}`,
       ()=>`🏆 ${p.n} — ${p.title||''} (${p.sport||''}). ${p.grad||''}.`+(p.text?`\n${cut(p.text,200)}`:'')+
-        '\n'+String(p.wins||'').split('\n').filter(w=>w&&!w.startsWith('—')).slice(0,4).map(w=>'• '+w).join('\n')));
+        '\n'+String(p.wins||'').split('\n').filter(w=>w&&!w.startsWith('—')).slice(0,4).map(w=>'• '+w).join('\n'),{o:p}));
     g('ads').forEach(a=>add('ad',`${a.title} зар ${a.cat||''}`,a.desc,
-      ()=>`🛒 ${a.title} — ${a.deal?'үнэ тохиролцоно':+a.price?(+a.price).toLocaleString()+'₮':'үнэгүй'}.\n${cut(a.desc,200)}\n📞 ${a.contact||''}`));
+      ()=>`🛒 ${a.title} — ${a.deal?'үнэ тохиролцоно':+a.price?(+a.price).toLocaleString()+'₮':'үнэгүй'}.\n${cut(a.desc,200)}\n📞 ${a.contact||''}`,{o:a}));
     g('faq').forEach(f=>add('faq',f.q,f.a,()=>f.a));
     add('contact','холбоо барих утас утасны дугаар имэйл и-мэйл хаяг байршил ажлын цаг цагийн хуваарь','',
       ()=>['Сургуулийн холбоо барих мэдээлэл:',cfg.phone&&`📞 ${cfg.phone}`,cfg.email&&`✉️ ${cfg.email}`,cfg.address&&`📍 ${cfg.address}`,cfg.hours&&`🕘 Ажлын цаг: ${cfg.hours}`].filter(Boolean).join('\n'));
@@ -58,7 +58,7 @@ const S79Assistant=(()=>{
   }
   const has=(set,s)=>{if(set.has(s))return true;for(const x of set){const a=x.length<s.length?x:s,b=a===x?s:x;if(a.length>=3&&b.startsWith(a))return true}return false};
   // Ерөнхий үгс (бараг бүх бичлэгт байдаг) — бага жинтэй
-  const GEN=new Set(['багш','нар','анги','клуб','дугуй','сургалт','хичээ','мэдээ','сурагч','ажилт','тэмцээ'].map(stem));
+  const GEN=new Set(['багш','нар','анги','клуб','дугуй','сургалт','хичээ','мэдээ','сурагч','ажилт','ажилла','тэмцээ','жил','хэдэн'].map(stem));
   const isGen=t=>[...GEN].some(g=>t.startsWith(g)||g.startsWith(t));
   // Мэдээ/хуудасны текстээс асуултад хамгийн тохирох хэсгийг сонгох
   function bestPart(text,qt){const parts=String(text||'').split(/\n\s*\n/).map(x=>x.trim()).filter(Boolean);if(parts.length<2)return cut(text,450);
@@ -68,7 +68,7 @@ const S79Assistant=(()=>{
   function answer(q){
     docs=docs||build();
     const n=norm(q);
-    if(/^\s*(сайн уу|сайн байна уу|сайн байна|hello|hi|мэнд)\W*$/.test(n))return 'Сайн байна уу! 😊 Би сайтад байгаа мэдээллээс хайж хариулна. Багш, клуб, мэдээ, арга хэмжээ, холбоо барих зэргийг асуугаарай.';
+    if(/^\s*(сайн уу|сайн байна уу|сайн байна|hello|hi|мэнд)\W*$/.test(n))return 'Сайн байна уу! 😊 Юу асуух вэ?';
     if(/баярлалаа|thanks|thank you/.test(n))return 'Баярлалаа! Өөр асуулт байвал асуугаарай. 😊';
 
     // “5а ангийн багш хэн бэ?” — даасан анги
@@ -76,14 +76,23 @@ const S79Assistant=(()=>{
     if(cls&&/багш|анги/.test(n)){
       const key=cls[1]+cls[2];
       const hits=docs.filter(d=>d.kind==='teacher'&&norm(d.t.homeroom||'').replace(/\s/g,'')===key);
-      if(hits.length)return `${key} ангийн даасан багш:\n\n`+hits.map(d=>d.render()).join('\n\n');
+      if(hits.length)return `${key} ангийн багш — ${hits.map(d=>d.t.n).join(', ')}.`;
     }
-    if(/(хэд|хэдэн|тоо)/.test(n)&&/(сурагч|багш|ажилтан|клуб|дугуйлан|жил)/.test(n)&&!/анги/.test(n))return docs.find(d=>d.kind==='stats').render();
+    const statsLeft=toks(q).filter(t=>!STOP.has(t)&&!/^(хэд|тоо|сурагч|багш|ажилт|клуб|дугуйлан|жил|нийт|байд|байна|байгуул|он|түүх|ямар)/.test(t));
+    if(/(хэд|хэдэн|тоо)/.test(n)&&/(сурагч|багш|ажилтан|клуб|дугуйлан|жил)/.test(n)&&!/анги/.test(n)&&!statsLeft.length){const h=S79.get('home')||{},nc=(S79.get('clubs')||[]).length;
+      if(/сурагч/.test(n))return `${h.students} сурагчтай.`;
+      if(/багш|ажилтан/.test(n))return `${h.staff} багш, ажилтантай.`;
+      if(/клуб|дугуйлан/.test(n))return `${nc} клуб, дугуйлантай.`;
+      return `1974 онд байгуулагдсан, ${h.years} жилийн түүхтэй.`;}
     const qt=[...new Set(toks(q).filter(t=>!STOP.has(t)).map(stem))];
     // Олимпиадын хуваарь — зарлал доторх сургуулийн шатны жагсаалтыг шууд харуулна
     if(/олимпиад/.test(n)&&/хуваар|хэзээ|огноо|өдөр|шат/.test(n)){
       const ann=(S79.get('announcements')||[]).find(a=>/олимпиад/i.test(a.title)&&/шатны хуваарь/.test(a.text||''));
-      if(ann){const blk=String(ann.text).split(/\n\s*\n/).find(b=>/шатны хуваарь/.test(b));return `🏅 ${ann.title}\n\n${blk}\n\nДүүрэг, нийслэл, улсын шатны хуваарийг “Мэдээ” → “Зарлал” хэсгээс үзнэ үү.`}
+      if(ann){const blk=String(ann.text).split(/\n\s*\n/).find(b=>/шатны хуваарь/.test(b));
+        const qs=toks(q).filter(t=>!STOP.has(t)&&!/олимпиад|хуваар|хэзээ|огноо|өдөр|шат|бол/.test(t)).map(stem);
+        const ln=blk.split('\n').filter(l=>l.startsWith('•')&&qs.length&&qs.some(t=>has(new Set(toks(l).map(stem)),t)));
+        if(ln.length)return ln.map(l=>l.replace(/^•\s*/,'')+' (сургуулийн шат)').join('\n');
+        return blk.replace(/^🏫\s*Манай сургуулийн шатны хуваарь/,'Сургуулийн шат');}
     }
     if(!qt.length)return fallback();
     const spec=qt.filter(t=>!isGen(t));
@@ -92,26 +101,67 @@ const S79Assistant=(()=>{
       if(m===qt.length)s+=2; if(['contact','stats','director','about'].includes(d.kind))s+=0.5; return {d,s}}).filter(x=>x.s>0).sort((a,b)=>b.s-a.s||String(b.d.date||'').localeCompare(String(a.d.date||'')));
     if(!scored.length)return fallback();
 
+    // Асуултын төрлөөр тохирох бичлэгийн төрлийг давуу болгох
+    const pref=/үнэ|хэдээр|хэд вэ|зарна|авах/.test(n)?['ad']:/клуб|дугуйлан|секц/.test(n)?['club']:/хэзээ|огноо|болох/.test(n)?['events','announcements','news','club']:[];
+    if(pref.length)scored.forEach(x=>{if(pref.includes(x.d.kind))x.s+=1.5});
+    scored.sort((a,b)=>b.s-a.s||String(b.d.date||'').localeCompare(String(a.d.date||'')));
     const wantList=/багш нар|багшууд|бүх|жагсаа|ямар ямар|хэн хэн|клубууд|клубүүд|дугуйлангууд|мэдээнүүд/.test(n);
     const top=scored[0].s, best=scored.filter(x=>x.s>=top-1);
-    // Олон багш таарвал жагсаалтаар
+    if(/клуб|дугуйлан|секц/.test(n)&&(wantList||!spec.length||best.filter(x=>x.d.kind==='club').length>=3)){
+      const cl=docs.filter(d=>d.kind==='club');
+      return `${cl.length} клуб, дугуйлан байна:\n`+cl.map(d=>`• ${d.c.name.replace(/&amp;/g,'&')}`).join('\n');
+    }
+    // Олон багш таарвал жагсаалтаар (зөвхөн багш асуусан үед)
     let tch=best.filter(x=>x.d.kind==='teacher');
     if(tch.length>1&&spec.length){const rs=tch.filter(x=>{const ts=new Set(toks(x.d.t.r+' '+(x.d.t.s||'')).map(stem));return spec.every(t=>has(ts,t))});if(rs.length)tch=rs}
-    if(tch.length>=2&&(wantList||tch.length>=3||/багш/.test(n)&&tch.length===best.length)){
-      const L=tch.slice(0,15).map(x=>`• ${x.d.t.n} — ${x.d.t.r}${x.d.t.e?`, ${x.d.t.e} жил`:''}`);
-      return `Тохирох ${tch.length} багш олдлоо:\n${L.join('\n')}${tch.length>15?'\n…':''}\n\nДэлгэрэнгүйг “Багш нар” хэсгээс үзнэ үү.`;
-    }
-    if(/клуб|дугуйлан|секц/.test(n)&&(wantList||best.filter(x=>x.d.kind==='club').length>=3)){
-      const cl=docs.filter(d=>d.kind==='club');
-      return `Манай сургуульд ${cl.length} клуб, дугуйлан байна:\n`+cl.map(d=>`• ${d.c.ico||''} ${d.c.name}${d.c.day?` — ${d.c.day}`:''}`).join('\n')+'\n\n“Клуб” хэсгээс дэлгэрэнгүй үзэж, бүртгүүлээрэй.';
+    if(/багш/.test(n)&&!/клуб|дугуйлан|секц/.test(n)&&tch.length>=2&&(wantList||tch.length>=3||tch.length===best.length)){
+      return `${tch.length} багш: ${tch.slice(0,20).map(x=>x.d.t.n).join(', ')}${tch.length>20?'…':''}.`;
     }
     const first=scored[0].d;
-    const more=scored.slice(1).map(x=>x.d).filter(d=>d!==first&&d.kind!=='page').slice(0,2);
-    return first.render(qt)+(more.length&&scored[1].s>=top-1?'\n\nХолбоотой: '+more.map(d=>cut(d.title.split(' ').slice(0,6).join(' '),40)).join('; '):'');
+    return brief(first,n);
+  }
+  // Асуултын төрлийг тодорхойлж, зөвхөн асуусан зүйлийг товч хариулна
+  const first1=t=>{t=clean(t);const m=t.match(/^.*?[.!?](?=\s|$)/);return cut(m?m[0]:t,200)};
+  const price=a=>a.deal?'үнэ тохиролцоно':+a.price?(+a.price).toLocaleString()+'₮':'үнэгүй';
+  function brief(d,n){
+    const I={when:/хэзээ|хэдэн цаг|цагт|аль өдөр|өдөр|гараг|огноо|хэдний/.test(n),where:/хаана|байршил|хаяг|аль байр|хаана байдаг/.test(n),
+      phone:/утас|дугаар/.test(n),who:/хэн|удирдагч|дасгалжуулагч|багш нь/.test(n),
+      years:/хэдэн жил|туршлага|хэдэн жилийн/.test(n),price:/үнэ|хэдээр|хэдэн төгрөг/.test(n),grade:/аль анги|хэддүгээр анги|хэдэн анги|хамрагд|нас/.test(n),
+      cls:/заадаг|ямар анги|аль ангид/.test(n)};
+    switch(d.kind){
+      case 'club':{const c=d.c,N=c.name;
+        if(I.when)return c.day?`${N} — ${c.day}.`:`${N} — хичээллэх цаг сайтад алга.`+(c.phone?` 📞 ${c.phone}`:'');
+        if(I.where)return c.place?`${N} — ${c.place}.`:`${N} — байршил сайтад алга.`;
+        if(I.phone)return c.phone?`${N}: 📞 ${c.phone}`:`${N} — утас сайтад алга.`;
+        if(I.who)return c.t?`${N} — удирдагч: ${c.t}.`:`${N} — удирдагч сайтад алга.`;
+        if(I.grade)return c.grade?`${N} — ${/^[\d\s–-]+$/.test(c.grade)?c.grade+'-р анги':c.grade}.`:`${N} — хамрагдах анги сайтад алга.`;
+        return `${N}`+(c.t?`, удирдагч ${c.t}`:'')+(c.day?`. 🕒 ${c.day}`:'')+(c.place?`. 📍 ${c.place}`:'')+'.';}
+      case 'teacher':{const t=d.t;
+        if(I.years)return t.e?`${t.n} — ${t.e} жил ажиллаж байна.`:`${t.n}-ийн ажилласан жил сайтад алга.`;
+        if(I.cls)return t.classes?`${t.n} заадаг анги: ${t.classes}.`:`${t.n}-ийн заадаг анги сайтад алга.`;
+        return `${t.n} — ${t.r}`+(t.e?`, ${t.e} жил`:'')+(t.rank?`, ${t.rank.toLowerCase()}`:'')+(t.homeroom?`, ${t.homeroom} ангийн даасан багш`:'')+'.';}
+      case 'news':case 'announcements':case 'events':{const o=d.o;
+        if(I.when)return `${o.title} — ${fmtDate(o.date)}${o.place?`, ${o.place}`:''}.`;
+        if(I.where&&o.place)return `${o.title} — ${o.place}.`;
+        return `${o.title} (${fmtDate(o.date)}). ${first1(o.text)}`;}
+      case 'pride':{const p=d.o;return `${p.n} — ${p.title||''} (${p.sport||''}), ${p.grad||''}.`;}
+      case 'ad':{const a=d.o;if(I.phone)return `${a.title}: 📞 ${a.contact}`;return `${a.title} — ${price(a)}. 📞 ${a.contact}`;}
+      case 'contact':{const c=S79.get('settings')||{};
+        if(I.phone)return `📞 ${c.phone||'—'}`+(c.email&&/имэйл|и-мэйл|мэйл/.test(n)?`, ✉️ ${c.email}`:'');
+        if(/имэйл|и-мэйл|мэйл/.test(n))return `✉️ ${c.email||'—'}`;
+        if(I.where)return `📍 ${c.address||'—'}`;
+        if(I.when)return `🕘 Ажлын цаг: ${c.hours||'—'}`;
+        return d.render();}
+      case 'director':{const h=S79.get('home')||{};return `Захирал: ${h.dirName}.`;}
+      case 'about':return /он|байгуулагд|хэзээ/.test(n)?'79-р сургууль 1974 онд байгуулагдсан.':first1(d.body);
+      case 'page':return first1(d.body);
+      case 'faq':return d.render();
+    }
+    return d.render();
   }
   function fallback(){
     const cfg=S79.get('settings')||{};
-    return 'Уучлаарай, энэ асуултын хариулт сайтад оруулсан мэдээлэлд олдсонгүй.'+(cfg.phone?` 📞 ${cfg.phone} утсаар`:'')+' “Холбоо барих” хэсгээр хүсэлт илгээж лавлана уу.';
+    return 'Энэ талаар мэдээлэл алга.'+(cfg.phone?` 📞 ${cfg.phone}-аас лавлана уу.`:'');
   }
 
   // Сервер дээрх Claude (байгаа бол)
