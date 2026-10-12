@@ -201,6 +201,18 @@
    "o": 2
   },
   {
+   "n": "Ц.Тунгалагтуяа",
+   "r": "Нийгмийн ажилтан",
+   "s": "Нийгмийн ажил",
+   "e": 28,
+   "rank": "Тэргүүлэх зэрэгтэй · Магистр",
+   "note": "Боловсролын байгууллагад 28 жил, үүнээс манай сургуульд 16 жил нийгмийн ажилтнаар ажиллаж байна.",
+   "photo": "img/teachers/social-tungalagtuya.jpg",
+   "dept": "Удирдлага",
+   "id": "social-tungalagtuya",
+   "o": 3
+  },
+  {
    "n": "Х.Ган-Очир",
    "r": "Нийгмийн ажилтан",
    "s": "Нийгмийн ажил",
@@ -209,7 +221,7 @@
    "photo": "img/teachers/social-ganochir.jpg",
    "dept": "Удирдлага",
    "id": "social-ganochir",
-   "o": 3
+   "o": 4
   },
   {
    "n": "Ж.Алтанцэцэг",
@@ -220,7 +232,7 @@
    "classes": "9а, 9б, 9в, 9д, 9е, 7а, 7б, 7г, 7е",
    "quote": "Мэдлэг бол ирээдүйн түлхүүр юм.",
    "photo": "img/teachers/altantsetseg.jpg",
-   "o": 4,
+   "o": 5,
    "id": "se",
    "dept": "Гадаад хэл"
   },
@@ -233,7 +245,7 @@
    "classes": "5а, б, г, 8б, в, д, е, 7б, в, г, д, е",
    "quote": "Хэл бол хүмүүстэй холбогдох гүүр юм.",
    "photo": "img/teachers/tulgabaatar.jpg",
-   "o": 5,
+   "o": 6,
    "id": "sf",
    "dept": "Гадаад хэл"
   },
@@ -246,7 +258,7 @@
    "classes": "7а, 7в, 7е, 9а, б, в, г, д, е",
    "quote": "Хэл бол хүмүүсийг холбодог гүүр юм.",
    "photo": "img/teachers/amarjargal.jpg",
-   "o": 6,
+   "o": 7,
    "id": "sg",
    "dept": "Гадаад хэл"
   },
@@ -260,7 +272,7 @@
    "classes": "10в, г, 11а, б, 12а, б, в",
    "quote": "Хэл бол хүмүүстэй холбогдох гүүр юм.",
    "photo": "img/teachers/erdenechuluun.jpg",
-   "o": 7,
+   "o": 8,
    "id": "sh",
    "dept": "Гадаад хэл"
   },
@@ -274,7 +286,7 @@
    "classes": "10а, б, в, г, 11в, 12в, 7а",
    "quote": "Хэл бол хүмүүсийг холбодог гүүр юм.",
    "photo": "img/teachers/tumentsetseg.jpg",
-   "o": 8,
+   "o": 9,
    "id": "si",
    "dept": "Гадаад хэл"
   },
@@ -287,7 +299,7 @@
    "classes": "11а, 11в, 10а, б, 5в, 6а, ё",
    "quote": "Хэл бол хүмүүстэй холбогдох гүүр юм.",
    "photo": "img/teachers/khishigjargal.jpg",
-   "o": 9,
+   "o": 10,
    "id": "sj",
    "dept": "Гадаад хэл"
   },
@@ -301,7 +313,7 @@
    "classes": "9а, б, в, г, д, е, 8а, г, 7а, в, е",
    "quote": "Хэл бол хүмүүстэй холбогдох гүүр юм.",
    "photo": "img/teachers/bayantungalag.jpg",
-   "o": 10,
+   "o": 11,
    "id": "sk",
    "dept": "Гадаад хэл"
   },
@@ -314,7 +326,7 @@
    "classes": "8а, б, г, д, е, 7б, г",
    "quote": "Хэл бол хүмүүстэй холбогдох гүүр юм.",
    "photo": "img/teachers/bolortsetseg.jpg",
-   "o": 11,
+   "o": 12,
    "id": "sl",
    "dept": "Гадаад хэл"
   },
@@ -328,7 +340,7 @@
    "classes": "5а, б, г, 8б, в, д, е, 7б, в, г, д",
    "quote": "Хэл бол хүмүүстэй холбогдох гүүр юм.",
    "photo": "img/teachers/ganchimeg.jpg",
-   "o": 12,
+   "o": 13,
    "id": "sm",
    "dept": "Гадаад хэл"
   },
@@ -341,7 +353,7 @@
    "classes": "8а, в, г, д, е, ё, 3а, 6б, в, г, д, е",
    "quote": "Хэл бол хүмүүстэй холбогдох гүүр юм.",
    "photo": "img/teachers/bilguuntugs.jpg",
-   "o": 13,
+   "o": 14,
    "id": "sn",
    "dept": "Гадаад хэл"
   },
@@ -353,7 +365,7 @@
    "classes": "7б, г, д, 6б, г, е, 5д, е, ё",
    "quote": "Хэл бол хүмүүстэй холбогдох гүүр юм.",
    "photo": "img/teachers/nyamkhuu.jpg",
-   "o": 14,
+   "o": 15,
    "id": "so",
    "dept": "Гадаад хэл"
   },
@@ -367,7 +379,7 @@
    "classes": "12а, б, 9а, б, в, д, е",
    "quote": "Англи хэл — Мөрөөдөлдөө хүрэх зам",
    "photo": "img/teachers/bolormaa.jpg",
-   "o": 15,
+   "o": 16,
    "id": "sp",
    "dept": "Гадаад хэл"
   },
@@ -381,7 +393,7 @@
    "classes": "4а, б, в, г, д, е, 6б, г, д, е, 7д",
    "quote": "Хэл бол хүмүүстэй холбогдох гүүр юм.",
    "photo": "img/teachers/bayarmaa.jpg",
-   "o": 16,
+   "o": 17,
    "id": "sq",
    "dept": "Гадаад хэл"
   },
@@ -395,7 +407,7 @@
    "classes": "6а, в, ё, 7в, е, 4а, б, в, г, д, е",
    "quote": "Хэл бол хүмүүсийг холбодог гүүр юм.",
    "photo": "img/teachers/buyankhishig.jpg",
-   "o": 17,
+   "o": 18,
    "id": "sr",
    "dept": "Гадаад хэл"
   },
@@ -408,7 +420,7 @@
    "classes": "3а, 3б, 3в, 3г, 3д, 3е, 5а, 5б, 5в, 5г, 7б",
    "quote": "Хэл бол Дэлхийтэй холбодог гүүр юм.",
    "photo": "img/teachers/tuyatsetseg.jpg",
-   "o": 18,
+   "o": 19,
    "id": "ss",
    "dept": "Гадаад хэл"
   },
@@ -419,7 +431,7 @@
    "e": 26,
    "rank": "Тэргүүлэх зэрэгтэй",
    "photo": "img/teachers/khandmaa.jpg",
-   "o": 19,
+   "o": 20,
    "id": "th1",
    "dept": "Түүх, газарзүй"
   },
@@ -430,7 +442,7 @@
    "e": 25,
    "rank": "Тэргүүлэх зэрэгтэй",
    "photo": "img/teachers/bolortsetseg-e.jpg",
-   "o": 20,
+   "o": 21,
    "id": "th2",
    "dept": "Түүх, газарзүй"
   },
@@ -441,7 +453,7 @@
    "e": 20,
    "rank": "Тэргүүлэх зэрэгтэй",
    "photo": "img/teachers/davaa-ulzii.jpg",
-   "o": 21,
+   "o": 22,
    "id": "th3",
    "dept": "Түүх, газарзүй"
   },
@@ -452,7 +464,7 @@
    "e": 7,
    "rank": "Заах аргач зэрэгтэй",
    "photo": "img/teachers/yesun-erdene.jpg",
-   "o": 22,
+   "o": 23,
    "id": "th4",
    "dept": "Түүх, газарзүй"
   },
@@ -462,7 +474,7 @@
    "s": "Түүх, Нийгэм судлал",
    "e": 5,
    "photo": "img/teachers/aigulsin.jpg",
-   "o": 23,
+   "o": 24,
    "id": "th5",
    "rank": "Арга зүйч",
    "dept": "Түүх, газарзүй"
@@ -473,7 +485,7 @@
    "s": "Түүх, Нийгэм судлал",
    "e": 4,
    "photo": "img/teachers/kunsaule-2.jpg",
-   "o": 24,
+   "o": 25,
    "id": "th6",
    "rank": "Арга зүйч",
    "dept": "Түүх, газарзүй"
@@ -484,7 +496,7 @@
    "s": "Түүх, Нийгэм судлал",
    "e": 2,
    "photo": "img/teachers/tsogbadrakh.jpg",
-   "o": 25,
+   "o": 26,
    "id": "th7",
    "dept": "Түүх, газарзүй"
   },
@@ -494,7 +506,7 @@
    "s": "Түүх, Нийгэм судлал",
    "e": 1,
    "photo": "img/teachers/aisaule.jpg",
-   "o": 26,
+   "o": 27,
    "id": "th8",
    "dept": "Түүх, газарзүй"
   },
@@ -506,7 +518,7 @@
    "rank": "Тэргүүлэх зэрэгтэй",
    "photo": "img/teachers/enkhjargal.jpg",
    "id": "design-enkhjargal",
-   "o": 27,
+   "o": 28,
    "dept": "Дизайн технологи"
   },
   {
@@ -517,7 +529,7 @@
    "rank": "Заах аргач зэрэгтэй",
    "photo": "img/teachers/enkhchimeg.jpg",
    "id": "design-enkhchimeg",
-   "o": 28,
+   "o": 29,
    "dept": "Дизайн технологи"
   },
   {
@@ -528,7 +540,7 @@
    "rank": "Заах аргач зэрэгтэй",
    "photo": "img/teachers/munkhdelger.jpg",
    "id": "design-munkhdelger",
-   "o": 29,
+   "o": 30,
    "dept": "Дизайн технологи"
   },
   {
@@ -538,7 +550,7 @@
    "e": 23,
    "photo": "img/teachers/urnukhsaikhan.jpg",
    "id": "design-urnukhsaikhan",
-   "o": 30,
+   "o": 31,
    "dept": "Дизайн технологи"
   },
   {
@@ -548,7 +560,7 @@
    "e": 12,
    "photo": "img/teachers/batjargal.jpg",
    "id": "design-batjargal",
-   "o": 31,
+   "o": 32,
    "dept": "Дизайн технологи"
   },
   {
@@ -559,7 +571,7 @@
    "rank": "Заах аргач зэрэгтэй",
    "photo": "img/teachers/erdenebaatar.jpg",
    "id": "design-erdenebaatar",
-   "o": 32,
+   "o": 33,
    "dept": "Дизайн технологи"
   },
   {
@@ -569,7 +581,7 @@
    "e": 12,
    "photo": "img/teachers/tumurbaatar.jpg",
    "id": "design-tumurbaatar",
-   "o": 33,
+   "o": 34,
    "dept": "Дизайн технологи"
   },
   {
@@ -580,7 +592,7 @@
    "homeroom": "1а",
    "photo": "img/teachers/primary-1a.jpg",
    "id": "primary-1a",
-   "o": 34,
+   "o": 35,
    "dept": "Бага анги"
   },
   {
@@ -591,7 +603,7 @@
    "homeroom": "1б",
    "photo": "img/teachers/primary-1b.jpg",
    "id": "primary-1b",
-   "o": 35,
+   "o": 36,
    "dept": "Бага анги"
   },
   {
@@ -602,7 +614,7 @@
    "homeroom": "1в",
    "photo": "img/teachers/primary-1v.jpg",
    "id": "primary-1v",
-   "o": 36,
+   "o": 37,
    "dept": "Бага анги"
   },
   {
@@ -613,7 +625,7 @@
    "homeroom": "1г",
    "photo": "img/teachers/primary-1g.jpg",
    "id": "primary-1g",
-   "o": 37,
+   "o": 38,
    "dept": "Бага анги"
   },
   {
@@ -624,7 +636,7 @@
    "homeroom": "1д",
    "photo": "img/teachers/primary-1d.jpg",
    "id": "primary-1d",
-   "o": 38,
+   "o": 39,
    "dept": "Бага анги"
   },
   {
@@ -635,7 +647,7 @@
    "homeroom": "1е",
    "photo": "img/teachers/primary-1e.jpg",
    "id": "primary-1e",
-   "o": 39,
+   "o": 40,
    "dept": "Бага анги"
   },
   {
@@ -646,7 +658,7 @@
    "homeroom": "2а",
    "photo": "img/teachers/primary-2a.jpg",
    "id": "primary-2a",
-   "o": 40,
+   "o": 41,
    "dept": "Бага анги"
   },
   {
@@ -657,7 +669,7 @@
    "homeroom": "2б",
    "photo": "img/teachers/primary-2b.jpg",
    "id": "primary-2b",
-   "o": 41,
+   "o": 42,
    "dept": "Бага анги"
   },
   {
@@ -668,7 +680,7 @@
    "homeroom": "2в",
    "photo": "img/teachers/primary-2v.jpg",
    "id": "primary-2v",
-   "o": 42,
+   "o": 43,
    "dept": "Бага анги"
   },
   {
@@ -679,7 +691,7 @@
    "homeroom": "2г",
    "photo": "img/teachers/primary-2g.jpg",
    "id": "primary-2g",
-   "o": 43,
+   "o": 44,
    "dept": "Бага анги"
   },
   {
@@ -690,7 +702,7 @@
    "homeroom": "2д",
    "photo": "img/teachers/primary-2d.jpg",
    "id": "primary-2d",
-   "o": 44,
+   "o": 45,
    "dept": "Бага анги"
   },
   {
@@ -701,7 +713,7 @@
    "homeroom": "2е",
    "photo": "img/teachers/primary-2e.jpg",
    "id": "primary-2e",
-   "o": 45,
+   "o": 46,
    "dept": "Бага анги"
   },
   {
@@ -712,7 +724,7 @@
    "homeroom": "3а",
    "photo": "img/teachers/primary-3a.jpg",
    "id": "primary-3a",
-   "o": 46,
+   "o": 47,
    "dept": "Бага анги"
   },
   {
@@ -723,7 +735,7 @@
    "homeroom": "3б",
    "photo": "img/teachers/primary-3b.jpg",
    "id": "primary-3b",
-   "o": 47,
+   "o": 48,
    "dept": "Бага анги"
   },
   {
@@ -734,7 +746,7 @@
    "homeroom": "3в",
    "photo": "img/teachers/primary-3v.jpg",
    "id": "primary-3v",
-   "o": 48,
+   "o": 49,
    "dept": "Бага анги"
   },
   {
@@ -745,7 +757,7 @@
    "homeroom": "3г",
    "photo": "img/teachers/primary-3g.jpg",
    "id": "primary-3g",
-   "o": 49,
+   "o": 50,
    "dept": "Бага анги"
   },
   {
@@ -756,7 +768,7 @@
    "homeroom": "3д",
    "photo": "img/teachers/primary-3d.jpg",
    "id": "primary-3d",
-   "o": 50,
+   "o": 51,
    "dept": "Бага анги"
   },
   {
@@ -767,7 +779,7 @@
    "homeroom": "3е",
    "photo": "img/teachers/primary-3e.jpg",
    "id": "primary-3e",
-   "o": 51,
+   "o": 52,
    "dept": "Бага анги"
   },
   {
@@ -778,7 +790,7 @@
    "homeroom": "4а",
    "photo": "img/teachers/primary-4a.jpg",
    "id": "primary-4a",
-   "o": 52,
+   "o": 53,
    "dept": "Бага анги"
   },
   {
@@ -789,7 +801,7 @@
    "homeroom": "4б",
    "photo": "img/teachers/primary-4b.jpg",
    "id": "primary-4b",
-   "o": 53,
+   "o": 54,
    "dept": "Бага анги"
   },
   {
@@ -800,7 +812,7 @@
    "homeroom": "4в",
    "photo": "img/teachers/primary-4v.jpg",
    "id": "primary-4v",
-   "o": 54,
+   "o": 55,
    "dept": "Бага анги"
   },
   {
@@ -811,7 +823,7 @@
    "homeroom": "4г",
    "photo": "img/teachers/primary-4g.jpg",
    "id": "primary-4g",
-   "o": 55,
+   "o": 56,
    "dept": "Бага анги"
   },
   {
@@ -822,7 +834,7 @@
    "homeroom": "4д",
    "photo": "img/teachers/primary-4d.jpg",
    "id": "primary-4d",
-   "o": 56,
+   "o": 57,
    "dept": "Бага анги"
   },
   {
@@ -833,7 +845,7 @@
    "homeroom": "4е",
    "photo": "img/teachers/primary-4e.jpg",
    "id": "primary-4e",
-   "o": 57,
+   "o": 58,
    "dept": "Бага анги"
   },
   {
@@ -844,7 +856,7 @@
    "homeroom": "5а",
    "photo": "img/teachers/primary-5a.jpg",
    "id": "primary-5a",
-   "o": 58,
+   "o": 59,
    "dept": "Бага анги"
   },
   {
@@ -855,7 +867,7 @@
    "homeroom": "5б",
    "photo": "img/teachers/primary-5b.jpg",
    "id": "primary-5b",
-   "o": 59,
+   "o": 60,
    "dept": "Бага анги"
   },
   {
@@ -866,7 +878,7 @@
    "homeroom": "5в",
    "photo": "img/teachers/primary-5v.jpg",
    "id": "primary-5v",
-   "o": 60,
+   "o": 61,
    "dept": "Бага анги"
   },
   {
@@ -877,7 +889,7 @@
    "homeroom": "5г",
    "photo": "img/teachers/primary-5g.jpg",
    "id": "primary-5g",
-   "o": 61,
+   "o": 62,
    "dept": "Бага анги"
   },
   {
@@ -888,7 +900,7 @@
    "homeroom": "5д",
    "photo": "img/teachers/primary-5d.jpg",
    "id": "primary-5d",
-   "o": 62,
+   "o": 63,
    "dept": "Бага анги"
   },
   {
@@ -899,7 +911,7 @@
    "homeroom": "5е",
    "photo": "img/teachers/primary-5e.jpg",
    "id": "primary-5e",
-   "o": 63,
+   "o": 64,
    "dept": "Бага анги"
   },
   {
@@ -912,7 +924,7 @@
    "classes": "11а, 11б, 12а, 12б",
    "photo": "img/teachers/mongol-ariunzaya.jpg",
    "id": "mongol-ariunzaya",
-   "o": 64,
+   "o": 65,
    "dept": "Монгол хэл, уран зохиол"
   },
   {
@@ -924,7 +936,7 @@
    "classes": "6б, 6д, 6ё, 10а",
    "photo": "img/teachers/mongol-batbayar.jpg",
    "id": "mongol-batbayar",
-   "o": 65,
+   "o": 66,
    "dept": "Монгол хэл, уран зохиол"
   },
   {
@@ -937,7 +949,7 @@
    "classes": "7а, 7в, 7е",
    "photo": "img/teachers/mongol-oyun-erdene.jpg",
    "id": "mongol-oyun-erdene",
-   "o": 66,
+   "o": 67,
    "dept": "Монгол хэл, уран зохиол"
   },
   {
@@ -950,7 +962,7 @@
    "classes": "8а, 8в, 7г, 6д",
    "photo": "img/teachers/mongol-davaatseren.jpg",
    "id": "mongol-davaatseren",
-   "o": 67,
+   "o": 68,
    "dept": "Монгол хэл, уран зохиол"
   },
   {
@@ -963,7 +975,7 @@
    "classes": "8д, 10б, 10г, 11б",
    "photo": "img/teachers/mongol-munkhgerel.jpg",
    "id": "mongol-munkhgerel",
-   "o": 68,
+   "o": 69,
    "dept": "Монгол хэл, уран зохиол"
   },
   {
@@ -976,7 +988,7 @@
    "classes": "9а, 9в, 9д, 8ё",
    "photo": "img/teachers/mongol-bulgan.jpg",
    "id": "mongol-bulgan",
-   "o": 69,
+   "o": 70,
    "dept": "Монгол хэл, уран зохиол"
   },
   {
@@ -988,7 +1000,7 @@
    "classes": "11а, 10а, 10в",
    "photo": "img/teachers/mongol-lkhagvagerel.jpg",
    "id": "mongol-lkhagvagerel",
-   "o": 70,
+   "o": 71,
    "dept": "Монгол хэл, уран зохиол"
   },
   {
@@ -1001,7 +1013,7 @@
    "classes": "8е, 9б, 9е",
    "photo": "img/teachers/mongol-tsolmon.jpg",
    "id": "mongol-tsolmon",
-   "o": 71,
+   "o": 72,
    "dept": "Монгол хэл, уран зохиол"
   },
   {
@@ -1012,7 +1024,7 @@
    "classes": "7б, 7г, 7д",
    "photo": "img/teachers/mongol-dulguunmurun.jpg",
    "id": "mongol-dulguunmurun",
-   "o": 72,
+   "o": 73,
    "dept": "Монгол хэл, уран зохиол"
   },
   {
@@ -1023,7 +1035,7 @@
    "photo": "img/teachers/music-buyan-undrakh.jpg",
    "dept": "Урлаг",
    "id": "music-buyan-undrakh",
-   "o": 73
+   "o": 74
   },
   {
    "n": "Б.Буянхишиг",
@@ -1035,7 +1047,7 @@
    "photo": "img/teachers/music-buyankhishig.jpg",
    "dept": "Урлаг",
    "id": "music-buyankhishig",
-   "o": 74
+   "o": 75
   },
   {
    "n": "П.Дөлгөөн",
@@ -1046,7 +1058,7 @@
    "photo": "img/teachers/music-dolgoon.jpg",
    "dept": "Урлаг",
    "id": "music-dolgoon",
-   "o": 75,
+   "o": 76,
    "rank": "Арга зүйч"
   },
   {
@@ -1059,7 +1071,7 @@
    "photo": "img/teachers/music-ariuntuya.jpg",
    "dept": "Урлаг",
    "id": "music-ariuntuya",
-   "o": 76
+   "o": 77
   },
   {
    "n": "Т.Дэлгэрнасан",
@@ -1071,7 +1083,7 @@
    "photo": "img/teachers/mathit-delgernasan.jpg",
    "dept": "Математик, физик, МТ",
    "id": "mathit-delgernasan",
-   "o": 77
+   "o": 78
   },
   {
    "n": "Д.Саранчимэг",
@@ -1083,7 +1095,7 @@
    "photo": "img/teachers/mathit-saranchimeg.jpg",
    "dept": "Математик, физик, МТ",
    "id": "mathit-saranchimeg",
-   "o": 78
+   "o": 79
   },
   {
    "n": "Т.Мөнгөнцэцэг",
@@ -1095,7 +1107,7 @@
    "photo": "img/teachers/mathit-mungunttsetseg.jpg",
    "dept": "Математик, физик, МТ",
    "id": "mathit-mungunttsetseg",
-   "o": 79
+   "o": 80
   },
   {
    "n": "Г.Оюун",
@@ -1106,7 +1118,7 @@
    "photo": "img/teachers/mathit-oyun.jpg",
    "dept": "Математик, физик, МТ",
    "id": "mathit-oyun",
-   "o": 80
+   "o": 81
   },
   {
    "n": "Э.Болортунгалаг",
@@ -1119,7 +1131,7 @@
    "photo": "img/teachers/mathit-bolortungalag.jpg",
    "dept": "Математик, физик, МТ",
    "id": "mathit-bolortungalag",
-   "o": 81
+   "o": 82
   },
   {
    "n": "Б.Гулжанар",
@@ -1132,7 +1144,7 @@
    "photo": "img/teachers/mathit-guljanar.jpg",
    "dept": "Математик, физик, МТ",
    "id": "mathit-guljanar",
-   "o": 82
+   "o": 83
   },
   {
    "n": "Б.Түвшинтөгс",
@@ -1145,7 +1157,7 @@
    "photo": "img/teachers/mathit-tuvshintugs.jpg",
    "dept": "Математик, физик, МТ",
    "id": "mathit-tuvshintugs",
-   "o": 83
+   "o": 84
   },
   {
    "n": "Ө.Өлзийчимэг",
@@ -1157,7 +1169,7 @@
    "photo": "img/teachers/mathit-ulziichimeg.jpg",
    "dept": "Математик, физик, МТ",
    "id": "mathit-ulziichimeg",
-   "o": 84,
+   "o": 85,
    "rank": "Арга зүйч"
   },
   {
@@ -1170,7 +1182,7 @@
    "photo": "img/teachers/mathit-munkhdulam.jpg",
    "dept": "Математик, физик, МТ",
    "id": "mathit-munkhdulam",
-   "o": 85
+   "o": 86
   },
   {
    "n": "Б.Бадамханд",
@@ -1181,7 +1193,7 @@
    "photo": "img/teachers/mathit-badamkhand.jpg",
    "dept": "Математик, физик, МТ",
    "id": "mathit-badamkhand",
-   "o": 86,
+   "o": 87,
    "rank": "Арга зүйч"
   },
   {
@@ -1193,7 +1205,7 @@
    "photo": "img/teachers/mathit-aldanysh.jpg",
    "dept": "Математик, физик, МТ",
    "id": "mathit-aldanysh",
-   "o": 87,
+   "o": 88,
    "rank": "Арга зүйч"
   },
   {
@@ -1204,7 +1216,7 @@
    "photo": "img/teachers/psych-enkhjargal.jpg",
    "dept": "Эмч, мэргэжилтнүүд",
    "id": "psych-enkhjargal",
-   "o": 88
+   "o": 89
   },
   {
    "n": "Н.Алтангинж",
@@ -1214,7 +1226,7 @@
    "photo": "img/teachers/doctor-altanginj.jpg",
    "dept": "Эмч, мэргэжилтнүүд",
    "id": "doctor-altanginj",
-   "o": 89
+   "o": 90
   }
  ],
  "clubs": [
