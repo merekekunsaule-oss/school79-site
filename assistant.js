@@ -49,7 +49,7 @@ const S79Assistant=(()=>{
     add('contact','холбоо барих утас утасны дугаар имэйл и-мэйл хаяг байршил ажлын цаг цагийн хуваарь','',
       ()=>['Сургуулийн холбоо барих мэдээлэл:',cfg.phone&&`📞 ${cfg.phone}`,cfg.email&&`✉️ ${cfg.email}`,cfg.address&&`📍 ${cfg.address}`,cfg.hours&&`🕘 Ажлын цаг: ${cfg.hours}`].filter(Boolean).join('\n'));
     add('stats','сурагч сурагчид тоо хэдэн багш ажилтан нийт жилийн түүх байгуулагдсан он клубын тоо','',
-      ()=>`📊 Манай сургууль: ${home.students||'—'} сурагч, ${home.staff||'—'} багш ажилтан, ${g('clubs').length} клуб дугуйлан. 1974 онд байгуулагдсан, ${home.years||''} жилийн түүхтэй.`);
+      ()=>`📊 Манай сургууль: ${home.students||'—'} сурагч, ${home.staff||'—'} багш ажилтан, ${home.groups||'—'} анги бүлэг, ${g('clubs').length} клуб дугуйлан. 1974 онд байгуулагдсан, ${home.years||''} жилийн түүхтэй.`);
     if(home.dirText)add('director',`захирал ${home.dirName||''} мэндчилгээ удирдлага`,home.dirText,
       ()=>`👩‍💼 Захирал: ${home.dirName}.\n${cut(home.dirText,300)}`);
     if(home.about)add('about','сургуулийн тухай танилцуулга түүх байгуулагдсан',home.about,()=>`🏫 ${home.about}`);
@@ -78,9 +78,10 @@ const S79Assistant=(()=>{
       const hits=docs.filter(d=>d.kind==='teacher'&&norm(d.t.homeroom||'').replace(/\s/g,'')===key);
       if(hits.length)return `${key} ангийн багш — ${hits.map(d=>d.t.n).join(', ')}.`;
     }
-    const statsLeft=toks(q).filter(t=>!STOP.has(t)&&!/^(хэд|тоо|сурагч|багш|ажилт|клуб|дугуйлан|жил|нийт|байд|байна|байгуул|он|түүх|ямар)/.test(t));
-    if(/(хэд|хэдэн|тоо)/.test(n)&&/(сурагч|багш|ажилтан|клуб|дугуйлан|жил)/.test(n)&&!/анги/.test(n)&&!statsLeft.length){const h=S79.get('home')||{},nc=(S79.get('clubs')||[]).length;
+    const statsLeft=toks(q).filter(t=>!STOP.has(t)&&!/^(хэд|тоо|сурагч|багш|ажилт|клуб|дугуйлан|жил|нийт|байд|байна|байгуул|он|түүх|ямар|анги|бүлэг)/.test(t));
+    if(/(хэд|хэдэн|тоо)/.test(n)&&/(сурагч|багш|ажилтан|клуб|дугуйлан|жил|бүлэг)/.test(n)&&(!/анги/.test(n)||/бүлэг/.test(n))&&!statsLeft.length){const h=S79.get('home')||{},nc=(S79.get('clubs')||[]).length;
       if(/сурагч/.test(n))return `${h.students} сурагчтай.`;
+      if(/бүлэг/.test(n))return `${h.groups} анги бүлэгтэй.`;
       if(/багш|ажилтан/.test(n))return `${h.staff} багш, ажилтантай.`;
       if(/клуб|дугуйлан/.test(n))return `${nc} клуб, дугуйлантай.`;
       return `1974 онд байгуулагдсан, ${h.years} жилийн түүхтэй.`;}
