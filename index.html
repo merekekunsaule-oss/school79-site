@@ -80,12 +80,12 @@ nav a:hover,nav a.active{background:var(--bg);color:var(--blue)}
 
 /* stats */
 .stats{margin-top:-40px;position:relative;z-index:2}
-.stats .grid{display:grid;grid-template-columns:repeat(5,1fr);background:#fff;border-radius:20px;box-shadow:0 12px 40px rgba(0,62,117,.12);overflow:hidden}
+.stats .grid{display:grid;grid-template-columns:repeat(6,1fr);background:#fff;border-radius:20px;box-shadow:0 12px 40px rgba(0,62,117,.12);overflow:hidden}
 .stat{padding:26px 20px;text-align:center;border-right:1px solid var(--line)}
 .stat:last-child{border-right:0}
 .stat b{display:block;font-size:34px;color:var(--blue);font-weight:900}
 .stat span{color:var(--muted);font-size:14px}
-@media(max-width:700px){.stats .grid{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--line)}.stat:nth-child(2n){border-right:0}.stat:last-child{grid-column:1/-1;border-bottom:0}}
+@media(max-width:700px){.stats .grid{grid-template-columns:repeat(2,1fr)}.stat{border-bottom:1px solid var(--line)}.stat:nth-child(2n){border-right:0}.stat:nth-last-child(-n+2){border-bottom:0}}
 
 /* sections */
 section{padding-block:84px}
@@ -325,7 +325,8 @@ footer a:hover{color:#fff}
 
 <div class="stats"><div class="wrap"><div class="grid">
   <div class="stat"><b data-count="2650" data-h="students">0</b><span>сурагч</span></div>
-  <div class="stat"><b data-count="140" data-h="staff">0</b><span>багш, ажилтан</span></div>
+  <div class="stat"><b data-count="96" data-h="teachersN">0</b><span>багш</span></div>
+  <div class="stat"><b data-count="44" data-h="workers">0</b><span>ажилтан</span></div>
   <div class="stat"><b data-count="67" data-h="groups">0</b><span>анги бүлэг</span></div>
   <div class="stat"><b data-count="12" data-h="clubs">0</b><span>клуб, дугуйлан</span></div>
   <div class="stat"><b data-count="45" data-h="years">0</b><span>жилийн түүх</span></div>
