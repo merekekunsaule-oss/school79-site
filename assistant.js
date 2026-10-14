@@ -4,7 +4,7 @@
 const S79Assistant=(()=>{
   const STOP=new Set(('вэ бэ юу юуг хэн хэнийг ямар ямархуу хаана хэзээ хэд хэдэн хэдэх уу үү юм байна байдаг байгаа '+
     'нь ба болон тухай талаар мэдээлэл мэдээллийг өгөөч өгнө хэлээч хэлнэ үү гэж гэдэг энэ тэр манай танай '+
-    'сургууль сургуулийн сургуульд 79 79-р дүгээр бол л ч гэх мэт вэ? надад би та бид асуух асуулт').split(' '));
+    'сургууль сургуулийн сургуульд 79 79-р дүгээр бол л ч гэх мэт вэ? надад би та бид асуух асуулт болох болно болдог болсон байх').split(' '));
   const norm=s=>String(s??'').toLowerCase().replace(/ё/g,'е');
   const toks=s=>norm(s).match(/[a-zа-яөү0-9]+/g)||[];
   // Монгол үгийн нөхцөлийг ойролцоогоор таслах: “математикийн” → “математик”
@@ -167,6 +167,12 @@ const S79Assistant=(()=>{
         if(I.cls)return t.classes?`${t.n} заадаг анги: ${t.classes}.`:`${t.n}-ийн заадаг анги сайтад алга.`;
         return `${t.n} — ${t.r}`+(t.e?`, ${t.e} жил`:'')+(t.rank?`, ${t.rank.toLowerCase()}`:'')+(t.homeroom?`, ${t.homeroom} ангийн даасан багш`:'')+'.';}
       case 'news':case 'announcements':case 'events':{const o=d.o;
+        // Гарчигт байхгүй үгээр асуусан бол текстээс хамгийн тохирох мөрийг сонгоно (ж: “сэдэв”, “шагнал”, “хаана илгээх”)
+        const tt=new Set(toks(o.title).map(stem)), want=toks(n).filter(t=>!STOP.has(t)).map(stem).filter(t=>!isGen(t)&&!has(tt,t));
+        let best='',bs=0;
+        if(want.length)String(o.text||'').split('\n').map(clean).filter(Boolean).forEach(l=>{const lt=toks(l).map(stem),ls=new Set(lt);
+          let sc=want.filter(t=>has(ls,t)).length; if(sc&&want.some(t=>lt.slice(0,2).some(x=>x.startsWith(t)||t.startsWith(x))))sc+=0.5; if(sc>bs){bs=sc;best=l}});
+        if(bs>=1.5||(bs>=1&&!I.when))return `${o.title}:\n${cut(best.replace(/^•\s*/,''),400)}`;
         if(I.when)return `${o.title} — ${fmtDate(o.date)}${o.place?`, ${o.place}`:''}.`;
         if(I.where&&o.place)return `${o.title} — ${o.place}.`;
         return `${o.title} (${fmtDate(o.date)}). ${first1(o.text)}`;}
