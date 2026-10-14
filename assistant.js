@@ -170,7 +170,72 @@ const S79Assistant=(()=>{
   // Сервер дээрх Claude (байгаа бол)
   let remote=null;
   const remoteOn=()=>remote??=fetch('/api/ask/status').then(r=>r.ok?r.json():{enabled:false}).then(j=>!!j.enabled).catch(()=>false);
+  /* ---------- Клуб сонгоход туслах (сонирхол, анги, хүйсэнд тулгуурлан санал болгоно) ---------- */
+  const INTERESTS=[
+    {k:'sport',l:'⚽ Спорт, хөдөлгөөн',re:/спорт|хөл бөмбөг|сагс|бөмбөг|гүйх|гүйлт|хөдөлгөө|тамир|барилд|бөх(?!ийн шинж)|football|basket/},
+    {k:'art',l:'🎨 Зураг, урлаг',re:/зураг|зурах|урлаг|бүтээл|гар урлал|бийр|уран бичлэг|art|draw/},
+    {k:'dance',l:'💃 Бүжиг, хөгжим',re:/бүжиг|хөгжим|дуу|тайз|хэмнэл|dance|music/},
+    {k:'speak',l:'🎤 Ярих, мэтгэлцэх',re:/ярих|илтгэ|мэтгэл|дебат|ном унших|унших|бичих|логик|debate/},
+    {k:'lead',l:'🤝 Манлайлал, нийгмийн ажил',re:/манлайл|удирд|нийгм|сайн дур|туслах|зохион байгуул|аян|leader/},
+    {k:'nature',l:'🌱 Байгаль, шинжлэх ухаан',re:/байгал|эко|ногоон|шинжлэх|биолог|хими|ургамал|амьтан|хог|nature/},
+    {k:'health',l:'🩺 Эрүүл мэнд, сэтгэл зүй',re:/эрүүл|сэтгэл зүй|сэтгэл|эмч|зөвлөх|стресс|health/},
+    {k:'media',l:'📰 Медиа, зураг авалт',re:/медиа|сэтгүүл|видео|зураг авах|гэрэл зураг|контент|мэдээ бэлтгэ|фото|camera|video/},
+    {k:'culture',l:'🏹 Монгол соёл, уламжлал',re:/монгол бичиг|уламжлал|соёл|үндэсн|монгол бөх|өв/}];
+  const TAGS={'club-football':['sport'],'club-magick-rock':['sport'],'club-uran-biir':['art','culture'],'club-lilo':['dance','art','culture'],
+    'club-souz':['lead'],'club-malala':['lead','speak'],'club-uhaalag-hotoch':['health','lead','nature'],'club-tsets-mergen':['speak','lead'],
+    'club-eco':['nature','lead'],'club-journalist':['media','speak'],'club-harandaa':['art'],'club-mongol-bukh':['sport','culture']};
+  const clubTags=c=>TAGS[c.id]||INTERESTS.filter(i=>i.re.test(norm(`${c.name} ${c.cat} ${c.d} ${c.acts||''}`))).map(i=>i.k);
+  function eligible(c,st){
+    const g=norm(c.grade||''), r=g.match(/(\d{1,2})\s*[–-]\s*(\d{1,2})/);
+    if(st.grade&&r&&(st.grade<+r[1]||st.grade>+r[2]))return false;
+    if(/охид/.test(g)&&st.sex==='boy')return false;
+    return true;
+  }
+  let quiz=null; // {grade, sex, ints:[]}
+  const wantsAdvice=n=>/(аль|ямар|ямар нэг)\s+(клуб|дугуйлан|секц)/.test(n)&&/(элс|орох|сонго|тохир|явах|сурах|хичээллэ)/.test(n)
+    ||/(клуб|дугуйлан).*(санал болго|зөвлө)|санал болго.*(клуб|дугуйлан)|(клуб|дугуйлан).*мэдэхгүй|мэдэхгүй.*(клуб|дугуйлан)|клуб сонго/.test(n);
+  function readFacts(n,st){
+    const g=n.match(/(\d{1,2})\s*(?:-р|-ийн|-н|дугаар|дүгээр|р)?\s*анги/)||n.match(/^\s*(\d{1,2})\s*$/);
+    if(g&&+g[1]>=1&&+g[1]<=12)st.grade=+g[1];
+    if(/охин|охид|эмэгтэй/.test(n))st.sex='girl'; else if(/хүү\b|хөвгүүн|эрэгтэй|^хүү/.test(n))st.sex='boy'; else if(/хэлэхгүй|хамаагүй/.test(n)&&st.grade>=8&&st.grade<=11&&!st.sex)st.sex='na';
+    INTERESTS.forEach(i=>{const lab=norm(i.l.replace(/^\S+\s+/,''));if((i.re.test(n)||(lab&&n.includes(lab)))&&!st.ints.includes(i.k))st.ints.push(i.k)});
+    if(/мэдэхгүй|сайн мэдэхгүй|бүгд|хамаагүй/.test(n)&&!st.ints.length&&st.asked)st.ints.push('any');
+  }
+  function recommend(st){
+    const all=(S79.get('clubs')||[]).filter(c=>eligible(c,st));
+    const scored=all.map(c=>{const t=clubTags(c);const hit=st.ints.filter(k=>t.includes(k));return {c,hit,s:hit.reduce((z,k)=>z+(t[0]===k?3:1),0)+(st.ints.includes('any')?0.1:0)}})
+      .filter(x=>x.s>0||st.ints.includes('any')).sort((a,b)=>b.s-a.s);
+    let top=scored.slice(0,3);
+    if(st.ints.includes('any')&&st.ints.length===1){ // “Мэдэхгүй” — өөр өөр чиглэлээс нэг нэгийг санал болгоно
+      const seen=new Set();top=[];
+      for(const c of all){const t=clubTags(c)[0]||'other';if(!seen.has(t)){seen.add(t);top.push({c,hit:[t].filter(k=>k!=='other')})}if(top.length===4)break}
+    }
+    if(!top.length)return {text:`${st.grade?st.grade+'-р ангийн':'Таны'} сонирхолд яг тохирох клуб одоогоор алга байна. 😊 Нийт ${all.length} клуб танд нээлттэй — “Клубүүд” гэж бичээд бүгдийг нь харж болно.`,options:['Клубүүд','Дахин эхлэх']};
+    const lab=k=>(INTERESTS.find(i=>i.k===k)||{l:''}).l.replace(/^\S+\s/,'').toLowerCase();
+    const lines=top.map((x,i)=>{const c=x.c;return `${i+1}. ${c.ico||'🏅'} ${c.name.replace(/&amp;/g,'&')}`+(x.hit.length?` — ${x.hit.map(lab).join(', ')}`:'')+(c.day?`\n   🕒 ${c.day}`:'')});
+    quiz=null;
+    const intro=st.ints.includes('any')&&st.ints.length===1?'Өөр өөр чиглэлээс сонирхож болох клубууд':'Танд тохирох клубууд';
+    return {text:`${intro}${st.grade?` (${st.grade}-р анги)`:''}:\n\n${lines.join('\n')}\n\nДэлгэрэнгүйг доорх товчоор асууж, “Клуб” хэсгээс бүртгүүлээрэй.`,
+      options:top.map(x=>x.c.name.replace(/&amp;/g,'&').replace(/[“”]/g,'').slice(0,40)).concat(['Дахин эхлэх'])};
+  }
+  function advise(q){
+    const n=norm(q);
+    if(!quiz)quiz={grade:0,sex:'',ints:[],asked:false};
+    readFacts(n,quiz);
+    if(!quiz.grade)return {text:'Сайн байна! Тохирох клуб олоход тусалъя. 😊\nХэддүгээр ангид сурдаг вэ?',options:['1','2','3','4','5','6','7','8','9','10','11','12'].map(x=>x+'-р анги')};
+    if(quiz.grade>=8&&quiz.grade<=11&&!quiz.sex)return {text:'Хүү юү, охин уу? (Зарим клуб зөвхөн охидод зориулагдсан)',options:['Хүү','Охин','Хэлэхгүй']};
+    if(!quiz.ints.length){quiz.asked=true;return {text:'Юу хийх хамгийн дуртай вэ? Товч дарах эсвэл өөрөө бичээрэй (ж: “зураг зурах, хөл бөмбөг”).',options:INTERESTS.map(i=>i.l).concat(['Мэдэхгүй'])}}
+    return recommend(quiz);
+  }
+
   async function ask(q,history){
+    const n=norm(q);
+    if(/^дахин эхлэх$/.test(n)){quiz=null;return advise('клуб сонгох')}
+    if(quiz&&!wantsAdvice(n)){ // Санал болгох явцад хамааралгүй асуулт ирвэл энгийн горимд шилжинэ
+      const t={...quiz,ints:[...quiz.ints]};readFacts(n,t);
+      if(JSON.stringify(t)===JSON.stringify(quiz)&&!/мэдэхгүй|хамаагүй|бүгд/.test(n))quiz=null;
+    }
+    if(quiz||wantsAdvice(n))return advise(q);
     if(await remoteOn()){
       try{
         const r=await fetch('/api/ask',{method:'POST',headers:{'Content-Type':'application/json','X-S79':'1'},body:JSON.stringify({q,history})});
@@ -179,5 +244,5 @@ const S79Assistant=(()=>{
     }
     return answer(q);
   }
-  return {answer,ask,reset:()=>{docs=null}};
+  return {answer,ask,advise,reset:()=>{docs=null;quiz=null}};
 })();

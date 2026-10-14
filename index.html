@@ -271,6 +271,11 @@ footer a:hover{color:#fff}
 .msg{max-width:85%;padding:10px 14px;border-radius:14px;font-size:14px;white-space:pre-line}
 .msg.bot{background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}
 .msg.me{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.opts{display:flex;flex-wrap:wrap;gap:6px;max-width:92%}
+.opts button{border:1px solid var(--blue-2);background:#fff;border-radius:999px;padding:6px 11px;font-size:12.5px;color:var(--blue);cursor:pointer}
+.opts button:hover{background:var(--bg)}
+.club-advice{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:linear-gradient(135deg,#E6F0FA,#FDF2F8);border:1px solid var(--line);border-radius:16px;padding:16px 20px;margin:-8px 0 22px}
+.club-advice b{color:var(--navy)}.club-advice span{color:#475569;font-size:14px;flex:1;min-width:220px}
 .quick{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px 0;background:#fff}
 .quick button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 11px;font-size:12.5px;color:var(--blue)}
 .chat form{display:flex;gap:8px;padding:12px 14px;background:#fff}
@@ -401,6 +406,7 @@ footer a:hover{color:#fff}
     <div><div class="kicker">КЛУБ, ДУГУЙЛАН</div><h2>Клубт бүртгүүлэх</h2><p>Сургуулийнхаа клубүүдтэй танилцаж, өөрийн сонирхол, хүсэл тэмүүлэлдээ тохирох клубээ сонгон, онлайн бүртгэлээ хийгээрэй!</p></div>
     <div class="tabs" id="clubTabs"></div>
   </div>
+  <div class="club-advice"><b>🤔 Аль клубт элсэхээ мэдэхгүй байна уу?</b><span>Ангиа, юу хийх дуртайгаа хэлбэл AI туслах танд тохирох клубыг санал болгоно.</span><button class="btn btn-primary" id="clubAdvice" type="button">Клуб санал болгох</button></div>
   <div class="grid-3" id="clubGrid"></div>
 </div></section>
 
@@ -777,13 +783,18 @@ try{if(pop.on&&!sessionStorage.getItem('s79_pop')){setTimeout(()=>openM('#popup'
 
 /* AI туслах — сайтад оруулсан мэдээллээс хариулна (assistant.js) */
 const chatHist=[];
-function bot(t){const m=document.createElement('div');m.className='msg '+(t[0]);m.textContent=t[1];$('#msgs').appendChild(m);$('#msgs').scrollTop=1e9}
+function bot(t){$$('#msgs .opts').forEach(o=>o.remove());const a=t[1],m=document.createElement('div');m.className='msg '+(t[0]);m.textContent=typeof a==='object'?a.text:a;$('#msgs').appendChild(m);
+  if(a&&a.options&&a.options.length){const o=document.createElement('div');o.className='opts';o.innerHTML=a.options.map(x=>`<button type="button">${esc(x)}</button>`).join('');
+    o.querySelectorAll('button').forEach(b=>b.onclick=()=>ask(b.textContent));$('#msgs').appendChild(o)}
+  $('#msgs').scrollTop=1e9}
 function ask(q){bot(['me',q]);const w=document.createElement('div');w.className='msg bot';w.textContent='…';$('#msgs').appendChild(w);$('#msgs').scrollTop=1e9;
-  const t0=Date.now();S79Assistant.ask(q,chatHist.slice(-6)).then(a=>setTimeout(()=>{w.remove();bot(['bot',a]);chatHist.push({role:'user',content:q},{role:'assistant',content:a})},Math.max(0,350-(Date.now()-t0))))}
+  const t0=Date.now();S79Assistant.ask(q,chatHist.slice(-6)).then(a=>setTimeout(()=>{w.remove();bot(['bot',a]);chatHist.push({role:'user',content:q},{role:'assistant',content:typeof a==='object'?a.text:a})},Math.max(0,350-(Date.now()-t0))))}
 $('#fab').onclick=()=>{const c=$('#chat');c.hidden=!c.hidden;if(!c.hidden&&!$('#msgs').children.length)bot(['bot','Сайн уу? Би 79-р сургуулийн AI туслах байна. Сайтад байгаа мэдээллээс хайж хариулна: багш нар, клуб, мэдээ, арга хэмжээ, олимпиад, холбоо барих гэх мэт.']);if(!c.hidden)$('#chatIn').focus()};
 $('#chatClose').onclick=()=>$('#chat').hidden=true;
-$('#quick').innerHTML=['Клубүүд','Олимпиадын хуваарь','Захирал хэн бэ?','Холбоо барих'].map(q=>`<button>${q}</button>`).join('');
+$('#quick').innerHTML=['Аль клубт элсэх вэ?','Клубүүд','Олимпиадын хуваарь','Холбоо барих'].map(q=>`<button>${q}</button>`).join('');
 $$('#quick button').forEach(b=>b.onclick=()=>ask(b.textContent));
+// Клуб хэсгийн “Аль клуб тохирох вэ?” товч — чатыг нээж санал болгох асуултыг эхлүүлнэ
+$('#clubAdvice').onclick=()=>{const c=$('#chat');if(c.hidden)$('#fab').click();ask('Аль клубт элсэх вэ?')};
 $('#chatForm').onsubmit=e=>{e.preventDefault();const v=$('#chatIn').value.trim();if(!v)return;$('#chatIn').value='';ask(v)};
 });
 </script>
