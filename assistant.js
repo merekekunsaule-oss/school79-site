@@ -52,6 +52,7 @@ const S79Assistant=(()=>{
       ()=>`📊 Манай сургууль: ${home.students||'—'} сурагч, ${home.teachersN||'—'} багш, ${home.workers||'—'} ажилтан, ${home.groups||'—'} анги бүлэг, ${g('clubs').length} клуб дугуйлан. 1974 онд байгуулагдсан, ${home.years||''} жилийн түүхтэй.`);
     if(home.dirText)add('director',`захирал ${home.dirName||''} мэндчилгээ удирдлага`,home.dirText,
       ()=>`👩‍💼 Захирал: ${home.dirName}.\n${cut(home.dirText,300)}`);
+    if(home.goal)add('goal','сургуулийн зорилго алсын хараа эрхэм зорилго зорилт',home.goal,()=>`🎯 Сургуулийн зорилго: ${home.goal}`);
     if(home.about)add('about','сургуулийн тухай танилцуулга түүх байгуулагдсан',home.about,()=>`🏫 ${home.about}`);
     D.forEach(d=>{d.tt=new Set(toks(d.title).map(stem));d.bt=new Set(toks(d.body).map(stem))});
     return D;
@@ -107,7 +108,7 @@ const S79Assistant=(()=>{
     const spec=qt.filter(t=>!isGen(t));
     const scored=docs.map(d=>{let s=0,m=0,ms=0;qt.forEach(t=>{const g=isGen(t);if(has(d.tt,t)){s+=g?0.5:3;m++;if(!g)ms++}else if(has(d.bt,t)){s+=g?0.2:1;m++;if(!g)ms++}});
       if(spec.length&&!ms)return {d,s:0};
-      if(m===qt.length)s+=2; if(['contact','stats','director','about'].includes(d.kind))s+=0.5; return {d,s}}).filter(x=>x.s>0).sort((a,b)=>b.s-a.s||String(b.d.date||'').localeCompare(String(a.d.date||'')));
+      if(m===qt.length)s+=2; if(['contact','stats','director','about','goal'].includes(d.kind))s+=0.5; return {d,s}}).filter(x=>x.s>0).sort((a,b)=>b.s-a.s||String(b.d.date||'').localeCompare(String(a.d.date||'')));
     if(!scored.length)return fallback();
 
     // Асуултын төрлөөр тохирох бичлэгийн төрлийг давуу болгох
@@ -165,6 +166,7 @@ const S79Assistant=(()=>{
         if(I.where)return `📍 ${c.address||'—'}`;
         if(I.when)return `🕘 Ажлын цаг: ${c.hours||'—'}`;
         return d.render();}
+      case 'goal':return d.render();
       case 'director':{const h=S79.get('home')||{};return `Захирал: ${h.dirName}.`;}
       case 'about':return /он|байгуулагд|хэзээ/.test(n)?'79-р сургууль 1974 онд байгуулагдсан.':first1(d.body);
       case 'page':return first1(d.body);
