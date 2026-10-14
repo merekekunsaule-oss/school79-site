@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>79-р сургууль — Цахим портал</title>
+<title>Нийслэлийн ерөнхий боловсролын 79 дүгээр сургууль</title>
 <link rel="icon" type="image/png" href="img/logo.png">
 <link rel="apple-touch-icon" href="img/logo.png">
-<meta name="description" content="79-р сургуулийн албан ёсны цахим портал: мэдээ, зарлал, клуб, багш нар, зар.">
+<meta name="description" content="Нийслэлийн ерөнхий боловсролын 79 дүгээр сургууль-ийн албан ёсны цахим хуудас: мэдээ, зарлал, клуб, багш нар, зар.">
 <style>
 :root{
   --blue:#0057A8; --blue-2:#1976B8; --navy:#003E75; --sky:#9CC3E5;
@@ -41,6 +41,7 @@ header .wrap{display:flex;align-items:center;justify-content:space-between;heigh
 footer .logo-img{filter:drop-shadow(0 2px 6px rgba(0,0,0,.3))}
 .logo-mark::after{content:"";position:absolute;right:-3px;top:-3px;width:12px;height:12px;border-radius:50%;background:var(--red);border:2px solid #fff}
 .logo small{display:block;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.logo small.pre{font-size:10px;margin-bottom:1px}
 nav ul{list-style:none;display:flex;gap:4px;margin:0;padding:0}
 nav a{padding:9px 13px;border-radius:9px;font-weight:600;font-size:14.5px;color:#334155}
 nav a:hover,nav a.active{background:var(--bg);color:var(--blue)}
@@ -284,7 +285,7 @@ footer a:hover{color:#fff}
 </div></div>
 
 <header><div class="wrap">
-  <a href="#home" class="logo"><img src="img/logo.png" class="logo-img" alt="79-р сургуулийн лого"><div><span data-s="name">79-Р СУРГУУЛЬ</span><small data-s="sub">ЕРӨНХИЙ БОЛОВСРОЛЫН СУРГУУЛЬ</small></div></a>
+  <a href="#home" class="logo"><img src="img/logo.png" class="logo-img" alt="79-р сургуулийн лого"><div><small data-s="sub" class="pre">НИЙСЛЭЛИЙН ЕРӨНХИЙ БОЛОВСРОЛЫН</small><span data-s="name">79 ДҮГЭЭР СУРГУУЛЬ</span></div></a>
   <nav id="nav"><ul>
     <li><a href="#home" class="active">Нүүр</a></li>
     <li><a href="#about">Танилцуулга</a></li>
@@ -481,7 +482,7 @@ footer a:hover{color:#fff}
 <footer><div class="wrap">
   <div class="cols">
     <div>
-      <a href="#home" class="logo" style="color:#fff"><img src="img/logo.png" class="logo-img" alt="79-р сургуулийн лого"><div><span data-s="name">79-Р СУРГУУЛЬ</span><small style="color:#a9c3dc">Эрдэм мэдлэгийн ордон</small></div></a>
+      <a href="#home" class="logo" style="color:#fff"><img src="img/logo.png" class="logo-img" alt="79-р сургуулийн лого"><div><small data-s="sub" class="pre" style="color:#a9c3dc">НИЙСЛЭЛИЙН ЕРӨНХИЙ БОЛОВСРОЛЫН</small><span data-s="name">79 ДҮГЭЭР СУРГУУЛЬ</span></div></a>
       <p style="margin-top:16px" data-s="slogan">Эрдэм мэдлэгээр жигүүрлэсэн ирээдүйг хамтдаа бүтээнэ.</p>
       <div class="socials"><a href="#" aria-label="Facebook" data-link="facebook" target="_blank" rel="noopener">f</a><a href="#" aria-label="Instagram" data-link="instagram" target="_blank" rel="noopener">ig</a><a href="#" aria-label="YouTube" data-link="youtube" target="_blank" rel="noopener">▶</a></div>
     </div>
@@ -489,7 +490,7 @@ footer a:hover{color:#fff}
     <div><h5>Сургалт</h5><ul id="footCourses"><li><a href="#market">Зарын булан</a></li></ul></div>
     <div><h5>Холбоо барих</h5><ul><li>📞 <span data-s="phone"></span></li><li>✉️ <span data-s="email"></span></li><li>📍 <span data-s="city">Улаанбаатар хот</span></li></ul></div>
   </div>
-  <div class="copy"><span>© <span id="yr"></span> <span data-s="name">79-р сургууль</span>. Бүх эрх хуулиар хамгаалагдсан.</span><span>Мэдлэгээр жигүүрлэж, ирээдүйг бүтээнэ! 🚀</span></div>
+  <div class="copy"><span>© <span id="yr"></span> <span data-s="fullName">Нийслэлийн ерөнхий боловсролын 79 дүгээр сургууль</span>. Бүх эрх хуулиар хамгаалагдсан.</span><span>Мэдлэгээр жигүүрлэж, ирээдүйг бүтээнэ! 🚀</span></div>
 </div></footer>
 
 <!-- Modals -->
@@ -571,6 +572,7 @@ const rs=document.documentElement.style;
 [['--blue','blue'],['--blue-2','blue2'],['--navy','navy'],['--red','red'],['--bg','bg']].forEach(([v,k])=>theme[k]&&rs.setProperty(v,theme[k]));
 $$('[data-s]').forEach(el=>{const v=cfg[el.dataset.s];if(v!=null&&v!=='')el.textContent=v;else if(!el.textContent.trim()){const w=el.closest('.info-row,li,.topbar span:not([data-s]),.topbar .wrap>div');(w||el).style.display='none'}});
 $$('[data-link]').forEach(a=>a.href=cfg[a.dataset.link]||'#');
+if(cfg.fullName)document.title=cfg.fullName;
 $$('[data-h]').forEach(el=>{const v=home[el.dataset.h];if(v==null||v==='')return;if(el.hasAttribute('data-count'))el.dataset.count=v;else el.textContent=v});
 $$('[data-p]').forEach(el=>{const v=pop[el.dataset.p];if(v)el.textContent=v});
 $('#popup [data-p="btn"]').setAttribute('href',pop.link||'#clubs');
