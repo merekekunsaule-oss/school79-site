@@ -42,11 +42,13 @@ footer .logo-img{filter:drop-shadow(0 2px 6px rgba(0,0,0,.3))}
 .logo-mark::after{content:"";position:absolute;right:-3px;top:-3px;width:12px;height:12px;border-radius:50%;background:var(--red);border:2px solid #fff}
 .logo small{display:block;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.04em}
 .logo small.pre{font-size:10px;margin-bottom:1px}
+nav a{white-space:nowrap}.logo small,.logo span{white-space:nowrap}
+@media(max-width:1200px){nav a{padding:8px 8px;font-size:13.5px}.hdr-cta{padding:10px 14px}.logo small.pre{font-size:9px}.logo{gap:8px}}
 nav ul{list-style:none;display:flex;gap:4px;margin:0;padding:0}
 nav a{padding:9px 13px;border-radius:9px;font-weight:600;font-size:14.5px;color:#334155}
 nav a:hover,nav a.active{background:var(--bg);color:var(--blue)}
 .burger{display:none;background:none;border:0;font-size:26px;color:var(--blue)}
-@media(max-width:980px){
+@media(max-width:1080px){
   nav{position:fixed;inset:72px 0 auto 0;background:#fff;border-bottom:1px solid var(--line);display:none;padding:10px 20px 18px}
   nav.open{display:block}
   nav ul{flex-direction:column}
@@ -110,6 +112,16 @@ section{padding-block:84px}
 .about-visual{aspect-ratio:4/3;border-radius:24px;background:linear-gradient(160deg,#cfe3f6,#eaf3fb);position:relative;overflow:hidden}
 .about-visual svg,.about-visual img{position:absolute;inset:0;width:100%;height:100%}
 .about-visual img{object-fit:cover;object-position:center 55%}
+/* слайд шоу — зургууд ар араасаа зөөлөн солигдоно */
+.about-visual .slide{opacity:0;transition:opacity 1.2s ease;transform:scale(1.04)}
+.about-visual .slide.on{opacity:1;animation:kb 7s ease-out forwards}
+@keyframes kb{from{transform:scale(1.04)}to{transform:scale(1.12)}}
+.about-visual .cap{position:absolute;right:16px;top:16px;background:rgba(0,30,70,.72);color:#fff;font-weight:700;font-size:13px;padding:6px 12px;border-radius:999px;z-index:2}
+.about-visual .dots{position:absolute;left:0;right:0;bottom:14px;display:flex;justify-content:center;gap:7px;z-index:2}
+.about-visual .dots button{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,.55);padding:0;cursor:pointer;transition:.3s}
+.about-visual .dots button.on{width:24px;border-radius:5px;background:#fff}
+.about-badge{z-index:3}
+@media (prefers-reduced-motion:reduce){.about-visual .slide{transition:none}.about-visual .slide.on{animation:none}}
 .dir-sec{background:linear-gradient(180deg,#fff 0%,var(--bg) 100%)}
 .director{display:grid;grid-template-columns:minmax(260px,400px) 1fr;gap:56px;align-items:center}
 .dir-photo{position:relative}
@@ -167,6 +179,8 @@ section{padding-block:84px}
 .pride .pb{padding:16px 18px 18px}.pride h4{margin:0;color:var(--navy);font-size:16.5px}
 .pride .tl{color:var(--red);font-weight:700;font-size:12.5px;margin:4px 0 8px}
 .pride .gr{font-size:12.5px;color:var(--muted)}
+.bld{overflow:hidden}.bld .ph{display:block;aspect-ratio:3/2;background:#e8eef5 center/cover;cursor:zoom-in}
+.bld .pb{padding:14px 18px 18px}.bld h3{margin:0 0 6px;color:var(--navy);font-size:18px}.bld p{margin:0;font-size:13.5px;color:var(--muted)}
 .c-gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
 .c-gal a{display:block;aspect-ratio:1;border-radius:10px;background:var(--bg) center/cover;transition:.2s}.c-gal a:hover{opacity:.85}
 .c-detail dl{display:grid;gap:10px;margin:16px 0 0;padding:14px;background:var(--bg);border-radius:12px}
@@ -461,6 +475,12 @@ footer a:hover{color:#fff}
   <div class="faq" id="faqList"></div>
 </div></section>
 
+<!-- BUILDINGS -->
+<section id="buildings" class="alt" hidden><div class="wrap">
+  <div class="sec-head"><div><div class="kicker">ХИЧЭЭЛИЙН БАЙРУУД</div><h2>Манай хичээлийн байрууд</h2><p>Сургууль Баянзүрх дүүргийн 9-р хороонд 3 хичээлийн байранд хичээллэдэг.</p></div></div>
+  <div class="grid-3" id="bldGrid"></div>
+</div></section>
+
 <!-- CONTACT -->
 <section id="contact"><div class="wrap">
   <div class="sec-head"><div><div class="kicker">ХОЛБОО БАРИХ</div><h2>Холбоо барих хүсэлт</h2><p>Мэдээллээ бөглөж илгээвэл хүсэлт админд шууд хүрнэ.</p></div></div>
@@ -590,7 +610,22 @@ $('#popup [data-p="btn"]').setAttribute('href',pop.link||'#clubs');
 if(home.dirText){$('#director').hidden=false;$('#dirImg').src=S79.img(home.dirImg||'');$('#dirImg').alt=home.dirName||'';if(!home.dirImg)$('.dir-photo').hidden=true;
   $('#dirTitle').textContent=home.dirTitle||'Мэндчилгээ';$('#dirName').textContent=home.dirName||'';$('#dirRole').textContent=home.dirRole||'';
   $('#dirText').innerHTML=String(home.dirText).split('\n').map(l=>l.trim()).filter(Boolean).map(l=>`<p${l.length<70?' class="em"':''}>${esc(l)}</p>`).join('')}
-if(home.aboutImg){const im=$('#aboutImg');im.src=S79.img(home.aboutImg);im.hidden=false;$('.about-visual svg').style.display='none'}
+{ // “Сургуулийн тухай” зураг: хичээлийн байрнуудын зургийг слайд шоугаар солино
+  const bl=(S79.get('buildings')||[]).slice().sort((a,b)=>(a.o||0)-(b.o||0)).filter(b=>b.img);
+  const slides=bl.length?bl.map(b=>({src:S79.img(b.img),cap:b.name})):home.aboutImg?[{src:S79.img(home.aboutImg),cap:''}]:[];
+  if(slides.length){
+    const box=$('.about-visual');$('.about-visual svg').style.display='none';$('#aboutImg').remove();
+    box.insertAdjacentHTML('afterbegin',slides.map((x,i)=>`<img class="slide${i?'':' on'}" src="${esc(x.src)}" alt="${esc(x.cap||'Сургуулийн байр')}" ${i?'loading="lazy"':''}>`).join('')+
+      (slides.length>1?`<div class="cap">${esc(slides[0].cap)}</div><div class="dots">${slides.map((_,i)=>`<button type="button" aria-label="${i+1}-р зураг" class="${i?'':'on'}"></button>`).join('')}</div>`:''));
+    if(slides.length>1){
+      const imgs=[...box.querySelectorAll('.slide')],dots=[...box.querySelectorAll('.dots button')],cap=box.querySelector('.cap');let cur=0,timer;
+      const go=i=>{imgs[cur].classList.remove('on');dots[cur].classList.remove('on');cur=(i+imgs.length)%imgs.length;imgs[cur].classList.add('on');dots[cur].classList.add('on');cap.textContent=slides[cur].cap};
+      const play=()=>{clearInterval(timer);if(!matchMedia('(prefers-reduced-motion: reduce)').matches)timer=setInterval(()=>go(cur+1),5000)};
+      dots.forEach((d,i)=>d.onclick=()=>{go(i);play()});
+      box.onmouseenter=()=>clearInterval(timer);box.onmouseleave=play;play();
+    }
+  }
+}
 const fmtD=d=>S79.fmtDate(d);
 const today=new Date().toISOString().slice(0,10);
 const evs=S79.get('events'), upcoming=evs.filter(e=>e.date>=today).sort((a,b)=>a.date<b.date?-1:1), feat=upcoming.filter(e=>e.featured);
@@ -758,6 +793,12 @@ if(pride.length){$('#pride').hidden=false;
       ${wins.length?`<h4 class="pg-h">🏆 Гаргасан амжилт</h4><ul class="pg-ul">${wins.map(w=>w.startsWith('—')?`</ul><h4 class="pg-h">${esc(w.replace(/^—\s*|\s*—$/g,''))}</h4><ul class="pg-ul">`:`<li>${esc(w)}</li>`).join('')}</ul>`:''}
       ${gal.length?`<div class="c-gal" style="margin-top:14px">${gal.map(g=>`<a href="${g}" target="_blank" rel="noopener" style="background-image:url('${g}')"></a>`).join('')}</div>`:''}`;
     openM('#detailModal')})}
+
+/* Хичээлийн байрууд */
+const blds=(S79.get('buildings')||[]).slice().sort((a,b)=>(a.o||0)-(b.o||0));
+if(blds.length){$('#buildings').hidden=false;
+  $('#bldGrid').innerHTML=blds.map(b=>`<div class="card bld"><a class="ph" href="${esc(S79.img(b.img))}" target="_blank" rel="noopener" style="background-image:url('${esc(S79.img(b.img))}')" aria-label="${esc(b.name)} — зураг томоор"></a>
+    <div class="pb"><h3>🏫 ${esc(b.name)}</h3><p>📍 ${esc(b.address||'')}</p>${b.note?`<p style="margin-top:6px">${esc(b.note)}</p>`:''}</div></div>`).join('')}
 
 /* footer — Хуудсууд, Сургалт */
 function footList(sel,items,prepend){const ul=$(sel);ul.insertAdjacentHTML(prepend?'afterbegin':'beforeend',items.map((p,i)=>`<li><a href="#" data-pg="${i}">${esc(p.title)}</a></li>`).join(''));

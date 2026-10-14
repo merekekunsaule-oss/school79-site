@@ -52,6 +52,7 @@ const S79Assistant=(()=>{
       ()=>`📊 Манай сургууль: ${home.students||'—'} сурагч, ${home.teachersN||'—'} багш, ${home.workers||'—'} ажилтан, ${home.groups||'—'} анги бүлэг, ${g('clubs').length} клуб дугуйлан. 1974 онд байгуулагдсан, ${home.years||''} жилийн түүхтэй.`);
     if(home.dirText)add('director',`захирал ${home.dirName||''} мэндчилгээ удирдлага`,home.dirText,
       ()=>`👩‍💼 Захирал: ${home.dirName}.\n${cut(home.dirText,300)}`);
+    g('buildings').forEach(b=>add('building',`${b.name} хичээлийн байр байршил`,`${b.address||''} ${b.note||''}`,()=>`🏫 ${b.name} — 📍 ${b.address||''}`));
     if(home.obj1)add('goal','сургуулийн зорилт зорилтууд',[home.obj1,home.obj2,home.obj3].join(' '),()=>'📌 Сургуулийн зорилтууд:\n'+[home.obj1,home.obj2,home.obj3].filter(Boolean).map((x,i)=>`${i+1}. ${x}`).join('\n'));
     if(home.motto)add('goal','сургуулийн уриа уриалга',home.motto,()=>`📣 Уриа: “${home.motto}”`);
     if(home.goal)add('goal','сургуулийн зорилго алсын хараа эрхэм зорилго зорилт',home.goal,()=>`🎯 Сургуулийн зорилго: ${home.goal}`);

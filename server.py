@@ -47,7 +47,7 @@ _ask_ctx = {"stamp": None, "text": ""}
 _anthropic_client = None
 # Нийтэд нээлттэй контентын хэсгүүд (хувийн мэдээлэл — бүртгэл, зурвас, хэрэглэгч — орохгүй)
 ASK_KEYS = ["settings", "home", "pages", "teachers", "clubs", "news", "announcements", "events",
-            "pride", "faq", "courses", "ads", "videos"]
+            "pride", "faq", "courses", "ads", "videos", "buildings"]
 ASK_SYSTEM = (
     "Та Нийслэлийн ерөнхий боловсролын 79-р сургуулийн вэб сайтын AI туслах. "
     "Зөвхөн доорх <site_data> доторх мэдээлэлд тулгуурлан, монгол хэлээр хариулна. "
