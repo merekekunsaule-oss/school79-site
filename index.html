@@ -181,6 +181,13 @@ section{padding-block:84px}
 .pride .gr{font-size:12.5px;color:var(--muted)}
 .bld{overflow:hidden}.bld .ph{display:block;aspect-ratio:3/2;background:#e8eef5 center/cover;cursor:zoom-in}
 .bld .pb{padding:14px 18px 18px}.bld h3{margin:0 0 6px;color:var(--navy);font-size:18px}.bld p{margin:0;font-size:13.5px;color:var(--muted)}
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}@media(max-width:800px){.grid-2{grid-template-columns:1fr}}
+.adm{overflow:hidden;cursor:pointer;transition:.2s}.adm:hover{transform:translateY(-3px)}
+.adm .ph{aspect-ratio:16/7;background:#e8eef5 center/cover}
+.adm .pb{padding:16px 20px 20px}.adm h3{margin:8px 0 6px;color:var(--navy);font-size:17px;line-height:1.35}
+.adm .when{font-size:13px;color:var(--muted)}
+.adm .st{display:inline-block;font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:999px}
+.adm .st.open{background:#E8F4EC;color:#2E7D46}.adm .st.soon{background:#FFF4E0;color:#B26A00}.adm .st.done{background:#F1F5F9;color:#64748B}
 .c-gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
 .c-gal a{display:block;aspect-ratio:1;border-radius:10px;background:var(--bg) center/cover;transition:.2s}.c-gal a:hover{opacity:.85}
 .c-detail dl{display:grid;gap:10px;margin:16px 0 0;padding:14px;background:var(--bg);border-radius:12px}
@@ -459,7 +466,7 @@ footer a:hover{color:#fff}
 <section style="padding-top:0"><div class="wrap">
   <div class="band">
     <div><h2>АМЖИЛТЫН ЗҮГТ ХАМТДАА</h2><p>Мэдлэгээр жигүүрлэж, ирээдүйг бүтээнэ! 🚀📚 Элсэлтийн мэдээллийг авахыг хүсвэл бидэнтэй холбогдоорой.</p></div>
-    <a href="#contact" class="btn">Элсэлтийн мэдээлэл →</a>
+    <a href="#admission" class="btn">Элсэлтийн мэдээлэл →</a>
   </div>
 </div></section>
 
@@ -473,6 +480,12 @@ footer a:hover{color:#fff}
 <section id="faq" class="alt"><div class="wrap">
   <div class="sec-head" style="justify-content:center;text-align:center"><div><div class="kicker">ТҮГЭЭМЭЛ АСУУЛТ</div><h2>Асуулт, хариулт</h2></div></div>
   <div class="faq" id="faqList"></div>
+</div></section>
+
+<!-- ADMISSION -->
+<section id="admission" hidden><div class="wrap">
+  <div class="sec-head"><div><div class="kicker">ЭЛСЭЛТ</div><h2>Элсэлтийн мэдээлэл</h2><p>Элсэлт, бүртгэл, шалгалтын хугацаа, холбоосыг эндээс аваарай.</p></div></div>
+  <div class="grid-2" id="admGrid"></div>
 </div></section>
 
 <!-- BUILDINGS -->
@@ -516,7 +529,7 @@ footer a:hover{color:#fff}
       <div class="socials"><a href="#" aria-label="Facebook" data-link="facebook" target="_blank" rel="noopener">f</a><a href="#" aria-label="Instagram" data-link="instagram" target="_blank" rel="noopener">ig</a><a href="#" aria-label="YouTube" data-link="youtube" target="_blank" rel="noopener">▶</a></div>
     </div>
     <div><h5>Хуудсууд</h5><ul id="footPages"><li><a href="#about">Танилцуулга</a></li><li><a href="#news">Мэдээ</a></li><li><a href="#clubs">Клуб</a></li><li><a href="#teachers">Багш нар</a></li></ul></div>
-    <div><h5>Сургалт</h5><ul id="footCourses"><li><a href="#market">Зарын булан</a></li></ul></div>
+    <div><h5>Сургалт</h5><ul id="footCourses"><li><a href="#admission">Элсэлтийн мэдээлэл</a></li><li><a href="#market">Зарын булан</a></li></ul></div>
     <div><h5>Холбоо барих</h5><ul><li>📞 <span data-s="phone"></span></li><li>✉️ <span data-s="email"></span></li><li>📍 <span data-s="city">Улаанбаатар хот</span></li></ul></div>
   </div>
   <div class="copy"><span>© <span id="yr"></span> <span data-s="fullName">Нийслэлийн ерөнхий боловсролын 79 дүгээр сургууль</span>. Бүх эрх хуулиар хамгаалагдсан.</span><span><span data-h="motto">Бид хүүхдийн төлөө – Хүүхэд бүр онцгой</span></span></div>
@@ -793,6 +806,15 @@ if(pride.length){$('#pride').hidden=false;
       ${wins.length?`<h4 class="pg-h">🏆 Гаргасан амжилт</h4><ul class="pg-ul">${wins.map(w=>w.startsWith('—')?`</ul><h4 class="pg-h">${esc(w.replace(/^—\s*|\s*—$/g,''))}</h4><ul class="pg-ul">`:`<li>${esc(w)}</li>`).join('')}</ul>`:''}
       ${gal.length?`<div class="c-gal" style="margin-top:14px">${gal.map(g=>`<a href="${g}" target="_blank" rel="noopener" style="background-image:url('${g}')"></a>`).join('')}</div>`:''}`;
     openM('#detailModal')})}
+
+/* Элсэлтийн мэдээлэл */
+const adm=(S79.get('admission')||[]).slice().sort((a,b)=>(a.o||0)-(b.o||0));
+if(adm.length){$('#admission').hidden=false;
+  const stat=a=>{const t=new Date().toISOString().slice(0,10);if(a.date&&t<a.date)return['soon','Удахгүй эхэлнэ'];if(a.until&&t>a.until)return['done','Дууссан'];return['open','Бүртгэл явагдаж байна']};
+  $('#admGrid').innerHTML=adm.map((a,i)=>{const[sc,sl]=stat(a);return `<div class="card adm" data-adm="${i}" tabindex="0">${a.img?`<div class="ph" style="background-image:url('${esc(S79.img(a.img))}')"></div>`:''}
+    <div class="pb"><span class="st ${sc}">${sl}</span><h3>${esc(a.title)}</h3><div class="when">📅 ${fmtD(a.date)}${a.until?` – ${fmtD(a.until)}`:''}</div></div></div>`}).join('');
+  $$('#admGrid [data-adm]').forEach(c=>c.onclick=c.onkeydown=e=>{if(e.type==='keydown'&&e.key!=='Enter')return;const a=adm[+c.dataset.adm];
+    $('#detailBody').innerHTML=`${a.img?`<img src="${esc(S79.img(a.img))}" alt="" style="width:100%;border-radius:12px;margin-bottom:14px">`:''}<h3>${esc(a.title)}</h3><p style="white-space:pre-line;color:#475569">${esc(a.text)}</p>${a.link?`<a class="btn btn-primary" href="${esc(a.link)}" target="_blank" rel="noopener">${esc(a.linkText||'Холбоос')} ↗</a>`:''}`;openM('#detailModal')})}
 
 /* Хичээлийн байрууд */
 const blds=(S79.get('buildings')||[]).slice().sort((a,b)=>(a.o||0)-(b.o||0));

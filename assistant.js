@@ -52,6 +52,7 @@ const S79Assistant=(()=>{
       ()=>`📊 Манай сургууль: ${home.students||'—'} сурагч, ${home.teachersN||'—'} багш, ${home.workers||'—'} ажилтан, ${home.groups||'—'} анги бүлэг, ${g('clubs').length} клуб дугуйлан. 1974 онд байгуулагдсан, ${home.years||''} жилийн түүхтэй.`);
     if(home.dirText)add('director',`захирал ${home.dirName||''} мэндчилгээ удирдлага`,home.dirText,
       ()=>`👩‍💼 Захирал: ${home.dirName}.\n${cut(home.dirText,300)}`);
+    g('admission').forEach(a=>add('admission',`${a.title} элсэлт бүртгэл шалгалт эеш`,a.text,()=>`🎓 ${a.title}\n📅 ${fmtDate(a.date)}${a.until?` – ${fmtDate(a.until)}`:''}${a.link?`\n🌐 ${a.link}`:''}`,{date:a.date||''}));
     g('buildings').forEach(b=>add('building',`${b.name} хичээлийн байр байршил`,`${b.address||''} ${b.note||''}`,()=>`🏫 ${b.name} — 📍 ${b.address||''}`));
     if(home.obj1)add('goal','сургуулийн зорилт зорилтууд',[home.obj1,home.obj2,home.obj3].join(' '),()=>'📌 Сургуулийн зорилтууд:\n'+[home.obj1,home.obj2,home.obj3].filter(Boolean).map((x,i)=>`${i+1}. ${x}`).join('\n'));
     if(home.motto)add('goal','сургуулийн уриа уриалга',home.motto,()=>`📣 Уриа: “${home.motto}”`);

@@ -239,6 +239,8 @@ const SECTIONS=[
  {k:'reports',t:'Гомдол, илгээлт',ic:'flag',raw:'s79_reports',badge:1,cols:[['ad','Зар'],['adId','Төлөв'],['at','Огноо']]},
  {k:'users',t:'Хэрэглэгчид',ic:'user',admin:1,fields:[{k:'name',l:'Бүтэн нэр',req:1},{k:'user',l:'Нэвтрэх нэр',req:1},{k:'pass',l:'Нууц үг (6+ тэмдэгт)',type:'password',ph:'Шинэ хэрэглэгчид заавал; солих бол л бичнэ'},{k:'role',l:'Эрх',type:'select',opt:['admin','editor']}],
    cols:[['name','Нэр'],['user','Нэвтрэх нэр'],['role','Эрх']]},
+ {k:'admission',t:'Элсэлтийн мэдээлэл',ic:'clip',fields:[{k:'title',l:'Гарчиг',req:1,full:1},{k:'date',l:'Эхлэх огноо',type:'date'},{k:'until',l:'Дуусах огноо',type:'date'},{k:'o',l:'Эрэмбэ',type:'number'},{k:'img',l:'Зураг',type:'img',full:1},{k:'link',l:'Холбоос (URL)',full:1,ph:'https://...'},{k:'linkText',l:'Холбоосын бичиг',full:1},{k:'text',l:'Агуулга',type:'textarea',full:1,rows:7}],
+   cols:[['_thumb',''],['title','Гарчиг'],['date','Эхлэх'],['until','Дуусах']],sort:'o',asc:1},
  {k:'buildings',t:'Хичээлийн байрууд',ic:'home',fields:[{k:'name',l:'Нэр',req:1,ph:'1-р байр'},{k:'o',l:'Эрэмбэ',type:'number'},{k:'address',l:'Хаяг',full:1},{k:'note',l:'Тайлбар (сонголттой)',full:1},{k:'img',l:'Зураг',type:'img',full:1}],
    cols:[['_thumb',''],['name','Нэр'],['address','Хаяг']],sort:'o',asc:1},
  {k:'media',t:'Медиа сан',ic:'folder'},
