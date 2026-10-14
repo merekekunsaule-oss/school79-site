@@ -13,7 +13,7 @@ const S79Assistant=(()=>{
   const cut=(s,n)=>{s=clean(s);return s.length>n?s.slice(0,n).replace(/\s\S*$/,'')+'…':s};
   const fmtDate=d=>d?String(d).replace(/-/g,'.'):'';
 
-  let docs=null;
+  let docs=null, lastClub=null; // lastClub — сүүлд ярьсан клуб (дараагийн асуултыг холбоход)
   function build(){
     const g=k=>S79.get(k)||[];
     const cfg=S79.get('settings')||{}, home=S79.get('home')||{};
@@ -25,7 +25,7 @@ const S79Assistant=(()=>{
         (t.e?` Туршлага: ${t.e} жил.`:'')+(t.rank?` ${t.rank}.`:'')+
         (t.homeroom?` Даасан анги: ${t.homeroom}.`:'')+(t.classes?`\nЗаадаг анги: ${t.classes}`:'')+(t.note?`\n${t.note}`:''),
       {t}));
-    g('clubs').forEach(c=>add('club',`${c.name} ${c.cat} клуб дугуйлан`,`${c.t} ${c.d} ${c.goal||''} ${c.acts||''} ${c.place||''} ${c.day||''} ${c.grade||''}`,
+    g('clubs').forEach(c=>add('club',`${c.name} ${c.cat} клуб дугуйлан`,`${c.t} ${c.d} ${c.goal||''} ${c.acts||''} ${c.place||''} ${c.day||''} ${c.grade||''} ${c.reqs||''}`,
       ()=>`🏅 ${c.name}`+(c.t?` — удирдагч ${c.t}`:'')+'.'+
         (c.grade?`\nХамрагдах: ${/^[\d\s–-]+$/.test(c.grade)?c.grade+'-р анги':c.grade}`:'')+(c.day?`\n🕒 ${c.day}`:'')+(c.place?`\n📍 ${c.place}`:'')+
         (c.phone?`\n📞 ${c.phone}`:'')+(c.d?`\n${cut(c.d,220)}`:'')+'\n\n“Клуб” хэсгээс онлайн бүртгүүлээрэй.',{c}));
@@ -88,6 +88,12 @@ const S79Assistant=(()=>{
       if(/клуб|дугуйлан/.test(n))return `${nc} клуб, дугуйлантай.`;
       return `1974 онд байгуулагдсан, ${h.years} жилийн түүхтэй.`;}
     const qt=[...new Set(toks(q).filter(t=>!STOP.has(t)).map(stem))];
+    // Дараагийн асуулт (ж: “Тавигдах шаардлага”, “Хэзээ?”) — нэр дурдаагүй бол сүүлд ярьсан клубыг ашиглана
+    if(lastClub){
+      const named=docs.find(d=>d.kind==='club'&&d.c!==lastClub&&qt.filter(t=>!isGen(t)).some(t=>has(d.tt,t)));
+      const follow=/шаардлага|юу хэрэгтэй|юу авч|авч ирэх|юу бэлд|бэлтгэх зүйл|нөхцөл|элсэхэд|элсэх бол|орохын тулд|орохад/.test(n)||/^(📋|🕒|📍|👤|📞)|^(хэзээ|хаана|хэн|бүртгүүлэх|утас)\b|хичээллэдэг вэ|удирдагч хэн/.test(n);
+      if(follow&&!named){const d=docs.find(x=>x.kind==='club'&&x.c===lastClub);if(d)return brief(d,n)}
+    }
     // Олимпиадын хуваарь — зарлал доторх сургуулийн шатны жагсаалтыг шууд харуулна
     if(/олимпиад/.test(n)&&/хуваар|хэзээ|огноо|өдөр|шат/.test(n)){
       const ann=(S79.get('announcements')||[]).find(a=>/олимпиад/i.test(a.title)&&/шатны хуваарь/.test(a.text||''));
@@ -130,15 +136,19 @@ const S79Assistant=(()=>{
     const I={when:/хэзээ|хэдэн цаг|цагт|аль өдөр|өдөр|гараг|огноо|хэдний/.test(n),where:/хаана|байршил|хаяг|аль байр|хаана байдаг/.test(n),
       phone:/утас|дугаар/.test(n),who:/хэн|удирдагч|дасгалжуулагч|багш нь/.test(n),
       years:/хэдэн жил|туршлага|хэдэн жилийн/.test(n),price:/үнэ|хэдээр|хэдэн төгрөг/.test(n),grade:/аль анги|хэддүгээр анги|хэдэн анги|хамрагд|нас/.test(n),
-      cls:/заадаг|ямар анги|аль ангид/.test(n)};
+      cls:/заадаг|ямар анги|аль ангид/.test(n),reqs:/шаардлага|юу хэрэгтэй|юу авч|авч ирэх|юу бэлд|бэлтгэх зүйл|нөхцөл|элсэхэд|элсэх бол|орохын тулд|орохад/.test(n),signup:/бүртгүүл|элсэх вэ|яаж элсэх|хэрхэн элсэх/.test(n)&&!/аль|ямар/.test(n)};
     switch(d.kind){
-      case 'club':{const c=d.c,N=c.name;
-        if(I.when)return c.day?`${N} — ${c.day}.`:`${N} — хичээллэх цаг сайтад алга.`+(c.phone?` 📞 ${c.phone}`:'');
-        if(I.where)return c.place?`${N} — ${c.place}.`:`${N} — байршил сайтад алга.`;
-        if(I.phone)return c.phone?`${N}: 📞 ${c.phone}`:`${N} — утас сайтад алга.`;
-        if(I.who)return c.t?`${N} — удирдагч: ${c.t}.`:`${N} — удирдагч сайтад алга.`;
-        if(I.grade)return c.grade?`${N} — ${/^[\d\s–-]+$/.test(c.grade)?c.grade+'-р анги':c.grade}.`:`${N} — хамрагдах анги сайтад алга.`;
-        return `${N}`+(c.t?`, удирдагч ${c.t}`:'')+(c.day?`. 🕒 ${c.day}`:'')+(c.place?`. 📍 ${c.place}`:'')+'.';}
+      case 'club':{const c=d.c,N=c.name.replace(/&amp;/g,'&');lastClub=c;
+        const O=t=>({text:t,options:['📋 Тавигдах шаардлага','🕒 Хэзээ хичээллэдэг вэ?','📍 Хаана хичээллэдэг вэ?','👤 Удирдагч хэн бэ?','📞 Холбоо барих'].concat(['Бүртгүүлэх'])});
+        if(I.reqs){const R=String(c.reqs||'').split('\n').map(x=>x.trim()).filter(Boolean);
+          return O(R.length?`📋 ${N} — тавигдах шаардлага:\n`+R.map(x=>'• '+x).join('\n'):`${N}-д тавигдах шаардлага сайтад оруулаагүй байна.`+(c.phone?` 📞 ${c.phone}-аас лавлана уу.`:''))}
+        if(I.signup)return O(`${N}-д бүртгүүлэхдээ “Клуб” хэсгээс тухайн клубын “Бүртгүүлэх” товчийг дарж, маягтыг бөглөнө.`+(c.phone?` Асуух зүйл байвал 📞 ${c.phone}.`:''));
+        if(I.when)return O(c.day?`${N} — ${c.day}.`:`${N} — хичээллэх цаг сайтад алга.`+(c.phone?` 📞 ${c.phone}`:''));
+        if(I.where)return O(c.place?`${N} — ${c.place}.`:`${N} — байршил сайтад алга.`);
+        if(I.phone)return O(c.phone?`${N}: 📞 ${c.phone}`:`${N} — утас сайтад алга.`);
+        if(I.who)return O(c.t?`${N} — удирдагч: ${c.t}.`:`${N} — удирдагч сайтад алга.`);
+        if(I.grade)return O(c.grade?`${N} — ${/^[\d\s–-]+$/.test(c.grade)?c.grade+'-р анги':c.grade}.`:`${N} — хамрагдах анги сайтад алга.`);
+        return O(`${N}`+(c.t?`, удирдагч ${c.t}`:'')+(c.day?`. 🕒 ${c.day}`:'')+(c.place?`. 📍 ${c.place}`:'')+'.');}
       case 'teacher':{const t=d.t;
         if(I.years)return t.e?`${t.n} — ${t.e} жил ажиллаж байна.`:`${t.n}-ийн ажилласан жил сайтад алга.`;
         if(I.cls)return t.classes?`${t.n} заадаг анги: ${t.classes}.`:`${t.n}-ийн заадаг анги сайтад алга.`;
@@ -213,7 +223,7 @@ const S79Assistant=(()=>{
     if(!top.length)return {text:`${st.grade?st.grade+'-р ангийн':'Таны'} сонирхолд яг тохирох клуб одоогоор алга байна. 😊 Нийт ${all.length} клуб танд нээлттэй — “Клубүүд” гэж бичээд бүгдийг нь харж болно.`,options:['Клубүүд','Дахин эхлэх']};
     const lab=k=>(INTERESTS.find(i=>i.k===k)||{l:''}).l.replace(/^\S+\s/,'').toLowerCase();
     const lines=top.map((x,i)=>{const c=x.c;return `${i+1}. ${c.ico||'🏅'} ${c.name.replace(/&amp;/g,'&')}`+(x.hit.length?` — ${x.hit.map(lab).join(', ')}`:'')+(c.day?`\n   🕒 ${c.day}`:'')});
-    quiz=null;
+    quiz=null; lastClub=top[0].c;
     const intro=st.ints.includes('any')&&st.ints.length===1?'Өөр өөр чиглэлээс сонирхож болох клубууд':'Танд тохирох клубууд';
     return {text:`${intro}${st.grade?` (${st.grade}-р анги)`:''}:\n\n${lines.join('\n')}\n\nДэлгэрэнгүйг доорх товчоор асууж, “Клуб” хэсгээс бүртгүүлээрэй.`,
       options:top.map(x=>x.c.name.replace(/&amp;/g,'&').replace(/[“”]/g,'').slice(0,40)).concat(['Дахин эхлэх'])};
@@ -244,5 +254,5 @@ const S79Assistant=(()=>{
     }
     return answer(q);
   }
-  return {answer,ask,advise,reset:()=>{docs=null;quiz=null}};
+  return {answer,ask,advise,lastClub:()=>lastClub,reset:()=>{docs=null;quiz=null;lastClub=null}};
 })();

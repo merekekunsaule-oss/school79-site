@@ -787,7 +787,10 @@ function bot(t){$$('#msgs .opts').forEach(o=>o.remove());const a=t[1],m=document
   if(a&&a.options&&a.options.length){const o=document.createElement('div');o.className='opts';o.innerHTML=a.options.map(x=>`<button type="button">${esc(x)}</button>`).join('');
     o.querySelectorAll('button').forEach(b=>b.onclick=()=>ask(b.textContent));$('#msgs').appendChild(o)}
   $('#msgs').scrollTop=1e9}
-function ask(q){bot(['me',q]);const w=document.createElement('div');w.className='msg bot';w.textContent='…';$('#msgs').appendChild(w);$('#msgs').scrollTop=1e9;
+function ask(q){
+  // “Бүртгүүлэх” товч — сүүлд ярьсан клубын бүртгэлийн маягтыг шууд нээнэ
+  if(q==='Бүртгүүлэх'&&S79Assistant.lastClub()){const lc=S79Assistant.lastClub(),c=clubs.find(x=>x.id===lc.id);if(c){bot(['me',q]);bot(['bot',`${lc.name} — бүртгэлийн маягт нээгдлээ. Мэдээллээ бөглөөрэй. 📝`]);openClub(c);return}}
+  bot(['me',q]);const w=document.createElement('div');w.className='msg bot';w.textContent='…';$('#msgs').appendChild(w);$('#msgs').scrollTop=1e9;
   const t0=Date.now();S79Assistant.ask(q,chatHist.slice(-6)).then(a=>setTimeout(()=>{w.remove();bot(['bot',a]);chatHist.push({role:'user',content:q},{role:'assistant',content:typeof a==='object'?a.text:a})},Math.max(0,350-(Date.now()-t0))))}
 $('#fab').onclick=()=>{const c=$('#chat');c.hidden=!c.hidden;if(!c.hidden&&!$('#msgs').children.length)bot(['bot','Сайн уу? Би 79-р сургуулийн AI туслах байна. Сайтад байгаа мэдээллээс хайж хариулна: багш нар, клуб, мэдээ, арга хэмжээ, олимпиад, холбоо барих гэх мэт.']);if(!c.hidden)$('#chatIn').focus()};
 $('#chatClose').onclick=()=>$('#chat').hidden=true;
