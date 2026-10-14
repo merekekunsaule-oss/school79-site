@@ -320,6 +320,7 @@ footer a:hover{color:#fff}
 .msg.bot{background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px}
 .msg.me{background:var(--blue);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
 .opts{display:flex;flex-wrap:wrap;gap:6px;max-width:92%}
+.opts.links a{border-radius:10px;padding:7px 11px;font-size:12.5px;font-weight:700;background:var(--blue);color:#fff;text-decoration:none}
 .opts button{border:1px solid var(--blue-2);background:#fff;border-radius:999px;padding:6px 11px;font-size:12.5px;color:var(--blue);cursor:pointer}
 .opts button:hover{background:var(--bg)}
 .club-advice{display:flex;align-items:center;gap:14px;flex-wrap:wrap;background:linear-gradient(135deg,#E6F0FA,#FDF2F8);border:1px solid var(--line);border-radius:16px;padding:16px 20px;margin:-8px 0 22px}
@@ -928,7 +929,11 @@ try{if(pop.on&&!sessionStorage.getItem('s79_pop')){setTimeout(()=>openM('#popup'
 
 /* AI туслах — сайтад оруулсан мэдээллээс хариулна (assistant.js) */
 const chatHist=[];
-function bot(t){$$('#msgs .opts').forEach(o=>o.remove());const a=t[1],m=document.createElement('div');m.className='msg '+(t[0]);m.textContent=typeof a==='object'?a.text:a;$('#msgs').appendChild(m);
+function bot(t){$$('#msgs .opts:not(.links)').forEach(o=>o.remove());const a=t[1],m=document.createElement('div');m.className='msg '+(t[0]);m.textContent=typeof a==='object'?a.text:a;$('#msgs').appendChild(m);
+  if(a&&a.links&&a.links.length){const l=document.createElement('div');l.className='opts links';
+    l.innerHTML=a.links.map(x=>`<a href="${esc(x.u)}" ${/^#/.test(x.u)?'':'target="_blank" rel="noopener"'} ${x.g?`data-g="${esc(x.g)}"`:''}>${esc(x.t)}</a>`).join('');
+    l.querySelectorAll('a[data-g]').forEach(x=>x.onclick=()=>{const b=document.querySelector(`#libTabs [data-g="${x.dataset.g}"]`);if(b)b.click()});
+    $('#msgs').appendChild(l)}
   if(a&&a.options&&a.options.length){const o=document.createElement('div');o.className='opts';o.innerHTML=a.options.map(x=>`<button type="button">${esc(x)}</button>`).join('');
     o.querySelectorAll('button').forEach(b=>b.onclick=()=>ask(b.textContent));$('#msgs').appendChild(o)}
   $('#msgs').scrollTop=1e9}
@@ -939,7 +944,7 @@ function ask(q){
   const t0=Date.now();S79Assistant.ask(q,chatHist.slice(-6)).then(a=>setTimeout(()=>{w.remove();bot(['bot',a]);chatHist.push({role:'user',content:q},{role:'assistant',content:typeof a==='object'?a.text:a})},Math.max(0,350-(Date.now()-t0))))}
 $('#fab').onclick=()=>{const c=$('#chat');c.hidden=!c.hidden;if(!c.hidden&&!$('#msgs').children.length)bot(['bot','Сайн уу? Би 79-р сургуулийн AI туслах байна. Сайтад байгаа мэдээллээс хайж хариулна: багш нар, клуб, мэдээ, арга хэмжээ, олимпиад, холбоо барих гэх мэт.']);if(!c.hidden)$('#chatIn').focus()};
 $('#chatClose').onclick=()=>$('#chat').hidden=true;
-$('#quick').innerHTML=['Аль клубт элсэх вэ?','Клубүүд','Олимпиадын хуваарь','Холбоо барих'].map(q=>`<button>${q}</button>`).join('');
+$('#quick').innerHTML=['Аль клубт элсэх вэ?','Сурах бичиг','Амралт хэзээ вэ?','Удахгүй болох арга хэмжээ','Холбоо барих'].map(q=>`<button>${q}</button>`).join('');
 $$('#quick button').forEach(b=>b.onclick=()=>ask(b.textContent));
 // Клуб хэсгийн “Аль клуб тохирох вэ?” товч — чатыг нээж санал болгох асуултыг эхлүүлнэ
 $('#clubAdvice').onclick=()=>{const c=$('#chat');if(c.hidden)$('#fab').click();ask('Аль клубт элсэх вэ?')};
