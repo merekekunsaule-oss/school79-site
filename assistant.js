@@ -52,6 +52,8 @@ const S79Assistant=(()=>{
       ()=>`📊 Манай сургууль: ${home.students||'—'} сурагч, ${home.teachersN||'—'} багш, ${home.workers||'—'} ажилтан, ${home.groups||'—'} анги бүлэг, ${g('clubs').length} клуб дугуйлан. 1974 онд байгуулагдсан, ${home.years||''} жилийн түүхтэй.`);
     if(home.dirText)add('director',`захирал ${home.dirName||''} мэндчилгээ удирдлага`,home.dirText,
       ()=>`👩‍💼 Захирал: ${home.dirName}.\n${cut(home.dirText,300)}`);
+    if(home.obj1)add('goal','сургуулийн зорилт зорилтууд',[home.obj1,home.obj2,home.obj3].join(' '),()=>'📌 Сургуулийн зорилтууд:\n'+[home.obj1,home.obj2,home.obj3].filter(Boolean).map((x,i)=>`${i+1}. ${x}`).join('\n'));
+    if(home.motto)add('goal','сургуулийн уриа уриалга',home.motto,()=>`📣 Уриа: “${home.motto}”`);
     if(home.goal)add('goal','сургуулийн зорилго алсын хараа эрхэм зорилго зорилт',home.goal,()=>`🎯 Сургуулийн зорилго: ${home.goal}`);
     if(home.about)add('about','сургуулийн тухай танилцуулга түүх байгуулагдсан',home.about,()=>`🏫 ${home.about}`);
     D.forEach(d=>{d.tt=new Set(toks(d.title).map(stem));d.bt=new Set(toks(d.body).map(stem))});
@@ -88,6 +90,12 @@ const S79Assistant=(()=>{
       if(/ажилтан|ажилчид/.test(n))return `${h.workers} ажилтантай.`;
       if(/клуб|дугуйлан/.test(n))return `${nc} клуб, дугуйлантай.`;
       return `1974 онд байгуулагдсан, ${h.years} жилийн түүхтэй.`;}
+    { // Сургуулийн зорилго / зорилт / уриа — ялгаж хариулна
+      const h=S79.get('home')||{};
+      if(/уриа/.test(n)&&h.motto&&!/клуб|дугуйлан/.test(n))return `📣 Уриа: “${h.motto}”`;
+      if(/зорилт/.test(n)&&h.obj1&&!/клуб|дугуйлан/.test(n))return '📌 Сургуулийн зорилтууд:\n'+[h.obj1,h.obj2,h.obj3].filter(Boolean).map((x,i)=>`${i+1}. ${x}`).join('\n');
+      if(/зорилго/.test(n)&&/сургуул|манай|79/.test(n)&&h.goal)return `🎯 Сургуулийн зорилго: ${h.goal}`;
+    }
     const qt=[...new Set(toks(q).filter(t=>!STOP.has(t)).map(stem))];
     // Дараагийн асуулт (ж: “Тавигдах шаардлага”, “Хэзээ?”) — нэр дурдаагүй бол сүүлд ярьсан клубыг ашиглана
     if(lastClub){
@@ -143,6 +151,8 @@ const S79Assistant=(()=>{
         const O=t=>({text:t,options:['📋 Тавигдах шаардлага','🕒 Хэзээ хичээллэдэг вэ?','📍 Хаана хичээллэдэг вэ?','👤 Удирдагч хэн бэ?','📞 Холбоо барих'].concat(['Бүртгүүлэх'])});
         if(I.reqs){const R=String(c.reqs||'').split('\n').map(x=>x.trim()).filter(Boolean);
           return O(R.length?`📋 ${N} — тавигдах шаардлага:\n`+R.map(x=>'• '+x).join('\n'):`${N}-д тавигдах шаардлага сайтад оруулаагүй байна.`+(c.phone?` 📞 ${c.phone}-аас лавлана уу.`:''))}
+        if(/уриа/.test(n))return O(c.motto?`${N} — уриа: “${c.motto}”`:`${N}-ийн уриа сайтад алга.`);
+        if(/зорилго/.test(n))return O(c.goal?`${N} — зорилго: ${c.goal}`:`${N}-ийн зорилго сайтад алга.`);
         if(I.signup)return O(`${N}-д бүртгүүлэхдээ “Клуб” хэсгээс тухайн клубын “Бүртгүүлэх” товчийг дарж, маягтыг бөглөнө.`+(c.phone?` Асуух зүйл байвал 📞 ${c.phone}.`:''));
         if(I.when)return O(c.day?`${N} — ${c.day}.`:`${N} — хичээллэх цаг сайтад алга.`+(c.phone?` 📞 ${c.phone}`:''));
         if(I.where)return O(c.place?`${N} — ${c.place}.`:`${N} — байршил сайтад алга.`);
