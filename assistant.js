@@ -92,6 +92,21 @@ const S79Assistant=(()=>{
       if(/ажилтан|ажилчид/.test(n))return `${h.workers} ажилтантай.`;
       if(/клуб|дугуйлан/.test(n))return `${nc} клуб, дугуйлантай.`;
       return `1974 онд байгуулагдсан, ${h.years} жилийн түүхтэй.`;}
+    if(/амралт/.test(n)&&!/булан/.test(n)){ // Улирлын амралт — “Нүүр хуудас”-ны хуваарьаас
+      const md=d=>{const [,m,dd]=d.split('-');return `${+m}-р сарын ${+dd}`};
+      const brs=String((S79.get('home')||{}).breaks||'').split('\n').map(l=>l.split('|').map(s=>s.trim())).filter(a=>a[0]&&/^\d{4}-\d\d-\d\d$/.test(a[1]||''))
+        .map(([nm,s,e,note])=>({nm,s,e:/^\d{4}-\d\d-\d\d$/.test(e||'')?e:'',note:note||''})).sort((a,b)=>a.s<b.s?-1:1);
+      if(brs.length){
+        const line=b=>`🗓 ${b.nm}: ${md(b.s)}${b.e?' – '+md(b.e):'-нөөс'}${b.note?` (${b.note})`:''}`;
+        const pick=/өвл/.test(n)?brs.find(b=>/өвл/i.test(b.nm)):/зун/.test(n)?brs.find(b=>/зун/i.test(b.nm)):
+          /(^|\s)(iii|3)/.test(n)?brs.find(b=>/^III\s/.test(b.nm)):/(^|\s)(ii|2)/.test(n)?brs.find(b=>/^II\s/.test(b.nm)):/(^|\s)(i|1)(\s|-)/.test(n)?brs.find(b=>/^I\s/.test(b.nm)):null;
+        if(pick)return line(pick);
+        if(/бүх|хуваар|улирлын амралтууд/.test(n))return brs.map(line).join('\n');
+        const d=new Date(),t=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        const b=brs.find(b=>b.s<=t&&(!b.e||t<=b.e))||brs.find(b=>b.s>t);
+        if(b)return (b.s<=t?'Одоо амралт үргэлжилж байна.\n':'')+line(b);
+      }
+    }
     { // Сургуулийн зорилго / зорилт / уриа — ялгаж хариулна
       const h=S79.get('home')||{};
       if(/уриа/.test(n)&&h.motto&&!/клуб|дугуйлан/.test(n))return `📣 Уриа: “${h.motto}”`;

@@ -78,6 +78,13 @@ nav a:hover,nav a.active{background:var(--bg);color:var(--blue)}
 .hero-card .date small{display:block;font-size:10.5px;color:var(--red)}
 .hero-card .item b{display:block;font-size:15px}
 .hero-card .item span{font-size:13px;color:#cfe1f3}
+.brk{display:flex;gap:16px;align-items:center;background:#fff;color:var(--blue);border-radius:18px;padding:16px 18px;margin-bottom:20px;box-shadow:0 10px 30px rgba(0,0,0,.15)}
+.brk .n{min-width:68px;height:68px;border-radius:16px;background:var(--red);color:#fff;display:grid;place-items:center;text-align:center;font-weight:900;font-size:28px;line-height:1}
+.brk .n small{display:block;font-size:11px;font-weight:700;margin-top:2px}
+.brk .t{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--red);text-transform:uppercase}
+.brk b{display:block;font-size:17px;margin:2px 0}
+.brk .d{font-size:14px;font-weight:700}
+.brk .s{display:block;font-size:12.5px;color:#5a6b7d;margin-top:3px}
 .wave{position:absolute;bottom:-1px;left:0;right:0;height:60px;background:#fff;clip-path:ellipse(75% 100% at 50% 100%)}
 @media(max-width:900px){.hero .wrap{grid-template-columns:1fr;padding-block:60px 90px}}
 
@@ -345,6 +352,7 @@ footer a:hover{color:#fff}
       </form>
     </div>
     <div class="hero-card">
+      <div class="brk" id="breakBox" hidden></div>
       <h3>📌 ОНЦЛОХ ЗАРЛАЛ</h3>
       <div id="heroEvents"></div>
     </div>
@@ -644,6 +652,23 @@ const today=new Date().toISOString().slice(0,10);
 const evs=S79.get('events'), upcoming=evs.filter(e=>e.date>=today).sort((a,b)=>a.date<b.date?-1:1), feat=upcoming.filter(e=>e.featured);
 $('#heroEvents').innerHTML=(feat.length?feat:upcoming).slice(0,3).map(e=>{const [,m,d]=e.date.split('-');
   return `<div class="item"><div class="date">${d}<small>${+m}-р сар</small></div><div><b>${esc(e.title)}</b><span>${esc(e.place||'')}</span></div></div>`}).join('')||'<div class="item"><div><span>Удахгүй болох арга хэмжээ алга.</span></div></div>';
+
+/* улирлын амралт — хамгийн ойрын (эсвэл одоо үргэлжилж буй) амралтыг нүүр хэсэгт */
+{
+  const ld=d=>{const [y,m,dd]=d.split('-').map(Number);return new Date(y,m-1,dd)};
+  const now=new Date(),t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const md=d=>{const x=ld(d);return `${x.getMonth()+1}-р сарын ${x.getDate()}`};
+  const brs=String(home.breaks||'').split('\n').map(l=>l.split('|').map(s=>s.trim())).filter(a=>a[0]&&/^\d{4}-\d\d-\d\d$/.test(a[1]||''))
+    .map(([n,s,e,note])=>({n,s,e:/^\d{4}-\d\d-\d\d$/.test(e||'')?e:'',note:note||''})).sort((a,b)=>a.s<b.s?-1:1);
+  const cur=brs.find(b=>ld(b.s)<=t0&&(!b.e||t0<=ld(b.e))), next=brs.find(b=>ld(b.s)>t0), b=cur||next;
+  if(b){
+    const days=Math.round((ld(b.s)-t0)/864e5), range=md(b.s)+(b.e?' – '+md(b.e):'-нөөс');
+    $('#breakBox').innerHTML=cur
+      ?`<div class="n">🎉</div><div><span class="t">Амралт эхэллээ</span><b>${esc(b.n)}</b><span class="d">${esc(range)}</span>${b.note?`<span class="s">${esc(b.note)}</span>`:''}</div>`
+      :`<div class="n">${days}<small>хоног</small></div><div><span class="t">${days===1?'Маргааш эхэлнэ':'Амралт эхлэхэд'}</span><b>${esc(b.n)}</b><span class="d">${esc(range)}</span>${b.note?`<span class="s">${esc(b.note)}</span>`:''}</div>`;
+    $('#breakBox').hidden=false;
+  }
+}
 
 /* зочноос сервер рүү илгээх (бүртгэл, зурвас, зар, гомдол) */
 function send(key,item,form,ok){const b=form&&form.querySelector('[type=submit],button:not([type=button])');if(b)b.disabled=true;
