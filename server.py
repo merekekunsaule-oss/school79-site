@@ -9,6 +9,7 @@ import hashlib
 import hmac
 import json
 import os
+import re
 import secrets
 import sqlite3
 import threading
@@ -16,7 +17,7 @@ import time
 from contextlib import contextmanager
 from http.cookies import SimpleCookie
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
-from urllib.parse import unquote, urlparse
+from urllib.parse import parse_qs, unquote, urlparse
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DB_PATH = os.environ.get("S79_DB", os.path.join(ROOT, "data", "school79.db"))
@@ -31,6 +32,10 @@ PRIVATE_KEYS = {"s79_msgs", "s79_reports", "s79_cms_log", USERS_KEY}
 APPEND_KEYS = {"s79_regs", "s79_msgs", "s79_reports", "s79_cms_ads"}
 # Статик файлаар өгөхгүй
 BLOCKED = (".py", ".db", ".json", ".docx", ".sqlite", ".md")
+# Цахим сан: админаас оруулах файл (сурах бичиг PDF г.м.)
+UPLOAD_DIR = os.path.join(ROOT, "media", "books")
+UPLOAD_MAX = 300 * 1024 * 1024
+UPLOAD_EXT = (".pdf", ".epub", ".jpg", ".jpeg", ".png", ".webp")
 
 _db_lock = threading.Lock()
 _login_fail = {}  # ip -> [timestamps]
@@ -47,7 +52,7 @@ _ask_ctx = {"stamp": None, "text": ""}
 _anthropic_client = None
 # Нийтэд нээлттэй контентын хэсгүүд (хувийн мэдээлэл — бүртгэл, зурвас, хэрэглэгч — орохгүй)
 ASK_KEYS = ["settings", "home", "pages", "teachers", "clubs", "news", "announcements", "events",
-            "pride", "faq", "courses", "ads", "videos", "buildings", "admission"]
+            "pride", "faq", "courses", "ads", "videos", "buildings", "admission", "library"]
 ASK_SYSTEM = (
     "Та Нийслэлийн ерөнхий боловсролын 79-р сургуулийн вэб сайтын AI туслах. "
     "Зөвхөн доорх <site_data> доторх мэдээлэлд тулгуурлан, монгол хэлээр хариулна. "
@@ -294,7 +299,7 @@ class Handler(SimpleHTTPRequestHandler):
         p = urlparse(self.path).path.lower()
         if not p.startswith("/api/") and (p.endswith((".html", ".js", ".css", "/")) or "." not in p.rsplit("/", 1)[-1]):
             self.send_header("Cache-Control", "no-cache")
-        if p.endswith((".mp4", ".webm", ".mov", ".m4v")) and self.command == "GET":
+        if p.endswith((".mp4", ".webm", ".mov", ".m4v", ".pdf")) and self.command == "GET":
             self.send_header("Accept-Ranges", "bytes")
         super().end_headers()
 
@@ -306,7 +311,7 @@ class Handler(SimpleHTTPRequestHandler):
         low = unquote(path).lower()
         if low.startswith("/data/") or low.endswith(BLOCKED) or "/." in low:
             return self.send_error(404)
-        if self.headers.get("Range") and low.endswith((".mp4", ".webm", ".mov", ".m4v")):
+        if self.headers.get("Range") and low.endswith((".mp4", ".webm", ".mov", ".m4v", ".pdf")):
             return self.send_range()
         return super().do_GET()
 
@@ -394,6 +399,34 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_json({"error": "Хариулт олдсонгүй"}, 502)
         return self.send_json({"answer": answer})
 
+    def upload(self):
+        """Цахим сангийн файлыг (PDF г.м.) media/books/ руу урсгалаар хадгална."""
+        name = unquote(parse_qs(urlparse(self.path).query).get("name", [""])[0])
+        base, ext = os.path.splitext(os.path.basename(name))
+        ext = ext.lower()
+        if ext not in UPLOAD_EXT:
+            return self.send_json({"error": "Зөвхөн PDF, EPUB эсвэл зураг оруулна"}, 400)
+        n = int(self.headers.get("Content-Length") or 0)
+        if n <= 0 or n > UPLOAD_MAX:
+            return self.send_json({"error": "Файл хоосон эсвэл хэт том (300MB хүртэл)"}, 400)
+        safe = re.sub(r"[^\w.-]+", "-", base, flags=re.UNICODE).strip("-.")[:60] or "file"
+        os.makedirs(UPLOAD_DIR, exist_ok=True)
+        fn = f"{time.strftime('%Y%m%d-%H%M%S')}-{secrets.token_hex(3)}-{safe}{ext}"
+        tmp = os.path.join(UPLOAD_DIR, "." + fn + ".part")
+        left = n
+        with open(tmp, "wb") as out:
+            while left > 0:
+                chunk = self.rfile.read(min(256 * 1024, left))
+                if not chunk:
+                    break
+                out.write(chunk)
+                left -= len(chunk)
+        if left:
+            os.remove(tmp)
+            return self.send_json({"error": "Файл бүрэн ирсэнгүй"}, 400)
+        os.replace(tmp, os.path.join(UPLOAD_DIR, fn))
+        return self.send_json({"ok": True, "path": "media/books/" + fn, "size": n})
+
     # --- api
     def api(self, method, path):
         try:
@@ -403,6 +436,13 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.send_json({"enabled": ask_enabled()})
             if path == "/api/ask" and method == "POST":
                 return self.ask()
+            if path == "/api/upload" and method == "POST":
+                # Том файл удаан ирдэг тул DB-ийн түгжээг барихгүйгээр хадгална
+                with _db_lock, tx() as c:
+                    me = self.current_user(c)
+                if not me:
+                    return self.send_json({"error": "Нэвтрэх шаардлагатай"}, 401)
+                return self.upload()
             with _db_lock, tx() as c:
                 me = self.current_user(c)
 

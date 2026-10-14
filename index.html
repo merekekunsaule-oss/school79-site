@@ -162,6 +162,23 @@ section{padding-block:84px}
 .tabs{display:flex;gap:8px;flex-wrap:wrap}
 .tab{border:1px solid var(--line);background:#fff;padding:8px 16px;border-radius:999px;font-weight:600;font-size:14px;color:#475569}
 .tab.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+/* цахим сан */
+.lib-tabs{margin:0 0 22px}
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:18px}
+.book{display:flex;flex-direction:column;overflow:hidden}
+.book .cv{aspect-ratio:3/4;background:var(--bg) center/cover no-repeat;display:flex;flex-direction:column;justify-content:flex-end;padding:14px;color:#fff;position:relative}
+.book .cv.gen::before{content:"";position:absolute;inset:0 auto 0 0;width:10px;background:rgba(0,0,0,.18)}
+.book .cv b{font-size:17px;line-height:1.2;text-shadow:0 1px 2px rgba(0,0,0,.2)}
+.book .cv small{font-size:12px;opacity:.9;font-weight:700}
+.book .cv .ic{font-size:34px;margin-bottom:auto}
+.book .bb{padding:12px 14px;display:flex;flex-direction:column;gap:8px;flex:1}
+.book .bb h3{font-size:15px;margin:0;line-height:1.3}
+.book .bb p{margin:0;font-size:12.5px;color:var(--muted)}
+.book .acts{display:flex;gap:6px;margin-top:auto}
+.book .acts a{flex:1;text-align:center;padding:8px 6px;border-radius:10px;font-weight:700;font-size:13px;background:var(--blue);color:#fff}
+.book .acts a.dl{background:var(--bg);color:var(--blue);flex:0 0 40px}
+@media(max-width:600px){.lib-grid{grid-template-columns:repeat(2,1fr);gap:12px}.lib-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.lib-tabs .tab{flex:0 0 auto}.book .cv{padding:10px}.book .cv b{font-size:15px}.book .bb{padding:10px}}
+.lib-empty{padding:40px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:16px}
 
 /* clubs */
 .club{padding:22px;display:flex;flex-direction:column}
@@ -327,6 +344,7 @@ footer a:hover{color:#fff}
     <li><a href="#news">Мэдээ</a></li>
     <li><a href="#clubs">Клуб</a></li>
     <li><a href="#teachers">Багш нар</a></li>
+    <li><a href="#library">Цахим сан</a></li>
     <li><a href="#market">Зар</a></li>
     <li><a href="#faq">Асуулт хариулт</a></li>
     <li><a href="#contact">Холбоо барих</a></li>
@@ -458,6 +476,13 @@ footer a:hover{color:#fff}
 </div></section>
 
 <!-- MARKET -->
+<!-- LIBRARY -->
+<section id="library"><div class="wrap">
+  <div class="sec-head"><div><div class="kicker">ЦАХИМ САН</div><h2>Цахим сурах бичиг</h2><p>Ангиа сонгоод сурах бичгээ онлайнаар уншиж, татаж аваарай.</p></div></div>
+  <div class="tabs lib-tabs" id="libTabs"></div>
+  <div class="lib-grid" id="libGrid"></div>
+</div></section>
+
 <section id="market"><div class="wrap">
   <div class="sec-head">
     <div><div class="kicker">79-Р СУРГУУЛИЙН ЗАР</div><h2>Зарын булан</h2><p>Сурах бичиг, хувцас, спорт, цахилгаан бараа зэрэг зар нэмж, солилцох энгийн платформ.</p></div>
@@ -537,7 +562,7 @@ footer a:hover{color:#fff}
       <div class="socials"><a href="#" aria-label="Facebook" data-link="facebook" target="_blank" rel="noopener">f</a><a href="#" aria-label="Instagram" data-link="instagram" target="_blank" rel="noopener">ig</a><a href="#" aria-label="YouTube" data-link="youtube" target="_blank" rel="noopener">▶</a></div>
     </div>
     <div><h5>Хуудсууд</h5><ul id="footPages"><li><a href="#about">Танилцуулга</a></li><li><a href="#news">Мэдээ</a></li><li><a href="#clubs">Клуб</a></li><li><a href="#teachers">Багш нар</a></li></ul></div>
-    <div><h5>Сургалт</h5><ul id="footCourses"><li><a href="#admission">Элсэлтийн мэдээлэл</a></li><li><a href="#market">Зарын булан</a></li></ul></div>
+    <div><h5>Сургалт</h5><ul id="footCourses"><li><a href="#library">Цахим сан</a></li><li><a href="#admission">Элсэлтийн мэдээлэл</a></li><li><a href="#market">Зарын булан</a></li></ul></div>
     <div><h5>Холбоо барих</h5><ul><li>📞 <span data-s="phone"></span></li><li>✉️ <span data-s="email"></span></li><li>📍 <span data-s="city">Улаанбаатар хот</span></li></ul></div>
   </div>
   <div class="copy"><span>© <span id="yr"></span> <span data-s="fullName">Нийслэлийн ерөнхий боловсролын 79 дүгээр сургууль</span>. Бүх эрх хуулиар хамгаалагдсан.</span><span><span data-h="motto">Бид хүүхдийн төлөө – Хүүхэд бүр онцгой</span></span></div>
@@ -840,6 +865,29 @@ if(adm.length){$('#admission').hidden=false;
     <div class="pb"><span class="st ${sc}">${sl}</span><h3>${esc(a.title)}</h3><div class="when">📅 ${fmtD(a.date)}${a.until?` – ${fmtD(a.until)}`:''}</div></div></div>`}).join('');
   $$('#admGrid [data-adm]').forEach(c=>c.onclick=c.onkeydown=e=>{if(e.type==='keydown'&&e.key!=='Enter')return;const a=adm[+c.dataset.adm];
     $('#detailBody').innerHTML=`${a.img?`<img src="${esc(S79.img(a.img))}" alt="" style="width:100%;border-radius:12px;margin-bottom:14px">`:''}<h3>${esc(a.title)}</h3><p style="white-space:pre-line;color:#475569">${esc(a.text)}</p>${a.link?`<a class="btn btn-primary" href="${esc(a.link)}" target="_blank" rel="noopener">${esc(a.linkText||'Холбоос')} ↗</a>`:''}`;openM('#detailModal')})}
+
+/* Цахим сан — сурах бичиг анги бүрээр */
+{
+  const books=(S79.get('library')||[]).filter(b=>b.title&&b.file).sort((a,b)=>(a.o||0)-(b.o||0)||String(a.subject||'').localeCompare(String(b.subject||''),'mn')||String(a.title).localeCompare(String(b.title),'mn'));
+  const G=['1','2','3','4','5','6','7','8','9','10','11','12'], cnt=g=>books.filter(b=>String(b.grade)===g).length;
+  const COL=['#1D4ED8','#DC2626','#059669','#7C3AED','#D97706','#0891B2','#DB2777','#4D7C0F'];
+  const ICO=[[/математик|алгебр|геометр/i,'➗'],[/монгол хэл|уран зохиол|үсэг|монгол бичиг/i,'📝'],[/англи|орос|хятад|япон|солонгос|герман|хэл/i,'🌐'],[/физик/i,'⚛️'],[/хими/i,'🧪'],[/биологи|байгаль|эрүүл/i,'🌱'],[/түүх|нийгэм|иргэн/i,'🏛️'],[/газарзүй/i,'🌏'],[/мэдээлэл|технологи|дизайн/i,'💻'],[/хөгжим|дуу/i,'🎵'],[/зураг|урлаг/i,'🎨'],[/биеийн тамир|спорт/i,'⚽']];
+  const ico=s=>(ICO.find(([r])=>r.test(s||''))||[,'📘'])[1];
+  const col=s=>{let h=0;for(const c of String(s||''))h=(h*31+c.charCodeAt(0))>>>0;return COL[h%COL.length]};
+  let g=(()=>{try{const v=localStorage.getItem('s79_libGrade');if(G.includes(v))return v}catch(e){}return G.find(cnt)||'1'})();
+  const render=()=>{
+    $('#libTabs').innerHTML=G.map(x=>`<button class="tab ${x===g?'on':''}" data-g="${x}">${x}-р анги${cnt(x)?` <small>${cnt(x)}</small>`:''}</button>`).join('');
+    {const t=$('#libTabs'),on=t.querySelector('.on');if(on&&t.scrollWidth>t.clientWidth)t.scrollLeft=on.offsetLeft-t.offsetLeft-(t.clientWidth-on.offsetWidth)/2}
+    $$('#libTabs .tab').forEach(b=>b.onclick=()=>{g=b.dataset.g;try{localStorage.setItem('s79_libGrade',g)}catch(e){}render()});
+    const list=books.filter(b=>String(b.grade)===g);
+    $('#libGrid').innerHTML=list.length?list.map(b=>{const f=S79.img(b.file),cv=S79.img(b.cover);
+      return `<div class="card book">${cv?`<div class="cv" style="background-image:url('${esc(cv)}')"></div>`
+        :`<div class="cv gen" style="background:${col(b.subject||b.title)}"><span class="ic">${ico(b.subject||b.title)}</span><b>${esc(b.subject||b.title)}</b><small>${esc(g)}-р анги</small></div>`}
+        <div class="bb"><h3>${esc(b.title)}</h3>${b.note?`<p>${esc(b.note)}</p>`:''}<div class="acts"><a href="${esc(f)}" target="_blank" rel="noopener">📖 Унших</a><a class="dl" href="${esc(f)}" download title="Татах" aria-label="${esc(b.title)} — татах">⬇</a></div></div></div>`}).join('')
+      :`<div class="lib-empty" style="grid-column:1/-1">📚 ${esc(g)}-р ангийн сурах бичиг удахгүй нэмэгдэнэ.</div>`;
+  };
+  render();
+}
 
 /* Хичээлийн байрууд */
 const blds=(S79.get('buildings')||[]).slice().sort((a,b)=>(a.o||0)-(b.o||0));

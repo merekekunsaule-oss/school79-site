@@ -239,6 +239,7 @@ const SECTIONS=[
  {k:'reports',t:'Гомдол, илгээлт',ic:'flag',raw:'s79_reports',badge:1,cols:[['ad','Зар'],['adId','Төлөв'],['at','Огноо']]},
  {k:'users',t:'Хэрэглэгчид',ic:'user',admin:1,fields:[{k:'name',l:'Бүтэн нэр',req:1},{k:'user',l:'Нэвтрэх нэр',req:1},{k:'pass',l:'Нууц үг (6+ тэмдэгт)',type:'password',ph:'Шинэ хэрэглэгчид заавал; солих бол л бичнэ'},{k:'role',l:'Эрх',type:'select',opt:['admin','editor']}],
    cols:[['name','Нэр'],['user','Нэвтрэх нэр'],['role','Эрх']]},
+ {k:'library',t:'Цахим сан',ic:'file',fields:[{k:'title',l:'Сурах бичгийн нэр',req:1,full:1,ph:'Математик 5'},{k:'grade',l:'Анги',type:'select',opt:['1','2','3','4','5','6','7','8','9','10','11','12']},{k:'subject',l:'Хичээл',ph:'Математик'},{k:'file',l:'Файл (PDF) — “Файл оруулах” товчоор серверт хуулна, эсвэл холбоос (URL) бичнэ',type:'file',full:1,req:1},{k:'cover',l:'Нүүрний зураг (сонголттой)',type:'img',full:1},{k:'o',l:'Эрэмбэ',type:'number'},{k:'note',l:'Тайлбар (сонголттой)',full:1}],cols:[['title','Нэр'],['grade','Анги'],['subject','Хичээл'],['file','Файл']],hint:'Сурах бичгүүд сайтын “Цахим сан” хэсэгт анги бүрээр харагдана. PDF файл 300MB хүртэл.'},
  {k:'admission',t:'Элсэлтийн мэдээлэл',ic:'clip',fields:[{k:'title',l:'Гарчиг',req:1,full:1},{k:'date',l:'Эхлэх огноо',type:'date'},{k:'until',l:'Дуусах огноо',type:'date'},{k:'o',l:'Эрэмбэ',type:'number'},{k:'img',l:'Зураг',type:'img',full:1},{k:'link',l:'Холбоос (URL)',full:1,ph:'https://...'},{k:'linkText',l:'Холбоосын бичиг',full:1},{k:'text',l:'Агуулга',type:'textarea',full:1,rows:7}],
    cols:[['_thumb',''],['title','Гарчиг'],['date','Эхлэх'],['until','Дуусах']],sort:'o',asc:1},
  {k:'buildings',t:'Хичээлийн байрууд',ic:'home',fields:[{k:'name',l:'Нэр',req:1,ph:'1-р байр'},{k:'o',l:'Эрэмбэ',type:'number'},{k:'address',l:'Хаяг',full:1},{k:'note',l:'Тайлбар (сонголттой)',full:1},{k:'img',l:'Зураг',type:'img',full:1}],
@@ -343,10 +344,26 @@ function fieldHTML(f,v){
     case 'select':inp=`<select name="${f.k}">${f.opt.map(o=>`<option ${o==val?'selected':''}>${esc(o)}</option>`).join('')}</select>`;break;
     case 'check':return `<div class="${f.full?'full':''}"><label class="chk"><input type="checkbox" name="${f.k}" ${val?'checked':''}> ${f.l}</label></div>`;
     case 'color':inp=`<input type="color" name="${f.k}" value="${esc(val||'#E6F0FA')}">`;break;
+    case 'file':inp=`<div class="img-f"><input name="${f.k}" value="${esc(val)}" ${req} placeholder="media/books/... эсвэл https://..."><label class="btn gray" style="margin:0;white-space:nowrap">⬆ Файл оруулах<input type="file" data-upload="${f.k}" accept=".pdf,.epub,application/pdf" hidden></label></div><small class="hint" data-upmsg="${f.k}"></small>`;break;
     case 'img':inp=`<div class="img-f"><div class="pv" style="background-image:url('${esc(S79.img(val))}')"></div><input name="${f.k}" value="${esc(val)}" placeholder="Зургийн URL эсвэл медиа сангаас сонгоно"><select data-media="${f.k}"><option value="">Медиа сан…</option>${mediaOpts(val)}</select></div>`;break;
     default:inp=`<input type="${f.type||'text'}" name="${f.k}" value="${esc(val)}" ${req} ${ph}>`;
   }
   return `<div class="${f.full?'full':''}"><label>${f.l}${f.req?' *':''}</label>${inp}</div>`;
+}
+function bindFile(root){
+  root.querySelectorAll('[data-upload]').forEach(inp=>inp.onchange=async()=>{
+    const f=inp.files[0];if(!f)return;const k=inp.dataset.upload,msg=root.querySelector(`[data-upmsg="${k}"]`),out=root.querySelector(`[name="${k}"]`);
+    if(f.size>300*1024*1024)return toast('Файл хэт том байна (300MB хүртэл)');
+    const sb=root.closest('form')?.querySelector('button:not([type=button])');if(sb)sb.disabled=true;
+    msg.textContent=`⏳ ${f.name} хуулж байна... (${(f.size/1048576).toFixed(1)}MB)`;
+    try{
+      const r=await fetch('/api/upload?name='+encodeURIComponent(f.name),{method:'POST',headers:{'X-S79':'1','Content-Type':f.type||'application/octet-stream'},body:f,credentials:'same-origin'});
+      const j=await r.json();if(!r.ok)throw new Error(j.error||r.status);
+      out.value=j.path;msg.textContent=`✓ ${f.name} хуулагдлаа`;
+      const t=root.querySelector('[name="title"]');if(t&&!t.value)t.value=f.name.replace(/\.[^.]+$/,'');
+    }catch(e){msg.textContent='';toast('Файл хуулж чадсангүй: '+e.message)}
+    finally{if(sb)sb.disabled=false;inp.value=''}
+  });
 }
 function bindImg(root){
   root.querySelectorAll('[data-media]').forEach(sel=>{
@@ -429,7 +446,7 @@ function edit(s,i){
   const list=load(s), x=i<0?{}:list[i];
   openModal(i<0?`${s.t} — шинээр нэмэх`:`${s.t} — засах`,`<div class="form">${s.fields.map(f=>fieldHTML(f,x[f.k]??(f.type==='date'?new Date().toISOString().slice(0,10):undefined))).join('')}</div>`,
     `<button type="button" class="btn gray" data-x>Болих</button><button class="btn">Хадгалах</button>`);
-  bindImg($('#mBody'));
+  bindImg($('#mBody'));bindFile($('#mBody'));
   $('#mForm').onsubmit=e=>{e.preventDefault();
     const o=readFields($('#mBody'),s.fields,x);
     if(s.k==='users'&&list.some((u,j)=>j!==i&&u.user===o.user))return toast('Энэ нэвтрэх нэр бүртгэлтэй байна');

@@ -13,9 +13,10 @@ python3 server.py
 - Бүх өгөгдөл `data/school79.db` (SQLite) файлд хадгалагдана. Нөөцлөх бол энэ файлыг хуулна.
 - Анх ажиллахад `seed.json`-оос анхны контент үүснэ. Бүгдийг анхны байдалд оруулах бол серверийг зогсоогоод `data/school79.db`-г устгана.
 - Хүснэгтүүд: `kv` (контент — түлхүүр/JSON), `users` (нууц үг PBKDF2 hash), `sessions`.
+- Цахим сангийн (сурах бичиг) PDF файлууд `media/books/` хавтаст хадгалагдана — нөөцлөхдөө энэ хавтсыг мөн хуулна.
 
 ## Файлууд
-- `server.py` — HTTP сервер, API (`/api/all`, `/api/login`, `/api/logout`, `/api/data/<key>`, `/api/append/<key>`)
+- `server.py` — HTTP сервер, API (`/api/all`, `/api/login`, `/api/logout`, `/api/data/<key>`, `/api/append/<key>`, `/api/upload` — цахим сангийн файл)
 - `cms-data.js` — сайт болон админ хоёрын хамтын өгөгдлийн давхарга
 - `index.html` — нийтийн сайт, `admin.html` — CMS
 
