@@ -1945,11 +1945,1461 @@
    "id": "lib-06-irgenii-yos-zui",
    "title": "Иргэний ёс зүйн боловсрол 6",
    "grade": "6",
-   "subject": "Иргэний ёс зүй",
+   "subject": "Иргэний ёс зүйн боловсрол",
    "file": "media/books/06-irgenii-yos-zuin-bolovsrol.pdf",
-   "cover": "",
+   "cover": "img/books/06_irgenii_yos_zuin_bolovsrol.jpg",
    "o": 0,
-   "note": "Б.Цасанчимэг, Ө.Цэндсүрэн, Ж.Гэрэлмаа · 2023 он, хоёр дахь хэвлэл"
+   "note": "PDF · 8MB"
+  },
+  {
+   "id": "esis-01_dursleh_urlag",
+   "title": "Дүрслэх урлаг, технологи 1",
+   "grade": "1",
+   "subject": "Дүрслэх урлаг, технологи",
+   "file": "https://cdn.esis.edu.mn/cover/01/01_dursleh_urlag.pdf",
+   "cover": "img/books/01_dursleh_urlag.jpg",
+   "o": 0,
+   "note": "PDF · 16MB"
+  },
+  {
+   "id": "esis-01_beltgel",
+   "title": "Бэлтгэл 1",
+   "grade": "1",
+   "subject": "Бэлтгэл",
+   "file": "https://cdn.esis.edu.mn/cover/01/01_beltgel.pdf",
+   "cover": "img/books/01_beltgel.jpg",
+   "o": 0,
+   "note": "PDF · 8MB"
+  },
+  {
+   "id": "esis-01_mongol_khel",
+   "title": "Монгол хэл 1",
+   "grade": "1",
+   "subject": "Монгол хэл",
+   "file": "https://cdn.esis.edu.mn/cover/01/01_mongol_khel.pdf",
+   "cover": "img/books/01_mongol_khel.jpg",
+   "o": 0,
+   "note": "PDF · 129MB"
+  },
+  {
+   "id": "esis-01_matematik",
+   "title": "Математик 1",
+   "grade": "1",
+   "subject": "Математик",
+   "file": "https://cdn.esis.edu.mn/cover/01/01_matematik.pdf",
+   "cover": "img/books/01_matematik.jpg",
+   "o": 0,
+   "note": "PDF · 87MB"
+  },
+  {
+   "id": "esis-01_khugjim",
+   "title": "Хөгжим 1",
+   "grade": "1",
+   "subject": "Хөгжим",
+   "file": "https://cdn.esis.edu.mn/cover/01/01_khugjim.pdf",
+   "cover": "img/books/01_khugjim.jpg",
+   "o": 0,
+   "note": "PDF · 66MB"
+  },
+  {
+   "id": "esis-01_khun_ba_orchin",
+   "title": "Хүн ба орчин 1",
+   "grade": "1",
+   "subject": "Хүн ба орчин",
+   "file": "https://cdn.esis.edu.mn/cover/01/01_khun_ba_orchin.pdf",
+   "cover": "img/books/01_khun_ba_orchin.jpg",
+   "o": 0,
+   "note": "PDF · 53MB"
+  },
+  {
+   "id": "esis-10_uran_zohiol",
+   "title": "Уран зохиол 10",
+   "grade": "10",
+   "subject": "Уран зохиол",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_uran_zohiol.pdf",
+   "cover": "img/books/10_uran_zohiol.jpg",
+   "o": 0,
+   "note": "PDF · 2MB"
+  },
+  {
+   "id": "esis-10_undesnii_bichig",
+   "title": "Үндэсний бичиг 10–11",
+   "grade": "10",
+   "subject": "Үндэсний бичиг",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_undesnii_bichig.pdf",
+   "cover": "img/books/10_undesnii_bichig.jpg",
+   "o": 0,
+   "note": "PDF · 59MB"
+  },
+  {
+   "id": "esis-10_undesnii_bichig-11",
+   "title": "Үндэсний бичиг 10–11",
+   "grade": "11",
+   "subject": "Үндэсний бичиг",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_undesnii_bichig.pdf",
+   "cover": "img/books/10_undesnii_bichig.jpg",
+   "o": 0,
+   "note": "PDF · 59MB"
+  },
+  {
+   "id": "esis-10_mongoliin_tuukh",
+   "title": "Монголын түүх 10",
+   "grade": "10",
+   "subject": "Монголын түүх",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_mongoliin_tuukh.pdf",
+   "cover": "img/books/10_mongoliin_tuukh.jpg",
+   "o": 0,
+   "note": "PDF · 41MB"
+  },
+  {
+   "id": "esis-10_english",
+   "title": "Англи хэл 10",
+   "grade": "10",
+   "subject": "Англи хэл",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_english.pdf",
+   "cover": "img/books/10_english.jpg",
+   "o": 0,
+   "note": "PDF · 152MB"
+  },
+  {
+   "id": "esis-10_biology",
+   "title": "Биологи 10",
+   "grade": "10",
+   "subject": "Биологи",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_biology.pdf",
+   "cover": "img/books/10_biology.jpg",
+   "o": 0,
+   "note": "PDF · 37MB"
+  },
+  {
+   "id": "esis-10_physic",
+   "title": "Физик 10",
+   "grade": "10",
+   "subject": "Физик",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_physic.pdf",
+   "cover": "img/books/10_physic.jpg",
+   "o": 0,
+   "note": "PDF · 22MB"
+  },
+  {
+   "id": "esis-10_gazarzui",
+   "title": "Газарзүй 10",
+   "grade": "10",
+   "subject": "Газарзүй",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_gazarzui.pdf",
+   "cover": "img/books/10_gazarzui.jpg",
+   "o": 0,
+   "note": "PDF · 21MB"
+  },
+  {
+   "id": "esis-10_khimi",
+   "title": "Хими 10",
+   "grade": "10",
+   "subject": "Хими",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_khimi.pdf",
+   "cover": "img/books/10_khimi.jpg",
+   "o": 0,
+   "note": "PDF · 29MB"
+  },
+  {
+   "id": "esis-10_mongol_khel",
+   "title": "Монгол хэл 10",
+   "grade": "10",
+   "subject": "Монгол хэл",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_mongol_khel.pdf",
+   "cover": "img/books/10_mongol_khel.jpg",
+   "o": 0,
+   "note": "PDF · 8MB"
+  },
+  {
+   "id": "esis-10_oros_khel",
+   "title": "Орос хэл 10",
+   "grade": "10",
+   "subject": "Орос хэл",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_oros_khel.pdf",
+   "cover": "img/books/10_oros_khel.jpg",
+   "o": 0,
+   "note": "PDF · 31MB"
+  },
+  {
+   "id": "esis-10_matematic",
+   "title": "Математик 10",
+   "grade": "10",
+   "subject": "Математик",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_matematic.pdf",
+   "cover": "img/books/10_matematic.jpg",
+   "o": 0,
+   "note": "PDF · 29MB"
+  },
+  {
+   "id": "esis-10_medeelliin_technology",
+   "title": "Мэдээллийн технологи 10",
+   "grade": "10",
+   "subject": "Мэдээллийн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_medeelliin_technology.pdf",
+   "cover": "img/books/10_medeelliin_technology.jpg",
+   "o": 0,
+   "note": "PDF · 18MB"
+  },
+  {
+   "id": "esis-10_eruul_mend",
+   "title": "Эрүүл мэнд 10",
+   "grade": "10",
+   "subject": "Эрүүл мэнд",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_eruul_mend.pdf",
+   "cover": "img/books/10_eruul_mend.jpg",
+   "o": 0,
+   "note": "PDF · 11MB"
+  },
+  {
+   "id": "esis-10_niigem_sudlal",
+   "title": "Нийгэм судлал 10",
+   "grade": "10",
+   "subject": "Нийгэм судлал",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_niigem_sudlal.pdf",
+   "cover": "img/books/10_niigem_sudlal.jpg",
+   "o": 0,
+   "note": "PDF · 9MB"
+  },
+  {
+   "id": "esis-10_irgenii_yos_zui",
+   "title": "Иргэний ёс зүйн боловсрол 10",
+   "grade": "10",
+   "subject": "Иргэний ёс зүйн боловсрол",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_irgenii_yos_zui.pdf",
+   "cover": "img/books/10_irgenii_yos_zui.jpg",
+   "o": 0,
+   "note": "PDF · 12MB"
+  },
+  {
+   "id": "esis-10_design_zurag_zui",
+   "title": "Дизайн, зураг зүй, технологи 10",
+   "grade": "10",
+   "subject": "Дизайн, зураг зүй, технологи",
+   "file": "https://cdn.esis.edu.mn/cover/10/10_design_zurag_zui.pdf",
+   "cover": "img/books/10_design_zurag_zui.jpg",
+   "o": 0,
+   "note": "PDF · 26MB"
+  },
+  {
+   "id": "esis-11_niigem_sudlal",
+   "title": "Нийгэм судлал 11",
+   "grade": "11",
+   "subject": "Нийгэм судлал",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_niigem_sudlal.pdf",
+   "cover": "img/books/11_niigem_sudlal.jpg",
+   "o": 0,
+   "note": "PDF · 7MB"
+  },
+  {
+   "id": "esis-11_english",
+   "title": "Англи хэл 11",
+   "grade": "11",
+   "subject": "Англи хэл",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_english.pdf",
+   "cover": "img/books/11_english.jpg",
+   "o": 0,
+   "note": "PDF · 115MB"
+  },
+  {
+   "id": "esis-11_physic",
+   "title": "Физик 11",
+   "grade": "11",
+   "subject": "Физик",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_physic.pdf",
+   "cover": "img/books/11_physic.jpg",
+   "o": 0,
+   "note": "PDF · 11MB"
+  },
+  {
+   "id": "esis-11_gazar_zui",
+   "title": "Газар зүй 11",
+   "grade": "11",
+   "subject": "Газар зүй",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_gazar_zui.pdf",
+   "cover": "img/books/11_gazar_zui.jpg",
+   "o": 0,
+   "note": "PDF · 16MB"
+  },
+  {
+   "id": "esis-11_khimi",
+   "title": "Хими 11",
+   "grade": "11",
+   "subject": "Хими",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_khimi.pdf",
+   "cover": "img/books/11_khimi.jpg",
+   "o": 0,
+   "note": ""
+  },
+  {
+   "id": "esis-11_matematic",
+   "title": "Математик 11",
+   "grade": "11",
+   "subject": "Математик",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_matematic.pdf",
+   "cover": "img/books/11_matematic.jpg",
+   "o": 0,
+   "note": "PDF · 98MB"
+  },
+  {
+   "id": "esis-11_mongol_khel",
+   "title": "Монгол хэл 11",
+   "grade": "11",
+   "subject": "Монгол хэл",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_mongol_khel.pdf",
+   "cover": "img/books/11_mongol_khel.jpg",
+   "o": 0,
+   "note": "PDF · 2MB"
+  },
+  {
+   "id": "esis-11_oros_khel",
+   "title": "Орос хэл 11",
+   "grade": "11",
+   "subject": "Орос хэл",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_oros_khel.pdf",
+   "cover": "img/books/11_oros_khel.jpg",
+   "o": 0,
+   "note": "PDF · 31MB"
+  },
+  {
+   "id": "esis-11_uran_zohiol",
+   "title": "Уран зохиол 11",
+   "grade": "11",
+   "subject": "Уран зохиол",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_uran_zohiol.pdf",
+   "cover": "img/books/11_uran_zohiol.jpg",
+   "o": 0,
+   "note": "PDF · 21MB"
+  },
+  {
+   "id": "esis-11_design_zurag_zui",
+   "title": "Дизайн технологи 11",
+   "grade": "11",
+   "subject": "Дизайн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_design_zurag_zui.pdf",
+   "cover": "img/books/11_design_zurag_zui.jpg",
+   "o": 0,
+   "note": "PDF · 27MB"
+  },
+  {
+   "id": "esis-11_medeelliin_technology",
+   "title": "Мэдээллийн технологи 11",
+   "grade": "11",
+   "subject": "Мэдээллийн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_medeelliin_technology.pdf",
+   "cover": "img/books/11_medeelliin_technology.jpg",
+   "o": 0,
+   "note": "PDF · 119MB"
+  },
+  {
+   "id": "esis-11_eruul_mend",
+   "title": "Эрүүл мэнд 11",
+   "grade": "11",
+   "subject": "Эрүүл мэнд",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_eruul_mend.pdf",
+   "cover": "img/books/11_eruul_mend.jpg",
+   "o": 0,
+   "note": "PDF · 6MB"
+  },
+  {
+   "id": "esis-11_biology",
+   "title": "Биологи 11",
+   "grade": "11",
+   "subject": "Биологи",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_biology.pdf",
+   "cover": "img/books/11_biology.jpg",
+   "o": 0,
+   "note": "PDF · 40MB"
+  },
+  {
+   "id": "esis-11_irgenii_yos_zui",
+   "title": "Иргэний ёс зүйн боловсрол 11",
+   "grade": "11",
+   "subject": "Иргэний ёс зүйн боловсрол",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_irgenii_yos_zui.pdf",
+   "cover": "img/books/11_irgenii_yos_zui.jpg",
+   "o": 0,
+   "note": "PDF · 10MB"
+  },
+  {
+   "id": "esis-11_mongoliin_tuukh",
+   "title": "Монголын түүх 11",
+   "grade": "11",
+   "subject": "Монголын түүх",
+   "file": "https://cdn.esis.edu.mn/cover/11/11_mongoliin_tuukh.pdf",
+   "cover": "img/books/11_mongoliin_tuukh.jpg",
+   "o": 0,
+   "note": "PDF · 9MB"
+  },
+  {
+   "id": "esis-12_undesnii_bichig",
+   "title": "Үндэсний бичиг 12",
+   "grade": "12",
+   "subject": "Үндэсний бичиг",
+   "file": "https://cdn.esis.edu.mn/cover/12/12_undesnii_bichig.pdf",
+   "cover": "img/books/12_undesnii_bichig.jpg",
+   "o": 0,
+   "note": "PDF · 15MB"
+  },
+  {
+   "id": "esis-12_uran_zohiol",
+   "title": "Уран зохиол 12",
+   "grade": "12",
+   "subject": "Уран зохиол",
+   "file": "https://cdn.esis.edu.mn/cover/12/12_uran_zohiol.pdf",
+   "cover": "img/books/12_uran_zohiol.jpg",
+   "o": 0,
+   "note": "PDF · 7MB"
+  },
+  {
+   "id": "esis-12_mongol_khel",
+   "title": "Монгол хэл 12",
+   "grade": "12",
+   "subject": "Монгол хэл",
+   "file": "https://cdn.esis.edu.mn/cover/12/12_mongol_khel.pdf",
+   "cover": "img/books/12_mongol_khel.jpg",
+   "o": 0,
+   "note": "PDF · 11MB"
+  },
+  {
+   "id": "esis-12_medeelliin-technology",
+   "title": "Мэдээллийн технологи 12",
+   "grade": "12",
+   "subject": "Мэдээллийн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/12/12_medeelliin%20technology.pdf",
+   "cover": "img/books/12_medeelliin-technology.jpg",
+   "o": 0,
+   "note": "PDF · 17MB"
+  },
+  {
+   "id": "esis-12_design_zurag_zui",
+   "title": "Дизайн технологи 12",
+   "grade": "12",
+   "subject": "Дизайн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/12/12_design_zurag_zui.pdf",
+   "cover": "img/books/12_design_zurag_zui.jpg",
+   "o": 0,
+   "note": "PDF · 25MB"
+  },
+  {
+   "id": "esis-12_matematic",
+   "title": "Математик 12",
+   "grade": "12",
+   "subject": "Математик",
+   "file": "https://cdn.esis.edu.mn/cover/12/12_matematic.pdf",
+   "cover": "img/books/12_matematic.jpg",
+   "o": 0,
+   "note": "PDF · 92MB"
+  },
+  {
+   "id": "esis-12_oros_khel",
+   "title": "Орос хэл 12",
+   "grade": "12",
+   "subject": "Орос хэл",
+   "file": "https://cdn.esis.edu.mn/cover/12/12_oros_khel.pdf",
+   "cover": "img/books/12_oros_khel.jpg",
+   "o": 0,
+   "note": "PDF · 40MB"
+  },
+  {
+   "id": "esis-12_english",
+   "title": "Англи хэл 12",
+   "grade": "12",
+   "subject": "Англи хэл",
+   "file": "https://cdn.esis.edu.mn/cover/12/12_english.pdf",
+   "cover": "img/books/12_english.jpg",
+   "o": 0,
+   "note": "PDF · 9MB"
+  },
+  {
+   "id": "esis-12_eruul_mend",
+   "title": "Эрүүл мэнд 12",
+   "grade": "12",
+   "subject": "Эрүүл мэнд",
+   "file": "https://cdn.esis.edu.mn/cover/12/12_eruul_mend.pdf",
+   "cover": "img/books/12_eruul_mend.jpg",
+   "o": 0,
+   "note": "PDF · 12MB"
+  },
+  {
+   "id": "esis-12_irgenii_yos_zui",
+   "title": "Иргэний боловсрол 12",
+   "grade": "12",
+   "subject": "Иргэний боловсрол",
+   "file": "https://cdn.esis.edu.mn/cover/12/12_irgenii_yos_zui.pdf",
+   "cover": "img/books/12_irgenii_yos_zui.jpg",
+   "o": 0,
+   "note": "PDF · 20MB"
+  },
+  {
+   "id": "esis-02_khugjim",
+   "title": "Хөгжим 2",
+   "grade": "2",
+   "subject": "Хөгжим",
+   "file": "https://cdn.esis.edu.mn/cover/02/02_khugjim.pdf",
+   "cover": "img/books/02_khugjim.jpg",
+   "o": 0,
+   "note": "PDF · 9MB"
+  },
+  {
+   "id": "esis-02_khun_ba_orchi",
+   "title": "Хүн ба орчин 2",
+   "grade": "2",
+   "subject": "Хүн ба орчин",
+   "file": "https://cdn.esis.edu.mn/cover/02/02_khun_ba_orchi.pdf",
+   "cover": "img/books/02_khun_ba_orchi.jpg",
+   "o": 0,
+   "note": "PDF · 18MB"
+  },
+  {
+   "id": "esis-02_dursleh_urlag",
+   "title": "Дүрслэх урлаг, технологи 2",
+   "grade": "2",
+   "subject": "Дүрслэх урлаг, технологи",
+   "file": "https://cdn.esis.edu.mn/cover/02/02_dursleh_urlag.pdf",
+   "cover": "img/books/02_dursleh_urlag.jpg",
+   "o": 0,
+   "note": "PDF · 20MB"
+  },
+  {
+   "id": "esis-02_matematick",
+   "title": "Математик 2",
+   "grade": "2",
+   "subject": "Математик",
+   "file": "https://cdn.esis.edu.mn/cover/02/02_matematick.pdf",
+   "cover": "img/books/02_matematick.jpg",
+   "o": 0,
+   "note": "PDF · 36MB"
+  },
+  {
+   "id": "esis-02_mongol_khel",
+   "title": "Монгол хэл 2",
+   "grade": "2",
+   "subject": "Монгол хэл",
+   "file": "https://cdn.esis.edu.mn/cover/02/02_mongol_khel.pdf",
+   "cover": "img/books/02_mongol_khel.jpg",
+   "o": 0,
+   "note": "PDF · 70MB"
+  },
+  {
+   "id": "esis-02_ekh_khel",
+   "title": "Эх хэл 2 (Казак хэл)",
+   "grade": "2",
+   "subject": "Казак хэл",
+   "file": "https://cdn.esis.edu.mn/cover/02/02_ekh_khel.pdf",
+   "cover": "img/books/02_ekh_khel.jpg",
+   "o": 0,
+   "note": "PDF · 9MB"
+  },
+  {
+   "id": "esis-02_mongol_yos_khumuujil",
+   "title": "Монгол ёс, хүмүүжил 2",
+   "grade": "2",
+   "subject": "Монгол ёс, хүмүүжил",
+   "file": "https://cdn.esis.edu.mn/cover/02/02_mongol_yos_khumuujil.pdf",
+   "cover": "img/books/02_mongol_yos_khumuujil.jpg",
+   "o": 0,
+   "note": "PDF · 15MB"
+  },
+  {
+   "id": "esis-03_khugjim",
+   "title": "Хөгжим 3",
+   "grade": "3",
+   "subject": "Хөгжим",
+   "file": "https://cdn.esis.edu.mn/cover/03/03_khugjim.pdf",
+   "cover": "img/books/03_khugjim.jpg",
+   "o": 0,
+   "note": "PDF · 19MB"
+  },
+  {
+   "id": "esis-03_khun_ba_orchin",
+   "title": "Хүн ба орчин 3",
+   "grade": "3",
+   "subject": "Хүн ба орчин",
+   "file": "https://cdn.esis.edu.mn/cover/03/03_khun_ba_orchin.pdf",
+   "cover": "img/books/03_khun_ba_orchin.jpg",
+   "o": 0,
+   "note": "PDF · 11MB"
+  },
+  {
+   "id": "esis-03_matematics",
+   "title": "Математик 3",
+   "grade": "3",
+   "subject": "Математик",
+   "file": "https://cdn.esis.edu.mn/cover/03/03_matematics.pdf",
+   "cover": "img/books/03_matematics.jpg",
+   "o": 0,
+   "note": "PDF · 12MB"
+  },
+  {
+   "id": "esis-03_mongol_khel",
+   "title": "Монгол хэл 3",
+   "grade": "3",
+   "subject": "Монгол хэл",
+   "file": "https://cdn.esis.edu.mn/cover/03/03_mongol_khel.pdf",
+   "cover": "img/books/03_mongol_khel.jpg",
+   "o": 0,
+   "note": "PDF · 42MB"
+  },
+  {
+   "id": "esis-03_ekh_khel",
+   "title": "Эх хэл 3 (Казак хэл)",
+   "grade": "3",
+   "subject": "Казак хэл",
+   "file": "https://cdn.esis.edu.mn/cover/03/03_ekh_khel.pdf",
+   "cover": "img/books/03_ekh_khel.jpg",
+   "o": 0,
+   "note": "PDF · 6MB"
+  },
+  {
+   "id": "esis-03_mongol_yos_khumuujil",
+   "title": "Монгол ёс, хүмүүжил 3",
+   "grade": "3",
+   "subject": "Монгол ёс, хүмүүжил",
+   "file": "https://cdn.esis.edu.mn/cover/03/03_mongol_yos_khumuujil.pdf",
+   "cover": "img/books/03_mongol_yos_khumuujil.jpg",
+   "o": 0,
+   "note": "PDF · 15MB"
+  },
+  {
+   "id": "esis-03_dursleh_urlag",
+   "title": "Дүрслэх урлаг, технологи 3",
+   "grade": "3",
+   "subject": "Дүрслэх урлаг, технологи",
+   "file": "https://cdn.esis.edu.mn/cover/03/03_dursleh_urlag.pdf",
+   "cover": "img/books/03_dursleh_urlag.jpg",
+   "o": 0,
+   "note": "PDF · 16MB"
+  },
+  {
+   "id": "esis-04_dursleh_urlag",
+   "title": "Дүрслэх урлаг, технологи 4",
+   "grade": "4",
+   "subject": "Дүрслэх урлаг, технологи",
+   "file": "https://cdn.esis.edu.mn/cover/04/04_dursleh_urlag.pdf",
+   "cover": "img/books/04_dursleh_urlag.jpg",
+   "o": 0,
+   "note": "PDF · 15MB"
+  },
+  {
+   "id": "esis-04_khun_ba_niigem",
+   "title": "Хүн ба нийгэм 4",
+   "grade": "4",
+   "subject": "Хүн ба нийгэм",
+   "file": "https://cdn.esis.edu.mn/cover/04/04_khun_ba_niigem.pdf",
+   "cover": "img/books/04_khun_ba_niigem.jpg",
+   "o": 0,
+   "note": "PDF · 20MB"
+  },
+  {
+   "id": "esis-04_khun_ba_baigali",
+   "title": "Хүн ба байгаль 4",
+   "grade": "4",
+   "subject": "Хүн ба байгаль",
+   "file": "https://cdn.esis.edu.mn/cover/04/04_khun_ba_baigali.pdf",
+   "cover": "img/books/04_khun_ba_baigali.jpg",
+   "o": 0,
+   "note": "PDF · 36MB"
+  },
+  {
+   "id": "esis-04_matemetic",
+   "title": "Математик 4",
+   "grade": "4",
+   "subject": "Математик",
+   "file": "https://cdn.esis.edu.mn/cover/04/04_matemetic.pdf",
+   "cover": "img/books/04_matemetic.jpg",
+   "o": 0,
+   "note": "PDF · 15MB"
+  },
+  {
+   "id": "esis-04_mongol_khel",
+   "title": "Монгол хэл 4",
+   "grade": "4",
+   "subject": "Монгол хэл",
+   "file": "https://cdn.esis.edu.mn/cover/04/04_mongol_khel.pdf",
+   "cover": "img/books/04_mongol_khel.jpg",
+   "o": 0,
+   "note": "PDF · 30MB"
+  },
+  {
+   "id": "esis-04_ekh_khel_kaz",
+   "title": "Эх хэл 4 (Казак хэл)",
+   "grade": "4",
+   "subject": "Казак хэл",
+   "file": "https://cdn.esis.edu.mn/cover/04/04_ekh_khel_kaz.pdf",
+   "cover": "img/books/04_ekh_khel_kaz.jpg",
+   "o": 0,
+   "note": "PDF · 5MB"
+  },
+  {
+   "id": "esis-04_khugjim",
+   "title": "Хөгжим 4",
+   "grade": "4",
+   "subject": "Хөгжим",
+   "file": "https://cdn.esis.edu.mn/cover/04/04_khugjim.pdf",
+   "cover": "img/books/04_khugjim.jpg",
+   "o": 0,
+   "note": "PDF · 7MB"
+  },
+  {
+   "id": "esis-04_mongol_yos_khumuujil",
+   "title": "Монгол ёс, хүмүүжил 4",
+   "grade": "4",
+   "subject": "Монгол ёс, хүмүүжил",
+   "file": "https://cdn.esis.edu.mn/cover/04/04_mongol_yos_khumuujil.pdf",
+   "cover": "img/books/04_mongol_yos_khumuujil.jpg",
+   "o": 0,
+   "note": "PDF · 10MB"
+  },
+  {
+   "id": "esis-04_eruul_mend",
+   "title": "Эрүүл мэнд 4",
+   "grade": "4",
+   "subject": "Эрүүл мэнд",
+   "file": "https://cdn.esis.edu.mn/cover/04/04_eruul_mend.pdf",
+   "cover": "img/books/04_eruul_mend.jpg",
+   "o": 0,
+   "note": "PDF · 10MB"
+  },
+  {
+   "id": "esis-05_english",
+   "title": "Англи хэл 5",
+   "grade": "5",
+   "subject": "Англи хэл",
+   "file": "https://cdn.esis.edu.mn/cover/05/05_english.pdf",
+   "cover": "img/books/05_english.jpg",
+   "o": 0,
+   "note": "PDF · 126MB"
+  },
+  {
+   "id": "esis-05_dursleh_urlag",
+   "title": "Дүрслэх урлаг, технологи 5",
+   "grade": "5",
+   "subject": "Дүрслэх урлаг, технологи",
+   "file": "https://cdn.esis.edu.mn/cover/05/05_dursleh_urlag.pdf",
+   "cover": "img/books/05_dursleh_urlag.jpg",
+   "o": 0,
+   "note": "PDF · 18MB"
+  },
+  {
+   "id": "esis-05_khugjim",
+   "title": "Хөгжим 5",
+   "grade": "5",
+   "subject": "Хөгжим",
+   "file": "https://cdn.esis.edu.mn/cover/05/05_khugjim.pdf",
+   "cover": "img/books/05_khugjim.jpg",
+   "o": 0,
+   "note": "PDF · 13MB"
+  },
+  {
+   "id": "esis-05_khun_ba_baigali",
+   "title": "Хүн ба байгаль 5",
+   "grade": "5",
+   "subject": "Хүн ба байгаль",
+   "file": "https://cdn.esis.edu.mn/cover/05/05_khun_ba_baigali.pdf",
+   "cover": "img/books/05_khun_ba_baigali.jpg",
+   "o": 0,
+   "note": "PDF · 36MB"
+  },
+  {
+   "id": "esis-05_khun_niigem",
+   "title": "Хүн ба нийгэм 5",
+   "grade": "5",
+   "subject": "Хүн ба нийгэм",
+   "file": "https://cdn.esis.edu.mn/cover/05/05_khun_niigem.pdf",
+   "cover": "img/books/05_khun_niigem.jpg",
+   "o": 0,
+   "note": "PDF · 21MB"
+  },
+  {
+   "id": "esis-05_matematic",
+   "title": "Математик 5",
+   "grade": "5",
+   "subject": "Математик",
+   "file": "https://cdn.esis.edu.mn/cover/05/05_matematic.pdf",
+   "cover": "img/books/05_matematic.jpg",
+   "o": 0,
+   "note": "PDF · 14MB"
+  },
+  {
+   "id": "esis-05_mongol_khel",
+   "title": "Монгол хэл 5",
+   "grade": "5",
+   "subject": "Монгол хэл",
+   "file": "https://cdn.esis.edu.mn/cover/05/05_mongol_khel.pdf",
+   "cover": "img/books/05_mongol_khel.jpg",
+   "o": 0,
+   "note": "PDF · 30MB"
+  },
+  {
+   "id": "esis-05_eruul_mend",
+   "title": "Эрүүл мэнд 5",
+   "grade": "5",
+   "subject": "Эрүүл мэнд",
+   "file": "https://cdn.esis.edu.mn/cover/05/05_eruul_mend.pdf",
+   "cover": "img/books/05_eruul_mend.jpg",
+   "o": 0,
+   "note": "PDF · 8MB"
+  },
+  {
+   "id": "esis-05_mongol_yos_khumuujil",
+   "title": "Монгол ёс, хүмүүжил 5",
+   "grade": "5",
+   "subject": "Монгол ёс, хүмүүжил",
+   "file": "https://cdn.esis.edu.mn/cover/05/05_mongol_yos_khumuujil.pdf",
+   "cover": "img/books/05_mongol_yos_khumuujil.jpg",
+   "o": 0,
+   "note": "PDF · 10MB"
+  },
+  {
+   "id": "esis-06_english",
+   "title": "Англи хэл 6",
+   "grade": "6",
+   "subject": "Англи хэл",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_english.pdf",
+   "cover": "img/books/06_english.jpg",
+   "o": 0,
+   "note": "PDF · 22MB"
+  },
+  {
+   "id": "esis-06_baigaliin_ukhaan",
+   "title": "Байгалын ухаан 6",
+   "grade": "6",
+   "subject": "Байгалын ухаан",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_baigaliin_ukhaan.pdf",
+   "cover": "img/books/06_baigaliin_ukhaan.jpg",
+   "o": 0,
+   "note": "PDF · 66MB"
+  },
+  {
+   "id": "esis-06_khugjim",
+   "title": "Хөгжим 6",
+   "grade": "6",
+   "subject": "Хөгжим",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_khugjim.pdf",
+   "cover": "img/books/06_khugjim.jpg",
+   "o": 0,
+   "note": "PDF · 87MB"
+  },
+  {
+   "id": "esis-06_matematic",
+   "title": "Математик 6",
+   "grade": "6",
+   "subject": "Математик",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_matematic.pdf",
+   "cover": "img/books/06_matematic.jpg",
+   "o": 0,
+   "note": "PDF · 23MB"
+  },
+  {
+   "id": "esis-06_medeelliin_technology",
+   "title": "Мэдээллийн технологи 6",
+   "grade": "6",
+   "subject": "Мэдээллийн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_medeelliin_technology.pdf",
+   "cover": "img/books/06_medeelliin_technology.jpg",
+   "o": 0,
+   "note": "PDF · 15MB"
+  },
+  {
+   "id": "esis-06_tuukh",
+   "title": "Түүх 6",
+   "grade": "6",
+   "subject": "Түүх",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_tuukh.pdf",
+   "cover": "img/books/06_tuukh.jpg",
+   "o": 0,
+   "note": "PDF · 48MB"
+  },
+  {
+   "id": "esis-06_mongol_khel",
+   "title": "Монгол хэл 6",
+   "grade": "6",
+   "subject": "Монгол хэл",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_mongol_khel.pdf",
+   "cover": "img/books/06_mongol_khel.jpg",
+   "o": 0,
+   "note": "PDF · 19MB"
+  },
+  {
+   "id": "esis-06_uran_zokhiol",
+   "title": "Уран зохиол 6",
+   "grade": "6",
+   "subject": "Уран зохиол",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_uran_zokhiol.pdf",
+   "cover": "img/books/06_uran_zokhiol.jpg",
+   "o": 0,
+   "note": "PDF · 9MB"
+  },
+  {
+   "id": "esis-06_undesnii_bichig",
+   "title": "Үндэсний бичиг 6",
+   "grade": "6",
+   "subject": "Үндэсний бичиг",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_undesnii_bichig.pdf",
+   "cover": "img/books/06_undesnii_bichig.jpg",
+   "o": 0,
+   "note": "PDF · 21MB"
+  },
+  {
+   "id": "esis-06_eruul_mend",
+   "title": "Эрүүл мэнд 6",
+   "grade": "6",
+   "subject": "Эрүүл мэнд",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_eruul_mend.pdf",
+   "cover": "img/books/06_eruul_mend.jpg",
+   "o": 0,
+   "note": "PDF · 6MB"
+  },
+  {
+   "id": "esis-06_design_technology",
+   "title": "Дизайн технологи 6",
+   "grade": "6",
+   "subject": "Дизайн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_design_technology.pdf",
+   "cover": "img/books/06_design_technology.jpg",
+   "o": 0,
+   "note": "PDF · 22MB"
+  },
+  {
+   "id": "esis-06_dursleh_urlag",
+   "title": "Дүрслэх урлаг 6–7",
+   "grade": "6",
+   "subject": "Дүрслэх урлаг",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_dursleh_urlag.pdf",
+   "cover": "img/books/06_dursleh_urlag.jpg",
+   "o": 0,
+   "note": "PDF · 21MB"
+  },
+  {
+   "id": "esis-06_dursleh_urlag-7",
+   "title": "Дүрслэх урлаг 6–7",
+   "grade": "7",
+   "subject": "Дүрслэх урлаг",
+   "file": "https://cdn.esis.edu.mn/cover/06/06_dursleh_urlag.pdf",
+   "cover": "img/books/06_dursleh_urlag.jpg",
+   "o": 0,
+   "note": "PDF · 21MB"
+  },
+  {
+   "id": "esis-07_design_technology",
+   "title": "Дизайн технологи 7",
+   "grade": "7",
+   "subject": "Дизайн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_design_technology.pdf",
+   "cover": "img/books/07_design_technology.jpg",
+   "o": 0,
+   "note": "PDF · 35MB"
+  },
+  {
+   "id": "esis-07_physic",
+   "title": "Физик 7",
+   "grade": "7",
+   "subject": "Физик",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_physic.pdf",
+   "cover": "img/books/07_physic.jpg",
+   "o": 0,
+   "note": "PDF · 54MB"
+  },
+  {
+   "id": "esis-07_khimi",
+   "title": "Хими 7",
+   "grade": "7",
+   "subject": "Хими",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_khimi.pdf",
+   "cover": "img/books/07_khimi.jpg",
+   "o": 0,
+   "note": "PDF · 12MB"
+  },
+  {
+   "id": "esis-07_khugjim",
+   "title": "Хөгжим 7",
+   "grade": "7",
+   "subject": "Хөгжим",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_khugjim.pdf",
+   "cover": "img/books/07_khugjim.jpg",
+   "o": 0,
+   "note": "PDF · 87MB"
+  },
+  {
+   "id": "esis-07_matematic",
+   "title": "Математик 7",
+   "grade": "7",
+   "subject": "Математик",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_matematic.pdf",
+   "cover": "img/books/07_matematic.jpg",
+   "o": 0,
+   "note": "PDF · 42MB"
+  },
+  {
+   "id": "esis-07_irgenii_yos_zuin_bolosrol",
+   "title": "Иргэний ёс зүйн боловсрол 7",
+   "grade": "7",
+   "subject": "Иргэний ёс зүйн боловсрол",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_irgenii_yos_zuin_bolosrol.pdf",
+   "cover": "img/books/07_irgenii_yos_zuin_bolosrol.jpg",
+   "o": 0,
+   "note": "PDF · 10MB"
+  },
+  {
+   "id": "esis-07_medeelliin-technology",
+   "title": "Мэдээллийн технологи 7",
+   "grade": "7",
+   "subject": "Мэдээллийн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_medeelliin%20technology.pdf",
+   "cover": "img/books/07_medeelliin-technology.jpg",
+   "o": 0,
+   "note": "PDF · 13MB"
+  },
+  {
+   "id": "esis-07_niigem_sudlal",
+   "title": "Нийгэм судлал 7",
+   "grade": "7",
+   "subject": "Нийгэм судлал",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_niigem_sudlal.pdf",
+   "cover": "img/books/07_niigem_sudlal.jpg",
+   "o": 0,
+   "note": "PDF · 50MB"
+  },
+  {
+   "id": "esis-07_oros_khel",
+   "title": "Орос хэл 7",
+   "grade": "7",
+   "subject": "Орос хэл",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_oros_khel.pdf",
+   "cover": "img/books/07_oros_khel.jpg",
+   "o": 0,
+   "note": "PDF · 41MB"
+  },
+  {
+   "id": "esis-07_tuukh",
+   "title": "Түүх 7",
+   "grade": "7",
+   "subject": "Түүх",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_tuukh.pdf",
+   "cover": "img/books/07_tuukh.jpg",
+   "o": 0,
+   "note": "PDF · 33MB"
+  },
+  {
+   "id": "esis-07_uran_zohiol",
+   "title": "Уран зохиол 7",
+   "grade": "7",
+   "subject": "Уран зохиол",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_uran_zohiol.pdf",
+   "cover": "img/books/07_uran_zohiol.jpg",
+   "o": 0,
+   "note": "PDF · 15MB"
+  },
+  {
+   "id": "esis-07_gazargui",
+   "title": "Газар зүй 7",
+   "grade": "7",
+   "subject": "Газар зүй",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_gazargui.pdf",
+   "cover": "img/books/07_gazargui.jpg",
+   "o": 0,
+   "note": "PDF · 27MB"
+  },
+  {
+   "id": "esis-07_mongol_khel",
+   "title": "Монгол хэл 7",
+   "grade": "7",
+   "subject": "Монгол хэл",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_mongol_khel.pdf",
+   "cover": "img/books/07_mongol_khel.jpg",
+   "o": 0,
+   "note": "PDF · 31MB"
+  },
+  {
+   "id": "esis-07_undesnii_bichig",
+   "title": "Үндэсний бичиг 7",
+   "grade": "7",
+   "subject": "Үндэсний бичиг",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_undesnii_bichig.pdf",
+   "cover": "img/books/07_undesnii_bichig.jpg",
+   "o": 0,
+   "note": "PDF · 55MB"
+  },
+  {
+   "id": "esis-07_eruul_mend",
+   "title": "Эрүүл мэнд 7",
+   "grade": "7",
+   "subject": "Эрүүл мэнд",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_eruul_mend.pdf",
+   "cover": "img/books/07_eruul_mend.jpg",
+   "o": 0,
+   "note": "PDF · 18MB"
+  },
+  {
+   "id": "esis-07_endlish",
+   "title": "Англи хэл 7",
+   "grade": "7",
+   "subject": "Англи хэл",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_endlish.pdf",
+   "cover": "img/books/07_endlish.jpg",
+   "o": 0,
+   "note": "PDF · 9MB"
+  },
+  {
+   "id": "esis-07_biology",
+   "title": "Биологи 7",
+   "grade": "7",
+   "subject": "Биологи",
+   "file": "https://cdn.esis.edu.mn/cover/07/07_biology.pdf",
+   "cover": "img/books/07_biology.jpg",
+   "o": 0,
+   "note": "PDF · 33MB"
+  },
+  {
+   "id": "esis-08_endlish",
+   "title": "Англи хэл 8",
+   "grade": "8",
+   "subject": "Англи хэл",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_endlish.pdf",
+   "cover": "img/books/08_endlish.jpg",
+   "o": 0,
+   "note": "PDF · 11MB"
+  },
+  {
+   "id": "esis-08_physic",
+   "title": "Физик 8",
+   "grade": "8",
+   "subject": "Физик",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_physic.pdf",
+   "cover": "img/books/08_physic.jpg",
+   "o": 0,
+   "note": "PDF · 25MB"
+  },
+  {
+   "id": "esis-08_uran_zohiol",
+   "title": "Уран зохиол 8",
+   "grade": "8",
+   "subject": "Уран зохиол",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_uran_zohiol.pdf",
+   "cover": "img/books/08_uran_zohiol.jpg",
+   "o": 0,
+   "note": "PDF · 18MB"
+  },
+  {
+   "id": "esis-08_gazar_zui",
+   "title": "Газар зүй 8",
+   "grade": "8",
+   "subject": "Газар зүй",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_gazar_zui.pdf",
+   "cover": "img/books/08_gazar_zui.jpg",
+   "o": 0,
+   "note": "PDF · 11MB"
+  },
+  {
+   "id": "esis-08_khimi",
+   "title": "Хими 8",
+   "grade": "8",
+   "subject": "Хими",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_khimi.pdf",
+   "cover": "img/books/08_khimi.jpg",
+   "o": 0,
+   "note": "PDF · 16MB"
+  },
+  {
+   "id": "esis-08_irgenii_yos_zui",
+   "title": "Иргэний боловсрол 8",
+   "grade": "8",
+   "subject": "Иргэний боловсрол",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_irgenii_yos_zui.pdf",
+   "cover": "img/books/08_irgenii_yos_zui.jpg",
+   "o": 0,
+   "note": "PDF · 13MB"
+  },
+  {
+   "id": "esis-08_matematic",
+   "title": "Математик 8",
+   "grade": "8",
+   "subject": "Математик",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_matematic.pdf",
+   "cover": "img/books/08_matematic.jpg",
+   "o": 0,
+   "note": "PDF · 18MB"
+  },
+  {
+   "id": "esis-08_medeelliin-technology",
+   "title": "Мэдээллийн технологи 8",
+   "grade": "8",
+   "subject": "Мэдээллийн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_medeelliin%20technology.pdf",
+   "cover": "img/books/08_medeelliin-technology.jpg",
+   "o": 0,
+   "note": "PDF · 22MB"
+  },
+  {
+   "id": "esis-08_mongol_khel",
+   "title": "Монгол хэл 8",
+   "grade": "8",
+   "subject": "Монгол хэл",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_mongol_khel.pdf",
+   "cover": "img/books/08_mongol_khel.jpg",
+   "o": 0,
+   "note": "PDF · 16MB"
+  },
+  {
+   "id": "esis-08_oros_khel",
+   "title": "Орос хэл 8",
+   "grade": "8",
+   "subject": "Орос хэл",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_oros_khel.pdf",
+   "cover": "img/books/08_oros_khel.jpg",
+   "o": 0,
+   "note": "PDF · 45MB"
+  },
+  {
+   "id": "esis-08_tuukh",
+   "title": "Түүх 8",
+   "grade": "8",
+   "subject": "Түүх",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_tuukh.pdf",
+   "cover": "img/books/08_tuukh.jpg",
+   "o": 0,
+   "note": "PDF · 73MB"
+  },
+  {
+   "id": "esis-08_undesnii_bichig",
+   "title": "Үндэсний бичиг 8",
+   "grade": "8",
+   "subject": "Үндэсний бичиг",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_undesnii_bichig.pdf",
+   "cover": "img/books/08_undesnii_bichig.jpg",
+   "o": 0,
+   "note": "PDF · 87MB"
+  },
+  {
+   "id": "esis-08_eruul_mend",
+   "title": "Эрүүл мэнд 8",
+   "grade": "8",
+   "subject": "Эрүүл мэнд",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_eruul_mend.pdf",
+   "cover": "img/books/08_eruul_mend.jpg",
+   "o": 0,
+   "note": "PDF · 9MB"
+  },
+  {
+   "id": "esis-08_dursleh_urlag",
+   "title": "Дүрслэх урлаг 8",
+   "grade": "8",
+   "subject": "Дүрслэх урлаг",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_dursleh_urlag.pdf",
+   "cover": "img/books/08_dursleh_urlag.jpg",
+   "o": 0,
+   "note": "PDF · 13MB"
+  },
+  {
+   "id": "esis-08_khugjim",
+   "title": "Хөгжим 8–9",
+   "grade": "8",
+   "subject": "Хөгжим",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_khugjim.pdf",
+   "cover": "img/books/08_khugjim.jpg",
+   "o": 0,
+   "note": "PDF · 11MB"
+  },
+  {
+   "id": "esis-08_khugjim-9",
+   "title": "Хөгжим 8–9",
+   "grade": "9",
+   "subject": "Хөгжим",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_khugjim.pdf",
+   "cover": "img/books/08_khugjim.jpg",
+   "o": 0,
+   "note": "PDF · 11MB"
+  },
+  {
+   "id": "esis-08_niigem_sudlal",
+   "title": "Нийгэм судлал 8",
+   "grade": "8",
+   "subject": "Нийгэм судлал",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_niigem_sudlal.pdf",
+   "cover": "img/books/08_niigem_sudlal.jpg",
+   "o": 0,
+   "note": "PDF · 11MB"
+  },
+  {
+   "id": "esis-08_biology",
+   "title": "Биологи 8",
+   "grade": "8",
+   "subject": "Биологи",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_biology.pdf",
+   "cover": "img/books/08_biology.jpg",
+   "o": 0,
+   "note": "PDF · 28MB"
+  },
+  {
+   "id": "esis-08_design_technology",
+   "title": "Дизайн технологи 8",
+   "grade": "8",
+   "subject": "Дизайн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/08/08_design_technology.pdf",
+   "cover": "img/books/08_design_technology.jpg",
+   "o": 0,
+   "note": "PDF · 27MB"
+  },
+  {
+   "id": "esis-09_english",
+   "title": "Англи хэл 9",
+   "grade": "9",
+   "subject": "Англи хэл",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_english.pdf",
+   "cover": "img/books/09_english.jpg",
+   "o": 0,
+   "note": "PDF · 10MB"
+  },
+  {
+   "id": "esis-09_biology",
+   "title": "Биологи 9",
+   "grade": "9",
+   "subject": "Биологи",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_biology.pdf",
+   "cover": "img/books/09_biology.jpg",
+   "o": 0,
+   "note": "PDF · 33MB"
+  },
+  {
+   "id": "esis-09_design_technology",
+   "title": "Дизайн технологи 9",
+   "grade": "9",
+   "subject": "Дизайн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_design_technology.pdf",
+   "cover": "img/books/09_design_technology.jpg",
+   "o": 0,
+   "note": "PDF · 16MB"
+  },
+  {
+   "id": "esis-09_physic",
+   "title": "Физик 9",
+   "grade": "9",
+   "subject": "Физик",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_physic.pdf",
+   "cover": "img/books/09_physic.jpg",
+   "o": 0,
+   "note": "PDF · 20MB"
+  },
+  {
+   "id": "esis-09_gazarzui",
+   "title": "Газар зүй 9",
+   "grade": "9",
+   "subject": "Газар зүй",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_gazarzui.pdf",
+   "cover": "img/books/09_gazarzui.jpg",
+   "o": 0,
+   "note": "PDF · 35MB"
+  },
+  {
+   "id": "esis-09_khmi",
+   "title": "Хими 9",
+   "grade": "9",
+   "subject": "Хими",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_khmi.pdf",
+   "cover": "img/books/09_khmi.jpg",
+   "o": 0,
+   "note": "PDF · 16MB"
+  },
+  {
+   "id": "esis-09_irgenii_yos_zui",
+   "title": "Иргэний ёс зүйн боловсрол 9",
+   "grade": "9",
+   "subject": "Иргэний ёс зүйн боловсрол",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_irgenii_yos_zui.pdf",
+   "cover": "img/books/09_irgenii_yos_zui.jpg",
+   "o": 0,
+   "note": "PDF · 8MB"
+  },
+  {
+   "id": "esis-09_matematic",
+   "title": "Математик 9",
+   "grade": "9",
+   "subject": "Математик",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_matematic.pdf",
+   "cover": "img/books/09_matematic.jpg",
+   "o": 0,
+   "note": "PDF · 21MB"
+  },
+  {
+   "id": "esis-09_medeelliin-technology",
+   "title": "Мэдээллийн технологи 9",
+   "grade": "9",
+   "subject": "Мэдээллийн технологи",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_medeelliin%20technology.pdf",
+   "cover": "img/books/09_medeelliin-technology.jpg",
+   "o": 0,
+   "note": "PDF · 15MB"
+  },
+  {
+   "id": "esis-09_oros_khel",
+   "title": "Орос хэл 9",
+   "grade": "9",
+   "subject": "Орос хэл",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_oros_khel.pdf",
+   "cover": "img/books/09_oros_khel.jpg",
+   "o": 0,
+   "note": "PDF · 64MB"
+  },
+  {
+   "id": "esis-09_tuukh",
+   "title": "Түүх 9",
+   "grade": "9",
+   "subject": "Түүх",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_tuukh.pdf",
+   "cover": "img/books/09_tuukh.jpg",
+   "o": 0,
+   "note": "PDF · 34MB"
+  },
+  {
+   "id": "esis-09_undesnii_bichig",
+   "title": "Үндэсний бичиг 9",
+   "grade": "9",
+   "subject": "Үндэсний бичиг",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_undesnii_bichig.pdf",
+   "cover": "img/books/09_undesnii_bichig.jpg",
+   "o": 0,
+   "note": "PDF · 54MB"
+  },
+  {
+   "id": "esis-09_eruul_mend",
+   "title": "Эрүүл мэнд 9",
+   "grade": "9",
+   "subject": "Эрүүл мэнд",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_eruul_mend.pdf",
+   "cover": "img/books/09_eruul_mend.jpg",
+   "o": 0,
+   "note": "PDF · 7MB"
+  },
+  {
+   "id": "esis-09_uran_zohiol",
+   "title": "Уран зохиол 9",
+   "grade": "9",
+   "subject": "Уран зохиол",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_uran_zohiol.pdf",
+   "cover": "img/books/09_uran_zohiol.jpg",
+   "o": 0,
+   "note": "PDF · 8MB"
+  },
+  {
+   "id": "esis-09_niigem_sudlal",
+   "title": "Нийгэм судлал 9",
+   "grade": "9",
+   "subject": "Нийгэм судлал",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_niigem_sudlal.pdf",
+   "cover": "img/books/09_niigem_sudlal.jpg",
+   "o": 0,
+   "note": "PDF · 8MB"
+  },
+  {
+   "id": "esis-09_mongol_khel",
+   "title": "Монгол хэл 9",
+   "grade": "9",
+   "subject": "Монгол хэл",
+   "file": "https://cdn.esis.edu.mn/cover/09/09_mongol_khel.pdf",
+   "cover": "img/books/09_mongol_khel.jpg",
+   "o": 0,
+   "note": "PDF · 12MB"
   }
  ]
 }
