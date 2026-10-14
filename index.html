@@ -179,6 +179,18 @@ section{padding-block:84px}
 .book .acts a.dl{background:var(--bg);color:var(--blue);flex:0 0 40px}
 @media(max-width:600px){.lib-grid{grid-template-columns:repeat(2,1fr);gap:12px}.lib-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.lib-tabs .tab{flex:0 0 auto}.book .cv{padding:10px}.book .cv b{font-size:15px}.book .bb{padding:10px}}
 .lib-h{font-size:18px;margin:26px 0 14px;color:var(--blue);display:flex;align-items:center;gap:8px}.lib-h:first-child{margin-top:0}.lib-h small{font-size:12px;background:var(--bg);color:var(--muted);padding:2px 9px;border-radius:999px}
+.bell{padding:0;overflow:hidden}
+.bell h3{margin:0;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;font-size:18px}
+.bell h3 small{font-size:13px;font-weight:600;opacity:.8}
+.bell.s1 h3{background:#E6F0FA;color:var(--blue)}.bell.s2 h3{background:#FFF1E0;color:#B45309}
+.bell table{width:100%;border-collapse:collapse;font-size:15px}
+.bell td{padding:10px 20px;border-top:1px solid var(--line)}
+.bell td:last-child{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.bell tr.br td{background:#FDECEC;color:#B91C1C;font-weight:600}
+.bell tr.now td{background:#DCFCE7;color:#166534;font-weight:800}
+.bell tr.now td:first-child::after{content:" • одоо";font-size:12px}
+#bellNow b{color:var(--red)}
+.btn-ghost-d{border:1px solid var(--line);background:#fff;color:var(--blue);padding:10px 16px;border-radius:999px;font-weight:700;font-size:14px}
 .lib-empty{padding:40px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:16px}
 
 /* clubs */
@@ -478,6 +490,12 @@ footer a:hover{color:#fff}
 </div></section>
 
 <!-- MARKET -->
+<!-- BELLS -->
+<section id="bells" class="alt" hidden><div class="wrap">
+  <div class="sec-head"><div><div class="kicker">ХИЧЭЭЛИЙН ЦАГ</div><h2>Хичээлийн цагийн хуваарь</h2><p id="bellNow">2026–2027 оны хичээлийн жил</p></div><a class="btn btn-ghost-d" id="bellImg" target="_blank" rel="noopener" hidden>🖼 Зургаар харах</a></div>
+  <div class="grid-2" id="bellGrid"></div>
+</div></section>
+
 <!-- LIBRARY -->
 <section id="library"><div class="wrap">
   <div class="sec-head"><div><div class="kicker">ЦАХИМ САН</div><h2>Сурах бичиг, дасгал ажлын дэвтэр</h2><p>Ангиа сонгоод сурах бичгээ онлайнаар уншиж, татаж, дасгал ажлын дэвтрээ бөглөөрэй.</p></div></div>
@@ -564,7 +582,7 @@ footer a:hover{color:#fff}
       <div class="socials"><a href="#" aria-label="Facebook" data-link="facebook" target="_blank" rel="noopener">f</a><a href="#" aria-label="Instagram" data-link="instagram" target="_blank" rel="noopener">ig</a><a href="#" aria-label="YouTube" data-link="youtube" target="_blank" rel="noopener">▶</a></div>
     </div>
     <div><h5>Хуудсууд</h5><ul id="footPages"><li><a href="#about">Танилцуулга</a></li><li><a href="#news">Мэдээ</a></li><li><a href="#clubs">Клуб</a></li><li><a href="#teachers">Багш нар</a></li></ul></div>
-    <div><h5>Сургалт</h5><ul id="footCourses"><li><a href="#library">Цахим сан</a></li><li><a href="#admission">Элсэлтийн мэдээлэл</a></li><li><a href="#market">Зарын булан</a></li></ul></div>
+    <div><h5>Сургалт</h5><ul id="footCourses"><li><a href="#bells">Хичээлийн цагийн хуваарь</a></li><li><a href="#library">Цахим сан</a></li><li><a href="#admission">Элсэлтийн мэдээлэл</a></li><li><a href="#market">Зарын булан</a></li></ul></div>
     <div><h5>Холбоо барих</h5><ul><li>📞 <span data-s="phone"></span></li><li>✉️ <span data-s="email"></span></li><li>📍 <span data-s="city">Улаанбаатар хот</span></li></ul></div>
   </div>
   <div class="copy"><span>© <span id="yr"></span> <span data-s="fullName">Нийслэлийн ерөнхий боловсролын 79 дүгээр сургууль</span>. Бүх эрх хуулиар хамгаалагдсан.</span><span><span data-h="motto">Бид хүүхдийн төлөө – Хүүхэд бүр онцгой</span></span></div>
@@ -867,6 +885,23 @@ if(adm.length){$('#admission').hidden=false;
     <div class="pb"><span class="st ${sc}">${sl}</span><h3>${esc(a.title)}</h3><div class="when">📅 ${fmtD(a.date)}${a.until?` – ${fmtD(a.until)}`:''}</div></div></div>`}).join('');
   $$('#admGrid [data-adm]').forEach(c=>c.onclick=c.onkeydown=e=>{if(e.type==='keydown'&&e.key!=='Enter')return;const a=adm[+c.dataset.adm];
     $('#detailBody').innerHTML=`${a.img?`<img src="${esc(S79.img(a.img))}" alt="" style="width:100%;border-radius:12px;margin-bottom:14px">`:''}<h3>${esc(a.title)}</h3><p style="white-space:pre-line;color:#475569">${esc(a.text)}</p>${a.link?`<a class="btn btn-primary" href="${esc(a.link)}" target="_blank" rel="noopener">${esc(a.linkText||'Холбоос')} ↗</a>`:''}`;openM('#detailModal')})}
+
+/* Хичээлийн цагийн хуваарь — одоо явагдаж буй цагийг тодруулна */
+{
+  const rows=String(home.bells||'').split('\n').map(l=>l.split('|').map(s=>s.trim())).filter(a=>a.length>=4&&/^\d\d?:\d\d$/.test(a[2]));
+  if(rows.length){
+    $('#bells').hidden=false;
+    if(home.bellsImg){$('#bellImg').href=S79.img(home.bellsImg);$('#bellImg').hidden=false}
+    const shifts=[...new Set(rows.map(r=>r[0]))], mins=t=>{const [h,m]=t.split(':');return +h*60+ +m};
+    const draw=()=>{const d=new Date(),wd=d.getDay(),now=d.getHours()*60+d.getMinutes(),school=wd>=1&&wd<=5;let cur=null;
+      $('#bellGrid').innerHTML=shifts.map((s,i)=>{const rs=rows.filter(r=>r[0]===s);
+        return `<div class="card bell s${i+1}"><h3>${i?'🌙':'☀️'} ${esc(s)} <small>${esc(rs[0][2])} цагт эхэлнэ</small></h3><table>${rs.map(r=>{
+          const on=school&&now>=mins(r[2])&&now<mins(r[3]);if(on)cur=`${s}: ${r[1]}`;
+          return `<tr class="${/завсарлага/i.test(r[1])?'br':''}${on?' now':''}"><td>${esc(r[1])}</td><td>${esc(r[2])} – ${esc(r[3])}</td></tr>`}).join('')}</table></div>`}).join('');
+      $('#bellNow').innerHTML=cur?`Одоо: <b>${esc(cur)}</b>`:'2026–2027 оны хичээлийн жил · Цаг бүр 40 минут';};
+    draw();setInterval(draw,60000);
+  }
+}
 
 /* Цахим сан — сурах бичиг анги бүрээр */
 {
