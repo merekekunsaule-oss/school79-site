@@ -178,6 +178,7 @@ section{padding-block:84px}
 .book .acts a{flex:1;text-align:center;padding:8px 6px;border-radius:10px;font-weight:700;font-size:13px;background:var(--blue);color:#fff}
 .book .acts a.dl{background:var(--bg);color:var(--blue);flex:0 0 40px}
 @media(max-width:600px){.lib-grid{grid-template-columns:repeat(2,1fr);gap:12px}.lib-tabs{flex-wrap:nowrap;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}.lib-tabs .tab{flex:0 0 auto}.book .cv{padding:10px}.book .cv b{font-size:15px}.book .bb{padding:10px}}
+.lib-h{font-size:18px;margin:26px 0 14px;color:var(--blue);display:flex;align-items:center;gap:8px}.lib-h:first-child{margin-top:0}.lib-h small{font-size:12px;background:var(--bg);color:var(--muted);padding:2px 9px;border-radius:999px}
 .lib-empty{padding:40px 20px;text-align:center;color:var(--muted);background:#fff;border:1px dashed var(--line);border-radius:16px}
 
 /* clubs */
@@ -478,9 +479,9 @@ footer a:hover{color:#fff}
 <!-- MARKET -->
 <!-- LIBRARY -->
 <section id="library"><div class="wrap">
-  <div class="sec-head"><div><div class="kicker">ЦАХИМ САН</div><h2>Цахим сурах бичиг</h2><p>Ангиа сонгоод сурах бичгээ онлайнаар уншиж, татаж аваарай.</p></div></div>
+  <div class="sec-head"><div><div class="kicker">ЦАХИМ САН</div><h2>Сурах бичиг, дасгал ажлын дэвтэр</h2><p>Ангиа сонгоод сурах бичгээ онлайнаар уншиж, татаж, дасгал ажлын дэвтрээ бөглөөрэй.</p></div></div>
   <div class="tabs lib-tabs" id="libTabs"></div>
-  <div class="lib-grid" id="libGrid"></div>
+  <div id="libGrid"></div>
 </div></section>
 
 <section id="market"><div class="wrap">
@@ -879,12 +880,17 @@ if(adm.length){$('#admission').hidden=false;
     $('#libTabs').innerHTML=G.map(x=>`<button class="tab ${x===g?'on':''}" data-g="${x}">${x}-р анги${cnt(x)?` <small>${cnt(x)}</small>`:''}</button>`).join('');
     {const t=$('#libTabs'),on=t.querySelector('.on');if(on&&t.scrollWidth>t.clientWidth)t.scrollLeft=on.offsetLeft-t.offsetLeft-(t.clientWidth-on.offsetWidth)/2}
     $$('#libTabs .tab').forEach(b=>b.onclick=()=>{g=b.dataset.g;try{localStorage.setItem('s79_libGrade',g)}catch(e){}render()});
-    const list=books.filter(b=>String(b.grade)===g);
-    $('#libGrid').innerHTML=list.length?list.map(b=>{const f=S79.img(b.file),cv=S79.img(b.cover);
+    const list=books.filter(b=>String(b.grade)===g), isWb=b=>b.kind==='Дасгал ажлын дэвтэр';
+    const card=b=>{const f=S79.img(b.file),cv=S79.img(b.cover),wb=isWb(b);
       return `<div class="card book">${cv?`<div class="cv" style="background-image:url('${esc(cv)}')"></div>`
-        :`<div class="cv gen" style="background:${col(b.subject||b.title)}"><span class="ic">${ico(b.subject||b.title)}</span><b>${esc(b.subject||b.title)}</b><small>${esc(g)}-р анги</small></div>`}
-        <div class="bb"><h3>${esc(b.title)}</h3>${b.note?`<p>${esc(b.note)}</p>`:''}<div class="acts"><a href="${esc(f)}" target="_blank" rel="noopener">📖 Унших</a><a class="dl" href="${esc(f)}" download title="Татах" aria-label="${esc(b.title)} — татах">⬇</a></div></div></div>`}).join('')
-      :`<div class="lib-empty" style="grid-column:1/-1">📚 ${esc(g)}-р ангийн сурах бичиг удахгүй нэмэгдэнэ.</div>`;
+        :`<div class="cv gen" style="background:${col(b.subject||b.title)}"><span class="ic">${wb?'✏️':ico(b.subject||b.title)}</span><b>${esc(b.subject||b.title)}</b><small>${esc(g)}-р анги</small></div>`}
+        <div class="bb"><h3>${esc(b.title)}</h3>${b.note?`<p>${esc(b.note)}</p>`:''}<div class="acts">${wb
+          ?`<a href="${esc(f)}" target="_blank" rel="noopener">✏️ Бөглөх</a>`
+          :`<a href="${esc(f)}" target="_blank" rel="noopener">📖 Унших</a><a class="dl" href="${esc(f)}" download title="Татах" aria-label="${esc(b.title)} — татах">⬇</a>`}</div></div></div>`};
+    const grp=(ttl,l)=>l.length?`<h3 class="lib-h">${ttl} <small>${l.length}</small></h3><div class="lib-grid">${l.map(card).join('')}</div>`:'';
+    const bk=list.filter(b=>!isWb(b)), wk=list.filter(isWb);
+    $('#libGrid').innerHTML=list.length?grp('📘 Сурах бичиг',bk)+grp('✏️ Дасгал ажлын дэвтэр',wk)
+      :`<div class="lib-empty">📚 ${esc(g)}-р ангийн сурах бичиг удахгүй нэмэгдэнэ.</div>`;
   };
   render();
 }
