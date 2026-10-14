@@ -621,7 +621,7 @@ renderNews();
 
 /* CLUBS */
 const clubs=S79.get('clubs').map(c=>({...c,name:esc(c.name),cat:esc(c.cat),t:esc(c.t||''),grade:esc(c.grade||''),day:esc(c.day||''),d:esc(c.d||''),ico:esc(c.ico||''),bg:esc(c.bg||'#E6F0FA'),
-  goal:esc(c.goal||''),acts:String(c.acts||'').split('\n').map(x=>x.trim()).filter(Boolean).map(esc),place:esc(c.place||''),phone:esc(c.phone||''),motto:esc(c.motto||''),email:esc(c.email||''),more:moreSecs(c.more),wins:String(c.wins||'').split('\n').map(x=>x.trim()).filter(Boolean).map(esc),gallery:String(c.gallery||'').split('\n').map(x=>x.trim()).filter(Boolean).map(g=>esc(S79.img(g))).filter(Boolean),im:esc(S79.img(c.img)),max:+c.max||0,cur:+c.cur||0}));
+  goal:esc(c.goal||''),acts:String(c.acts||'').split('\n').map(x=>x.trim()).filter(Boolean).map(esc),place:esc(c.place||''),phone:esc(c.phone||''),motto:esc(c.motto||''),reqs:String(c.reqs||'').split('\n').map(x=>x.trim()).filter(Boolean).map(esc),email:esc(c.email||''),more:moreSecs(c.more),wins:String(c.wins||'').split('\n').map(x=>x.trim()).filter(Boolean).map(esc),gallery:String(c.gallery||'').split('\n').map(x=>x.trim()).filter(Boolean).map(g=>esc(S79.img(g))).filter(Boolean),im:esc(S79.img(c.img)),max:+c.max||0,cur:+c.cur||0}));
 // “# Гарчиг” мөрөөр эхэлсэн хэсэг бүрийг жагсаалт болгоно
 function moreSecs(v){const out=[];String(v||'').split('\n').map(x=>x.trim()).filter(Boolean).forEach(l=>{
   if(l.startsWith('#'))out.push({h:esc(l.replace(/^#+\s*/,'')),items:[]});else{if(!out.length)out.push({h:'',items:[]});out[out.length-1].items.push(esc(l.replace(/^[*•\-✔️]+\s*/u,'')))}});return out}
@@ -650,6 +650,7 @@ function renderClubs(){
       ${c.goal?`<h4>🎯 Зорилго</h4><p style="margin:0">${c.goal}</p>`:''}
       ${c.acts.length?`<h4>${c.ico||'📌'} Үйл ажиллагаа</h4><ul>${c.acts.map(a=>`<li>${a}</li>`).join('')}</ul>`:''}
       ${c.more.map(m=>`${m.h?`<h4>${m.h}</h4>`:''}<ul>${m.items.map(a=>`<li>${a}</li>`).join('')}</ul>`).join('')}
+      ${c.reqs.length?`<h4>📋 Тавигдах шаардлага</h4><ul>${c.reqs.map(a=>`<li>${a}</li>`).join('')}</ul>`:''}
       ${c.wins.length?`<h4>🏆 Амжилт</h4><ul>${c.wins.map(a=>`<li>${a}</li>`).join('')}</ul>`:''}
       ${c.gallery.length?`<h4>📷 Зургийн цомог</h4><div class="c-gal">${c.gallery.map(g=>`<a href="${g}" target="_blank" rel="noopener" style="background-image:url('${g}')" aria-label="Зураг томоор харах"></a>`).join('')}</div>`:''}
       <dl>${c.grade?`<div><dt>👦👧 Хамрагдах</dt><dd>${gradeTxt(c.grade)}</dd></div>`:''}${c.t?`<div><dt>👤 Багш / дасгалжуулагч</dt><dd>${c.t}</dd></div>`:''}
