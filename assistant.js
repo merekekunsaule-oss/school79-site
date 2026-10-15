@@ -303,12 +303,13 @@ const S79Assistant=(()=>{
     {k:'culture',l:'🏹 Монгол соёл, уламжлал',re:/монгол бичиг|уламжлал|соёл|үндэсн|монгол бөх|өв/}];
   const TAGS={'club-football':['sport'],'club-magick-rock':['sport'],'club-uran-biir':['art','culture'],'club-lilo':['dance','art','culture'],
     'club-souz':['lead'],'club-malala':['lead','speak'],'club-uhaalag-hotoch':['health','lead','nature'],'club-tsets-mergen':['speak','lead'],
-    'club-eco':['nature','lead'],'club-journalist':['media','speak'],'club-harandaa':['art'],'club-mongol-bukh':['sport','culture']};
+    'club-eco':['nature','lead'],'club-journalist':['media','speak'],'club-harandaa':['art'],'club-hovguud':['lead','speak'],'club-mongol-bukh':['sport','culture']};
   const clubTags=c=>TAGS[c.id]||INTERESTS.filter(i=>i.re.test(norm(`${c.name} ${c.cat} ${c.d} ${c.acts||''}`))).map(i=>i.k);
   function eligible(c,st){
     const g=norm(c.grade||''), r=g.match(/(\d{1,2})\s*[–-]\s*(\d{1,2})/);
     if(st.grade&&r&&(st.grade<+r[1]||st.grade>+r[2]))return false;
     if(/охид/.test(g)&&st.sex==='boy')return false;
+    if(/хөвгүүд|хүү/.test(g)&&st.sex==='girl')return false;
     return true;
   }
   let quiz=null; // {grade, sex, ints:[]}
