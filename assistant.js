@@ -260,6 +260,8 @@ const S79Assistant=(()=>{
         let best='',bs=0;
         if(want.length)String(o.text||'').split('\n').map(clean).filter(Boolean).forEach(l=>{const lt=toks(l).map(stem),ls=new Set(lt);
           let sc=want.filter(t=>has(ls,t)).length; if(sc&&want.some(t=>lt.slice(0,2).some(x=>x.startsWith(t)||t.startsWith(x))))sc+=0.5; if(sc>bs){bs=sc;best=l}});
+        {const cm=n.match(/(?:^|\s)(\d{1,2})\s*-?\s*([а-яө])(?=\s|$|\s*анги)/);if(cm){const k=cm[1]+cm[2];
+          const ln=String(o.text||'').split('\n').find(l=>new RegExp('(^|[\\s,(])'+k+'(?=[\\s,)]|$)','i').test(norm(l)));if(ln)return `${o.title} (${fmtDate(o.date)}):\n${clean(ln.replace(/^•\s*/,''))}`}}
         if(bs>=1.5||(bs>=1&&!I.when))return `${o.title}:\n${cut(best.replace(/^•\s*/,''),400)}`;
         if(I.when)return `${o.title} — ${fmtDate(o.date)}${o.place?`, ${o.place}`:''}.`;
         if(I.where&&o.place)return `${o.title} — ${o.place}.`;
