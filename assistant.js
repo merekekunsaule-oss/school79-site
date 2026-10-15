@@ -315,7 +315,7 @@ const S79Assistant=(()=>{
     {k:'culture',l:'🏹 Монгол соёл, уламжлал',re:/монгол бичиг|уламжлал|соёл|үндэсн|монгол бөх|өв/}];
   const TAGS={'club-football':['sport'],'club-magick-rock':['sport'],'club-uran-biir':['art','culture'],'club-lilo':['dance','art','culture'],
     'club-souz':['lead'],'club-malala':['lead','speak'],'club-uhaalag-hotoch':['health','lead','nature'],'club-tsets-mergen':['speak','lead'],
-    'club-eco':['nature','lead'],'club-journalist':['media','speak'],'club-harandaa':['art'],'club-hovguud':['lead','speak'],'club-shanz':['dance','culture'],'club-morin-khuur':['dance','culture'],'club-nairal-duu':['dance'],'club-volleyball':['sport'],'club-volleyball-munkhbold':['sport'],'club-oyunii-ons':['speak','nature'],'club-shatar':['speak','sport'],'club-degee-zuu':['art'],'club-gar-urlal':['art','culture'],'club-mongol-bukh':['sport','culture']};
+    'club-eco':['nature','lead'],'club-journalist':['media','speak'],'club-harandaa':['art'],'club-hovguud':['lead','speak'],'club-shanz':['dance','culture'],'club-morin-khuur':['dance','culture'],'club-nairal-duu':['dance'],'club-volleyball':['sport'],'club-volleyball-munkhbold':['sport'],'club-oyunii-ons':['speak','nature'],'club-shatar':['speak','sport'],'club-degee-zuu':['art'],'club-gar-urlal':['art','culture'],'club-shuren-urlal':['art'],'club-mongol-bukh':['sport','culture']};
   const clubTags=c=>TAGS[c.id]||INTERESTS.filter(i=>i.re.test(norm(`${c.name} ${c.cat} ${c.d} ${c.acts||''}`))).map(i=>i.k);
   function eligible(c,st){
     const g=norm(c.grade||''), r=g.match(/(\d{1,2})\s*[–-]\s*(\d{1,2})/);
