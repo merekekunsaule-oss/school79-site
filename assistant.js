@@ -142,7 +142,7 @@ const S79Assistant=(()=>{
         const sc=c=>{const a=toks(cw?`${c.name} ${c.cat} ${c.t||''}`:c.name).map(st2),g=cw?toks(c.goal||'').map(st2):[];return topic.filter(t=>mt(a,t,3)||mt(g,t,5)).length};
         const mx=Math.max(0,...cl.map(sc)), hit=mx?cl.filter(c=>sc(c)===mx):[];
         if(hit.length===1&&(cw||mx>=2||topic.length===1)){const d=(docs||[]).find(x=>x.kind==='club'&&x.c===hit[0]);if(d)return brief(d,n)}
-        if(hit.length>=2){const nm=c=>c.name.replace(/&amp;/g,'&').replace(/[“”"]/g,'');return {text:`${hit.length} клуб, дугуйлан байна:\n`+hit.map(c=>`• ${nm(c)}${c.t?` — ${c.t}`:''}`).join('\n'),options:hit.map(nm)}}
+        if(hit.length>=2){const nm=c=>c.name.replace(/&amp;/g,'&').replace(/[“”"]/g,'');return {text:`${hit.length} клуб, дугуйлан байна:\n`+hit.map(c=>`• ${nm(c)}${c.t?` — ${c.t}`:''}${c.grade?` (${/^[\d\s–-]+$/.test(c.grade)?c.grade+'-р анги':c.grade})`:''}`).join('\n'),options:hit.map(nm)}}
         if(!hit.length&&cw)return {text:`Ийм клуб одоогоор алга. Манай ${cl.length} клуб, дугуйлан:\n`+cl.map(c=>'• '+c.name.replace(/&amp;/g,'&')).join('\n'),options:['Аль клубт элсэх вэ?']};}
     }
     return null;
@@ -338,7 +338,7 @@ const S79Assistant=(()=>{
     const all=(S79.get('clubs')||[]).filter(c=>eligible(c,st));
     const scored=all.map(c=>{const t=clubTags(c);const hit=st.ints.filter(k=>t.includes(k));return {c,hit,s:hit.reduce((z,k)=>z+(t[0]===k?3:1),0)+(st.ints.includes('any')?0.1:0)}})
       .filter(x=>x.s>0||st.ints.includes('any')).sort((a,b)=>b.s-a.s);
-    let top=scored.slice(0,3);
+    let top=scored.slice(0,5);
     if(st.ints.includes('any')&&st.ints.length===1){ // “Мэдэхгүй” — өөр өөр чиглэлээс нэг нэгийг санал болгоно
       const seen=new Set();top=[];
       for(const c of all){const t=clubTags(c)[0]||'other';if(!seen.has(t)){seen.add(t);top.push({c,hit:[t].filter(k=>k!=='other')})}if(top.length===4)break}
