@@ -132,13 +132,20 @@ const S79Assistant=(()=>{
       return {text:'Юунд бүртгүүлэх вэ?',options:['1-р ангийн элсэлт','Клубт бүртгүүлэх','ЭЕШ бүртгэл']};
     if(/^клубт бүртгүүлэх$|клубт (яаж|хэрхэн) (бүртгүүл|элс)|клубт (бүртгүүлэх|элсэх) (вэ|арга)/.test(n))
       return {text:'Сайтын “Клуб” хэсгээс клубээ сонгоод “Бүртгүүлэх” товчийг дарж, маягтыг бөглөнө. Аль клубт элсэхээ мэдэхгүй бол би санал болгож чадна. 😊',options:['Аль клубт элсэх вэ?','Клубууд'],links:[{t:'🏅 Клубууд',u:'#clubs'}]};
+    // “Х багшийн клуб/дугуйлан” — удирдагч багшийн нэрээр (бүтэн нэр таарах ёстой)
+    if(/клуб|дугуйлан|секц|зөвлөл|бүлэг/.test(n)){
+      const names=c=>String(c.t||'').replace(/\(.*?\)/g,'').split(/[,;]/).map(x=>norm(x).replace(/^.*\./,'').trim()).filter(x=>x.length>=4);
+      const byT=(S79.get('clubs')||[]).filter(c=>names(c).some(nm=>new RegExp('(^|[^а-яөү])'+nm.replace(/[-]/g,'\\-')+'(?![а-яөү])').test(n)));
+      if(byT.length===1){const d=(docs||[]).find(x=>x.kind==='club'&&x.c===byT[0]);if(d)return brief(d,n)}
+      if(byT.length>1)return {text:`${byT.length} клуб, дугуйлан:\n`+byT.map(c=>`• ${c.name.replace(/&amp;/g,'&')} — ${c.t}`).join('\n'),options:byT.map(c=>c.name.replace(/&amp;/g,'&').replace(/[“”"]/g,''))};}
     // Клуб байгаа эсэх (“шатрын дугуйлан байна уу?”)
     if(/байна уу|бий юу|байдаг уу|байгаа юу|байхгүй юу|байна у$|бий$/.test(n)&&!/багш|анги|номын|ном |мэдээ/.test(n)){const cw=/клуб|дугуйлан|секц/.test(n);
       // Нэрийн харьцуулалтад үгийг таслахгүй (зөвхөн нөхцөлийг авна): “хөгжмийн” ≠ “хөгжлийн”
       const st2=w=>{const b=w.replace(/(ийнх|ийн|ын|ний|ны|ийг|ыг|ныг|аас|ээс|оос|өөс|д|т)$/,'');return b.length>=3?b:w};
       const topic=toks(q).filter(t=>!STOP.has(t)).map(st2).filter(t=>!/^(клуб|дугуй|секц|байн|байд|байг|бий|ямар|танай|орох|элсэ|хүүх)/.test(t)&&t.length>=3);
       const cl=S79.get('clubs')||[];
-      if(topic.length){const mt=(ts,t,m)=>ts.some(x=>x===t||(Math.min(x.length,t.length)>=m&&(x.startsWith(t)||t.startsWith(x))));
+      if(topic.length){const cp=(a,b)=>{let i=0;while(i<a.length&&a[i]===b[i])i++;return i};
+        const mt=(ts,t,m)=>ts.some(x=>x===t||(Math.min(x.length,t.length)>=m&&(x.startsWith(t)||t.startsWith(x)))||cp(x,t)>=6);
         const sc=c=>{const a=toks(cw?`${c.name} ${c.cat} ${c.t||''}`:c.name).map(st2),g=cw?toks(`${c.goal||''} ${c.acts||''}`).map(st2):[];return topic.filter(t=>mt(a,t,3)||mt(g,t,5)).length};
         const mx=Math.max(0,...cl.map(sc)), hit=mx?cl.filter(c=>sc(c)===mx):[];
         if(hit.length===1&&(cw||mx>=2||topic.length===1)){const d=(docs||[]).find(x=>x.kind==='club'&&x.c===hit[0]);if(d)return brief(d,n)}
