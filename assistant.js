@@ -110,6 +110,8 @@ const S79Assistant=(()=>{
     // Гомдол, санал хүсэлт
     if(/гомдол|санал хүсэлт|санал гаргах|зурвас (илгээ|үлдээ)|хүсэлт (илгээ|гаргах)/.test(n))
       return {text:'Санал, хүсэлт, гомдлоо сайтын “Холбоо барих” хэсгийн маягтаар илгээнэ үү. Сургуулийн удирдлагад шууд хүрнэ.'+tel,links:[{t:'✉️ Холбоо барих',u:'#contact'}]};
+    if(/номын сан/.test(n)&&!/цахим/.test(n)){const d=(docs||[]).find(d=>/номын сан/i.test(d.body));
+      return {text:(d?cut(d.body,300)+'\n\n':'')+'Сурах бичгийг сайтын “Цахим сан” хэсгээс онлайнаар уншиж болно.',links:[{t:'📚 Цахим сан',u:'#library'}]};}
     if(/дүрэмт хувцас|сургуулийн хувцас|сургуулийн форм/.test(n))return 'Дүрэмт хувцасны мэдээлэл сайтад оруулаагүй байна — ангийн багшаасаа лавлана уу.'+tel;
     // Хичээлийн цагийн хуваарь (ээлж, цаг, завсарлага)
     if((/хичээл.{0,15}(хэдэн цаг|хэдэн цагт|хэдэд|цагт эхэл|эхэлдэг|эхлэх|тардаг|тарах|дуусдаг|дуусах)|(цагийн|хичээлийн) хуваарь|завсарлага|ээлж|(^|\s)([1-7])\s*-?\s*(р|дугаар|дүгээр)?\s*цаг(\s|$|ийн)/.test(n))&&!/улирал|жил|амралт|олимпиад|клуб|дугуйлан/.test(n)){
@@ -208,7 +210,7 @@ const S79Assistant=(()=>{
     }
     if(!qt.length)return fallback();
     const spec=qt.filter(t=>!isGen(t));
-    const scored=docs.map(d=>{let s=0,m=0,ms=0;qt.forEach(t=>{const g=isGen(t);if(has(d.tt,t)){s+=g?0.5:3;m++;if(!g)ms++}else if(has(d.bt,t)){s+=g?0.2:1;m++;if(!g)ms++}});
+    const scored=docs.map(d=>{let s=0,m=0,ms=0;qt.forEach(t=>{const g=isGen(t);if(has(d.tt,t)){s+=g?0.5:4;m++;if(!g)ms++}else if(has(d.bt,t)){s+=g?0.2:1;m++;if(!g)ms++}});
       if(spec.length&&!ms)return {d,s:0};
       if(m===qt.length)s+=2; if(['contact','stats','director','about','goal'].includes(d.kind))s+=0.5; return {d,s}}).filter(x=>x.s>0).sort((a,b)=>b.s-a.s||String(b.d.date||'').localeCompare(String(a.d.date||'')));
     if(!scored.length)return fallback();
@@ -309,7 +311,7 @@ const S79Assistant=(()=>{
     {k:'culture',l:'🏹 Монгол соёл, уламжлал',re:/монгол бичиг|уламжлал|соёл|үндэсн|монгол бөх|өв/}];
   const TAGS={'club-football':['sport'],'club-magick-rock':['sport'],'club-uran-biir':['art','culture'],'club-lilo':['dance','art','culture'],
     'club-souz':['lead'],'club-malala':['lead','speak'],'club-uhaalag-hotoch':['health','lead','nature'],'club-tsets-mergen':['speak','lead'],
-    'club-eco':['nature','lead'],'club-journalist':['media','speak'],'club-harandaa':['art'],'club-hovguud':['lead','speak'],'club-shanz':['dance','culture'],'club-morin-khuur':['dance','culture'],'club-nairal-duu':['dance'],'club-volleyball':['sport'],'club-volleyball-munkhbold':['sport'],'club-oyunii-ons':['speak','nature'],'club-mongol-bukh':['sport','culture']};
+    'club-eco':['nature','lead'],'club-journalist':['media','speak'],'club-harandaa':['art'],'club-hovguud':['lead','speak'],'club-shanz':['dance','culture'],'club-morin-khuur':['dance','culture'],'club-nairal-duu':['dance'],'club-volleyball':['sport'],'club-volleyball-munkhbold':['sport'],'club-oyunii-ons':['speak','nature'],'club-shatar':['speak','sport'],'club-mongol-bukh':['sport','culture']};
   const clubTags=c=>TAGS[c.id]||INTERESTS.filter(i=>i.re.test(norm(`${c.name} ${c.cat} ${c.d} ${c.acts||''}`))).map(i=>i.k);
   function eligible(c,st){
     const g=norm(c.grade||''), r=g.match(/(\d{1,2})\s*[–-]\s*(\d{1,2})/);
