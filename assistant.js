@@ -26,7 +26,7 @@ const S79Assistant=(()=>{
         (t.e?` Туршлага: ${t.e} жил.`:'')+(t.rank?` ${t.rank}.`:'')+
         (t.homeroom?` Даасан анги: ${t.homeroom}.`:'')+(t.classes?`\nЗаадаг анги: ${t.classes}`:'')+(t.note?`\n${t.note}`:''),
       {t}));
-    g('clubs').forEach(c=>add('club',`${c.name} ${c.cat} клуб дугуйлан`,`${c.t} ${c.d} ${c.goal||''} ${c.acts||''} ${c.place||''} ${c.day||''} ${c.grade||''} ${c.reqs||''}`,
+    g('clubs').forEach(c=>add('club',`${c.name} ${c.cat} ${c.motto||''} клуб дугуйлан`,`${c.t} ${c.d} ${c.goal||''} ${c.acts||''} ${c.place||''} ${c.day||''} ${c.grade||''} ${c.reqs||''}`,
       ()=>`🏅 ${c.name}`+(c.t?` — удирдагч ${c.t}`:'')+'.'+
         (c.grade?`\nХамрагдах: ${/^[\d\s–-]+$/.test(c.grade)?c.grade+'-р анги':c.grade}`:'')+(c.day?`\n🕒 ${c.day}`:'')+(c.place?`\n📍 ${c.place}`:'')+
         (c.phone?`\n📞 ${c.phone}`:'')+(c.d?`\n${cut(c.d,220)}`:'')+'\n\n“Клуб” хэсгээс онлайн бүртгүүлээрэй.',{c}));
@@ -59,7 +59,7 @@ const S79Assistant=(()=>{
     if(home.motto)add('goal','сургуулийн уриа уриалга',home.motto,()=>`📣 Уриа: “${home.motto}”`);
     if(home.goal)add('goal','сургуулийн зорилго алсын хараа эрхэм зорилго зорилт',home.goal,()=>`🎯 Сургуулийн зорилго: ${home.goal}`);
     if(home.about)add('about','сургуулийн тухай танилцуулга түүх байгуулагдсан',home.about,()=>`🏫 ${home.about}`);
-    D.forEach(d=>{d.tt=new Set(toks(d.title).map(stem));d.bt=new Set(toks(d.body).map(stem))});
+    D.forEach(d=>{d.tl=toks(d.title).map(stem);d.tt=new Set(d.tl);d.bt=new Set(toks(d.body).map(stem))});
     return D;
   }
   const has=(set,s)=>{if(set.has(s))return true;for(const x of set){const a=x.length<s.length?x:s,b=a===x?s:x;if(a.length>=3&&b.startsWith(a))return true}return false};
@@ -210,13 +210,14 @@ const S79Assistant=(()=>{
     }
     if(!qt.length)return fallback();
     const spec=qt.filter(t=>!isGen(t));
+    const qs=toks(q).filter(t=>!STOP.has(t)).map(stem); // дарааллаар (хоёр үгийн хэллэг таарвал нэмэх оноо)
     const scored=docs.map(d=>{let s=0,m=0,ms=0;qt.forEach(t=>{const g=isGen(t);if(has(d.tt,t)){s+=g?0.5:4;m++;if(!g)ms++}else if(has(d.bt,t)){s+=g?0.2:1;m++;if(!g)ms++}});
       if(spec.length&&!ms)return {d,s:0};
-      if(m===qt.length)s+=2; if(['contact','stats','director','about','goal'].includes(d.kind))s+=0.5; return {d,s}}).filter(x=>x.s>0).sort((a,b)=>b.s-a.s||String(b.d.date||'').localeCompare(String(a.d.date||'')));
+      if(m===qt.length)s+=2; if(d.kind!=='teacher')for(let i=0;i+1<qs.length;i++)if(qs[i].length>=3&&qs[i+1].length>=3&&!isGen(qs[i]))for(let j=0;j+1<d.tl.length;j++)if(d.tl[j]===qs[i]&&d.tl[j+1]===qs[i+1]){s+=2;break} if(['contact','stats','director','about','goal'].includes(d.kind))s+=0.5; return {d,s}}).filter(x=>x.s>0).sort((a,b)=>b.s-a.s||String(b.d.date||'').localeCompare(String(a.d.date||'')));
     if(!scored.length)return fallback();
 
     // Асуултын төрлөөр тохирох бичлэгийн төрлийг давуу болгох
-    const pref=/үнэ|хэдээр|хэд вэ|зарна|авах/.test(n)?['ad']:/клуб|дугуйлан|секц|шаардлага|юу хэрэгтэй|элсэхэд|юу авч ирэх/.test(n)?['club']:/хэзээ|огноо|болох/.test(n)?['events','announcements','news','club']:[];
+    const pref=/хэдэн хүн|хэдэн сурагч|хүн авах|сурагч авах|хүүхэд авах/.test(n)?['club']:/үнэ|хэдээр|хэд вэ|зарна|авах/.test(n)?['ad']:/клуб|дугуйлан|секц|шаардлага|юу хэрэгтэй|элсэхэд|юу авч ирэх/.test(n)?['club']:/хэзээ|огноо|болох/.test(n)?['events','announcements','news','club']:[];
     if(pref.length)scored.forEach(x=>{if(pref.includes(x.d.kind))x.s+=1.5});
     scored.sort((a,b)=>b.s-a.s||String(b.d.date||'').localeCompare(String(a.d.date||'')));
     const wantList=/багш нар|багшууд|бүх|жагсаа|ямар ямар|хэн хэн|клубууд|клубүүд|дугуйлангууд|мэдээнүүд/.test(n);
@@ -249,6 +250,8 @@ const S79Assistant=(()=>{
         const O=t=>({text:t,options:['📋 Тавигдах шаардлага','🕒 Хэзээ хичээллэдэг вэ?','📍 Хаана хичээллэдэг вэ?','👤 Удирдагч хэн бэ?','📞 Холбоо барих'].concat(['Бүртгүүлэх'])});
         if(I.reqs){const R=String(c.reqs||'').split('\n').map(x=>x.trim()).filter(Boolean);
           return O(R.length?`📋 ${N} — тавигдах шаардлага:\n`+R.map(x=>'• '+x).join('\n'):`${N}-д тавигдах шаардлага сайтад оруулаагүй байна.`+(c.phone?` 📞 ${c.phone}-аас лавлана уу.`:''))}
+        if(/хэдэн хүн|хэдэн сурагч|хэдэн хүүхэд|суудал|хүн авах|сурагч авах|хүүхэд авах/.test(n)){const R=String(c.reqs||'').split('\n').find(x=>/анги бүрээс|суралцагч|сурагч хамр/i.test(x));
+          return O(+c.max?`${N} — ${c.max} сурагч хамрагдана${+c.cur?` (одоогоор ${c.cur} бүртгэлтэй)`:''}.`:R?`${N} — ${R.replace(/^\S+\s/,m=>m)}.`:`${N} — суудлын хязгаар сайтад заагаагүй.`)}
         if(/уриа/.test(n))return O(c.motto?`${N} — уриа: “${c.motto}”`:`${N}-ийн уриа сайтад алга.`);
         if(/зорилго/.test(n))return O(c.goal?`${N} — зорилго: ${c.goal}`:`${N}-ийн зорилго сайтад алга.`);
         if(I.signup)return O(`${N}-д бүртгүүлэхдээ “Клуб” хэсгээс тухайн клубын “Бүртгүүлэх” товчийг дарж, маягтыг бөглөнө.`+(c.phone?` Асуух зүйл байвал 📞 ${c.phone}.`:''));
@@ -311,7 +314,7 @@ const S79Assistant=(()=>{
     {k:'culture',l:'🏹 Монгол соёл, уламжлал',re:/монгол бичиг|уламжлал|соёл|үндэсн|монгол бөх|өв/}];
   const TAGS={'club-football':['sport'],'club-magick-rock':['sport'],'club-uran-biir':['art','culture'],'club-lilo':['dance','art','culture'],
     'club-souz':['lead'],'club-malala':['lead','speak'],'club-uhaalag-hotoch':['health','lead','nature'],'club-tsets-mergen':['speak','lead'],
-    'club-eco':['nature','lead'],'club-journalist':['media','speak'],'club-harandaa':['art'],'club-hovguud':['lead','speak'],'club-shanz':['dance','culture'],'club-morin-khuur':['dance','culture'],'club-nairal-duu':['dance'],'club-volleyball':['sport'],'club-volleyball-munkhbold':['sport'],'club-oyunii-ons':['speak','nature'],'club-shatar':['speak','sport'],'club-mongol-bukh':['sport','culture']};
+    'club-eco':['nature','lead'],'club-journalist':['media','speak'],'club-harandaa':['art'],'club-hovguud':['lead','speak'],'club-shanz':['dance','culture'],'club-morin-khuur':['dance','culture'],'club-nairal-duu':['dance'],'club-volleyball':['sport'],'club-volleyball-munkhbold':['sport'],'club-oyunii-ons':['speak','nature'],'club-shatar':['speak','sport'],'club-degee-zuu':['art'],'club-mongol-bukh':['sport','culture']};
   const clubTags=c=>TAGS[c.id]||INTERESTS.filter(i=>i.re.test(norm(`${c.name} ${c.cat} ${c.d} ${c.acts||''}`))).map(i=>i.k);
   function eligible(c,st){
     const g=norm(c.grade||''), r=g.match(/(\d{1,2})\s*[–-]\s*(\d{1,2})/);
