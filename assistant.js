@@ -133,7 +133,7 @@ const S79Assistant=(()=>{
     if(/клуб|дугуйлан|секц/.test(n)&&/байна уу|бий юу|байдаг уу|байгаа юу|байхгүй юу|байна у$|бий$/.test(n)){
       const topic=qt.filter(t=>!/^(клуб|дугуй|секц|байн|байд|байг|бий|ямар|танай|орох|элсэ|хүүх)/.test(t)&&t.length>=3);
       const cl=S79.get('clubs')||[];
-      if(topic.length){const sc=c=>{const ts=toks(`${c.name} ${c.cat} ${c.t||''}`).map(stem);return topic.filter(t=>ts.some(x=>x===t||(Math.min(x.length,t.length)>=4&&(x.startsWith(t)||t.startsWith(x))))).length};
+      if(topic.length){const sc=c=>{const ts=toks(`${c.name} ${c.cat} ${c.t||''}`).map(stem);return topic.filter(t=>ts.some(x=>x===t||(Math.min(x.length,t.length)>=3&&(x.startsWith(t)||t.startsWith(x))))).length};
         const mx=Math.max(0,...cl.map(sc)), hit=mx?cl.filter(c=>sc(c)===mx):[];
         if(hit.length>=2){const nm=c=>c.name.replace(/&amp;/g,'&').replace(/[“”"]/g,'');return {text:`${hit.length} клуб, дугуйлан байна:\n`+hit.map(c=>`• ${nm(c)}${c.t?` — ${c.t}`:''}`).join('\n'),options:hit.map(nm)}}
         if(!hit.length)return {text:`Ийм клуб одоогоор алга. Манай ${cl.length} клуб, дугуйлан:\n`+cl.map(c=>'• '+c.name.replace(/&amp;/g,'&')).join('\n'),options:['Аль клубт элсэх вэ?']};}
@@ -305,7 +305,7 @@ const S79Assistant=(()=>{
     {k:'culture',l:'🏹 Монгол соёл, уламжлал',re:/монгол бичиг|уламжлал|соёл|үндэсн|монгол бөх|өв/}];
   const TAGS={'club-football':['sport'],'club-magick-rock':['sport'],'club-uran-biir':['art','culture'],'club-lilo':['dance','art','culture'],
     'club-souz':['lead'],'club-malala':['lead','speak'],'club-uhaalag-hotoch':['health','lead','nature'],'club-tsets-mergen':['speak','lead'],
-    'club-eco':['nature','lead'],'club-journalist':['media','speak'],'club-harandaa':['art'],'club-hovguud':['lead','speak'],'club-shanz':['dance','culture'],'club-morin-khuur':['dance','culture'],'club-mongol-bukh':['sport','culture']};
+    'club-eco':['nature','lead'],'club-journalist':['media','speak'],'club-harandaa':['art'],'club-hovguud':['lead','speak'],'club-shanz':['dance','culture'],'club-morin-khuur':['dance','culture'],'club-nairal-duu':['dance'],'club-mongol-bukh':['sport','culture']};
   const clubTags=c=>TAGS[c.id]||INTERESTS.filter(i=>i.re.test(norm(`${c.name} ${c.cat} ${c.d} ${c.acts||''}`))).map(i=>i.k);
   function eligible(c,st){
     const g=norm(c.grade||''), r=g.match(/(\d{1,2})\s*[–-]\s*(\d{1,2})/);
