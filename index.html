@@ -10,8 +10,8 @@
 <style>
 :root{
   --blue:#0057A8; --blue-2:#1976B8; --navy:#003E75; --sky:#9CC3E5;
-  --red:#D71920; --bg:#F5F9FC; --ink:#1F2937; --muted:#6B7280; --line:#E3EAF2;
-  --green:#4C9A62; --green-bg:#E8F4EC; --radius:14px;
+  --red:#D71920; --bg:#F4F8FC; --ink:#1F2937; --muted:#64748B; --line:#DFE8F1;
+  --green:#4C9A62; --green-bg:#E8F4EC; --radius:16px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -341,6 +341,82 @@ footer a:hover{color:#fff}
 .quick button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 11px;font-size:12.5px;color:var(--blue)}
 .chat form{display:flex;gap:8px;padding:12px 14px;background:#fff}
 .chat form button{border:0;background:var(--blue);color:#fff;border-radius:10px;padding:0 16px;font-weight:700}
+
+/* visual polish */
+body{line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;padding-inline:24px}
+.btn{min-height:46px;padding:12px 24px;box-shadow:0 2px 6px rgba(0,30,60,.08)}
+.btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,30,60,.14)}
+.btn:focus-visible,button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #F4B942;outline-offset:3px}
+header{box-shadow:0 4px 18px rgba(0,62,117,.07)}
+header .wrap{min-width:0}
+nav ul{gap:2px}
+nav a{transition:background .18s ease,color .18s ease}
+.hero .wrap{padding-block:100px 120px}
+.hero h1{max-width:760px;letter-spacing:-.025em}
+.hero p{line-height:1.7}
+.hero-card{box-shadow:0 18px 48px rgba(0,30,60,.16)}
+.stats .grid{box-shadow:0 16px 42px rgba(0,62,117,.13)}
+.stat{padding:28px 18px}
+.stat b{letter-spacing:-.035em;font-variant-numeric:tabular-nums}
+section{padding-block:clamp(64px,7vw,88px)}
+.sec-head{margin-bottom:32px}
+.sec-head h2{letter-spacing:-.02em}
+.sec-head p{line-height:1.7}
+.card{box-shadow:0 3px 12px rgba(0,62,117,.035)}
+.news-body,.club{padding:24px}
+.news-body p,.club p,.dir-text p{line-height:1.75}
+.tab{min-height:40px;transition:background .18s ease,color .18s ease,border-color .18s ease}
+.form,.info-box{box-shadow:0 10px 32px rgba(0,62,117,.07)}
+input,select,textarea{min-height:46px}
+textarea{line-height:1.6;resize:vertical}
+.contact{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}
+.contact>* ,.form .two,footer .cols>*{min-width:0}
+.info-row>div:last-child{min-width:0;overflow-wrap:anywhere}
+
+@media(max-width:700px){
+  .wrap{width:100%;min-width:0;padding-inline:18px}
+  .topbar .wrap{align-items:flex-start}
+  .topbar .wrap>div{display:flex;flex-wrap:wrap;gap:4px 12px}
+  .topbar span{margin-right:0}
+  header .wrap{height:68px;gap:10px}
+  .logo{flex:1;min-width:0;gap:8px}
+  .logo>div{flex:1;min-width:0}
+  .logo-img{width:44px;height:44px}
+  .logo small.pre{white-space:normal;overflow-wrap:anywhere;font-size:8px;line-height:1.25}
+  .logo span{white-space:normal;font-size:14px;line-height:1.2}
+  .burger{flex:0 0 44px;width:44px;height:44px;display:grid;place-items:center}
+  nav{inset:68px 0 auto;max-height:calc(100vh - 68px);overflow-y:auto;box-shadow:0 12px 20px rgba(0,30,60,.1)}
+  .hero .wrap{padding-block:56px 86px;gap:30px}
+  .hero h1{font-size:clamp(32px,9vw,44px);line-height:1.12}
+  .hero p{font-size:16px;margin-bottom:24px}
+  .hero-search{width:100%;min-width:0}
+  .hero-search input{min-width:0}
+  .hero-search .btn{flex:none;padding-inline:17px}
+  .hero-card{padding:20px}
+  .stats{margin-top:-28px}
+  .stat{padding:20px 12px}
+  .stat b{font-size:clamp(26px,8vw,32px)}
+  section{padding-block:60px}
+  .dir-photo::before{inset:12px -8px -12px 12px}
+  .sec-head{margin-bottom:24px}
+  .news-body,.club{padding:20px}
+  .info-box,.form{padding:24px}
+  .contact{grid-template-columns:minmax(0,1fr)}
+  footer .cols{grid-template-columns:repeat(2,minmax(0,1fr))}
+  footer li{overflow-wrap:anywhere}
+  .band{padding:30px 24px;border-radius:20px}
+  .chat{right:12px;bottom:84px;max-height:calc(100dvh - 106px)}
+  .fab{right:16px;bottom:16px;width:56px;height:56px}
+}
+@media(max-width:380px){
+  .wrap{padding-inline:14px}
+  footer .cols{grid-template-columns:minmax(0,1fr)}
+  .hero-actions .btn{width:100%;justify-content:center}
+  .hero-search{padding:4px}
+  .hero-search input{padding-inline:12px;font-size:14px}
+  .hero-search .btn{padding-inline:12px}
+}
 </style>
 </head>
 <body>
