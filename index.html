@@ -154,6 +154,7 @@ section{padding-block:84px}
 
 /* news */
 .news-img{aspect-ratio:16/10;display:grid;place-items:center;font-size:54px}
+.news-img.poster{aspect-ratio:2/3;background-color:#fff}
 .news-body{padding:20px}
 .news-body .meta{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--muted);margin-bottom:10px}
 .news-body h3{margin:0 0 8px;font-size:18px;color:var(--navy);line-height:1.3}
@@ -806,7 +807,10 @@ const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return
 $$('[data-count]').forEach(el=>io.observe(el));
 
 /* NEWS — Мэдээ, Зарлал, Арга хэмжээг нэгтгэж харуулна */
-const news=[...S79.get('news').map(n=>({...n,cat:'Мэдээ'})),...S79.get('announcements').map(n=>({...n,cat:'Зарлал'})),...evs.map(n=>({...n,cat:'Арга хэмжээ'}))]
+const posterAnnouncement={id:'ann-2026-11-09-pepero-day',ico:'🎀',bg:'#FFF0F3',date:'2026-11-09',img:'884670660_122227626956534552_3209338389599247234_n.jpg',fit:'contain',title:'Happy Pepero Day — Pepero Box',text:'Хамрах хүрээ: 6-12р анги\nХэзээ: 11.9-ээс 11.11 хүртэл\n\nХаана: 79-р сургуулийн үүдэнд\n\nАНХААРУУЛГА:\nPepero өгөх хүний анги нэрийг гарцтай тод бичиж өгнө.\n11.11нд 10цагаас тараах тул амжиж хийх\n\n79-р сургуулийн охидын зөвлөл'};
+const announcements=S79.get('announcements');
+if(!announcements.some(n=>n.id===posterAnnouncement.id))announcements.push(posterAnnouncement);
+const news=[...S79.get('news').map(n=>({...n,cat:'Мэдээ'})),...announcements.map(n=>({...n,cat:'Зарлал'})),...evs.map(n=>({...n,cat:'Арга хэмжээ'}))]
   .sort((a,b)=>a.date<b.date?1:-1).map(n=>({...n,date:fmtD(n.date),title:esc(n.title),text:esc(n.text),ico:esc(n.ico||''),bg:esc(n.bg||'#E6F0FA'),im:esc(S79.img(n.img)),vid:esc(S79.img(n.video||'')),gal:String(n.gallery||'').split('\n').map(x=>x.trim()).filter(Boolean).map(g=>esc(S79.img(g))).filter(Boolean)}));
 let newsCat='Бүгд';
 function renderNews(){
@@ -814,7 +818,7 @@ function renderNews(){
   $('#newsTabs').innerHTML=cats.map(c=>`<button class="tab ${c===newsCat?'on':''}" data-c="${c}">${c}</button>`).join('');
   $$('#newsTabs .tab').forEach(b=>b.onclick=()=>{newsCat=b.dataset.c;renderNews()});
   const list=news.filter(n=>newsCat==='Бүгд'||n.cat===newsCat);
-  $('#newsGrid').innerHTML=list.map((n,i)=>`<article class="card"><div class="news-img" style="background:${n.bg} center/cover;${n.im?`background-image:url('${n.im}')`:''}">${n.im?'':n.ico}${n.vid?'<span class="play">▶</span>':''}</div>
+  $('#newsGrid').innerHTML=list.map((n,i)=>`<article class="card"><div class="news-img${n.fit==='contain'?' poster':''}" style="background-color:${n.bg};background-position:center;background-size:${n.fit==='contain'?'contain':'cover'};background-repeat:no-repeat;${n.im?`background-image:url('${n.im}')`:''}">${n.im?'':n.ico}${n.vid?'<span class="play">▶</span>':''}</div>
    <div class="news-body"><div class="meta"><span class="chip ${n.cat==='Зарлал'?'red':n.cat==='Арга хэмжээ'?'green':''}">${n.cat}</span><span>📅 ${n.date}</span></div>
    <h3>${n.title}</h3><p>${n.text.slice(0,90)}…</p><a href="#" class="more" data-n="${news.indexOf(n)}">Дэлгэрэнгүй →</a></div></article>`).join('');
   $$('#newsGrid [data-n]').forEach(a=>a.onclick=e=>{e.preventDefault();const n=news[a.dataset.n];
