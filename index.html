@@ -9,9 +9,9 @@
 <meta name="description" content="Нийслэлийн ерөнхий боловсролын 79 дүгээр сургууль-ийн албан ёсны цахим хуудас: мэдээ, зарлал, клуб, багш нар, зар.">
 <style>
 :root{
-  --blue:#0759A6; --blue-2:#2879B8; --navy:#123B63; --sky:#A9C9E6;
-  --red:#C62836; --bg:#F5F8FC; --ink:#1F2937; --muted:#64748B; --line:#E1E9F1;
-  --green:#43845A; --green-bg:#EAF4EC; --gold:#FFD166; --radius:16px;
+  --blue:#0A5B96; --blue-2:#3585B7; --navy:#153B5B; --sky:#B6D2E8;
+  --red:#C44245; --bg:#EEF4F9; --ink:#1F2937; --muted:#64748B; --line:#DCE6EF;
+  --green:#397A57; --green-bg:#E7F2EA; --gold:#FFD166; --radius:16px;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -25,7 +25,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--blue-2);outline-
 label{font-size:13px;font-weight:600;display:block;margin-bottom:6px}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;border:0;font-weight:700;transition:.2s}
 .btn-primary{background:var(--blue);color:#fff}.btn-primary:hover{background:var(--navy)}
-.btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#A91F2B}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#A83238}
 .btn-ghost{background:rgba(255,255,255,.14);color:#fff;border:1px solid rgba(255,255,255,.4)}.btn-ghost:hover{background:rgba(255,255,255,.25)}
 .btn-outline{background:#fff;color:var(--blue);border:1.5px solid var(--blue)}.btn-outline:hover{background:var(--bg)}
 
@@ -355,12 +355,19 @@ nav ul{gap:2px}
 nav a{transition:background .18s ease,color .18s ease}
 .hero .wrap{padding-block:100px 120px}
 .hero{background:
-  radial-gradient(1200px 500px at 85% -10%,rgba(169,201,230,.32),transparent 60%),
-  linear-gradient(135deg,#123B63 0%,var(--blue) 58%,#2879B8 100%)}
+  radial-gradient(1100px 520px at 88% -12%,rgba(182,210,232,.4),transparent 62%),
+  linear-gradient(125deg,#153B5B 0%,#0A5B96 56%,#3585B7 100%)}
 .hero h1{max-width:760px;letter-spacing:-.025em}
 .hero p{line-height:1.7}
 .hero-card{box-shadow:0 18px 48px rgba(0,30,60,.16)}
-.stats .grid{box-shadow:0 16px 42px rgba(0,62,117,.13)}
+.stats .grid{border:1px solid var(--line);box-shadow:0 16px 42px rgba(21,59,91,.12)}
+.stat{position:relative}
+.stat::before{content:"";position:absolute;inset:0 14px auto;height:3px;border-radius:0 0 3px 3px;background:var(--blue)}
+.stat:nth-child(3n+2)::before{background:var(--green)}
+.stat:nth-child(3n)::before{background:var(--red)}
+.stat:nth-child(3n+2) b{color:var(--green)}
+.stat:nth-child(3n) b{color:var(--red)}
+.alt{background:linear-gradient(180deg,#F5F9FC 0%,var(--bg) 100%)}
 .stat{padding:28px 18px}
 .stat b{letter-spacing:-.035em;font-variant-numeric:tabular-nums}
 section{padding-block:clamp(64px,7vw,88px)}
