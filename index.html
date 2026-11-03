@@ -820,7 +820,10 @@ const posterAnnouncements=[
 ];
 const announcements=S79.get('announcements');
 posterAnnouncements.forEach(poster=>{if(!announcements.some(n=>n.id===poster.id))announcements.push(poster)});
-const news=[...S79.get('news').map(n=>({...n,cat:'Мэдээ'})),...announcements.map(n=>({...n,cat:'Зарлал'})),...evs.map(n=>({...n,cat:'Арга хэмжээ'}))]
+const judoNews={id:'news-2026-11-04-tumnii-manlai-judo',ico:'🥋',bg:'#FFF4E0',date:'2026-11-04',img:'886125341_3101123336889002_2871802948476747508_n.jpg',title:'Н.Дөлгөөн “Түмний манлай” жүдо бөхийн тэмцээнээс хүрэл медаль хүртлээ',text:'УЛСЫН ЗААН Р.ДАВААНЯМЫН НЭРЭМЖИТ "ТҮМНИЙ МАНЛАЙ" ОЛОН ХОТЫН НЭРЭМЖИТ ЖҮДО БӨХИЙН ТЭМЦЭЭНЭЭС 10Б АНГИЙН СУРАГЧ Н.ДӨЛГӨӨН ХҮРЭЛ МЕДАЛЬ ХҮРТЛЭЭ. ТАМИРЧИН СУРАГЧДАА БАЯР ХҮРГЭЖ ИХ АМЖИЛТЫГ ЕРӨӨЕ.'};
+const siteNews=S79.get('news');
+if(!siteNews.some(n=>n.id===judoNews.id))siteNews.push(judoNews);
+const news=[...siteNews.map(n=>({...n,cat:'Мэдээ'})),...announcements.map(n=>({...n,cat:'Зарлал'})),...evs.map(n=>({...n,cat:'Арга хэмжээ'}))]
   .sort((a,b)=>a.date<b.date?1:-1).map(n=>({...n,date:fmtD(n.date),title:esc(n.title),text:esc(n.text),ico:esc(n.ico||''),bg:esc(n.bg||'#E6F0FA'),im:esc(S79.img(n.img)),vid:esc(S79.img(n.video||'')),gal:String(n.gallery||'').split('\n').map(x=>x.trim()).filter(Boolean).map(g=>esc(S79.img(g))).filter(Boolean)}));
 let newsCat='Бүгд';
 function renderNews(){
